@@ -1,5 +1,8 @@
 package com.backend.backend_web.repository;
 
-public interface SolicitudArrendamientoRepository {
+import org.springframework.data.repository.CrudRepository;
+import com.backend.backend_web.entity.SolicitudArriendo;
+
+public interface SolicitudArrendamientoRepository extends CrudRepository<SolicitudArriendo,Long>{
 
 }

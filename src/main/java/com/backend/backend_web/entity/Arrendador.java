@@ -4,6 +4,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import java.util.List;
+import jakarta.persistence.CascadeType;
 
 @Entity
 @DiscriminatorValue("Arrendador")
