@@ -1,16 +1,31 @@
 package com.backend.backend_web.entity;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import java.util.List;
+import java.util.Set;
+import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
-@DiscriminatorValue("Arrendatario")
-public class Arrendatario extends Usuario {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE application SET  status = 1 WHERE id=?")
+public class Arrendatario {
     // Atributos y métodos específicos de Arrendatario
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+    private String apellido;
+    private String correo;
+    private String contrasena;
     @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación inversa
     private List<SolicitudArriendo> solicitudes;
 }
