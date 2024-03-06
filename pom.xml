@@ -14,7 +14,14 @@
 	<name>backend_web</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+	<!-- Configura las propiedades de SonarQube -->
+		<sonar.host.url>http://sonarjaveriana.dynaco.co/</sonar.host.url>
+		<sonar.login>sqp_305a9bade69056dfd9cbaa57db87a03d9d244db4</sonar.login>
+		<sonar.projectKey>ProyectoWeb_2_6</sonar.projectKey> 
+		<sonar.projectName>ProyectoWeb_2_6</sonar.projectName>
+		<sonar.projectVersion>1.0</sonar.projectVersion>
 		<java.version>17</java.version>
+		
 	</properties>
 	<dependencies>
 		<dependency>
@@ -65,6 +72,11 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.7.0.1746</version>
+        	</plugin>
 		</plugins>
 	</build>
 
