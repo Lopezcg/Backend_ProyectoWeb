@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "status = 0")
-@SQLDelete(sql = "UPDATE application SET  status = 1 WHERE id=?")
+@SQLDelete(sql = "UPDATE solicitudarriendo SET  status = 1 WHERE id=?")
 public class SolicitudArriendo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +39,7 @@ public class SolicitudArriendo {
     @ManyToOne // Establece una relación de muchos a uno
     @JoinColumn(name = "arrendatario_id", referencedColumnName = "id") // Define la columna de unión
     private Arrendatario arrendatario; // Relación con Arrendador
+    private Integer status = 0; // Valor predeterminado para el atributo status.
+
 
 }

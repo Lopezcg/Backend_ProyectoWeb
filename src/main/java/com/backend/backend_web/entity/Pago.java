@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "status = 0")
-@SQLDelete(sql = "UPDATE application SET  status = 1 WHERE id=?")
+@SQLDelete(sql = "UPDATE pago SET  status = 1 WHERE id=?")
 public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,8 @@ public class Pago {
     private long valor;
     private String banco;
     private long numCuenta;
+    private Integer status = 0; // Valor predeterminado para el atributo status.
+
     
 
 }

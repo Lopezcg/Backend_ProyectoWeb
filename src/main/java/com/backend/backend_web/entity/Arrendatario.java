@@ -16,7 +16,7 @@ import org.hibernate.annotations.SQLDelete;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "status = 0")
-@SQLDelete(sql = "UPDATE application SET  status = 1 WHERE id=?")
+@SQLDelete(sql = "UPDATE arrendatario SET  status = 1 WHERE id=?")
 public class Arrendatario {
     // Atributos y métodos específicos de Arrendatario
      @Id
@@ -28,4 +28,6 @@ public class Arrendatario {
     private String contrasena;
     @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación inversa
     private List<SolicitudArriendo> solicitudes;
+    private Integer status = 0; // Valor predeterminado para el atributo status.
+
 }
