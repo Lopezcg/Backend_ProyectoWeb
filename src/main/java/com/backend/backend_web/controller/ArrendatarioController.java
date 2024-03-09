@@ -10,6 +10,7 @@ import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendatarioRepository;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,22 +36,35 @@ public class ArrendatarioController {
             throw new RuntimeException(e);
         }
     }
+    @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Arrendatario> readAllArrendatario() {
         return repository.findAll();
     }
+    @CrossOrigin
     @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Arrendatario> readArrendatario(@PathVariable Long id) {
         Arrendatario arrendatario= repository.findById(id)
                 .orElseThrow(() -> new RegistroNoEncontradoException("No existe arrendatario con id: " + id));
             return ResponseEntity.ok(arrendatario);
     }
+    @CrossOrigin
     @DeleteMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Arrendatario> deleteArrendatario(@PathVariable Long id) {
         Arrendatario arrendatario= repository.findById(id)
         .orElseThrow(() -> new RegistroNoEncontradoException("No existe arrendatario con id: " + id));
         repository.delete(arrendatario);
         return ResponseEntity.ok(arrendatario);
+    }
+    @CrossOrigin
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public Arrendatario updateArrendatario(@RequestBody Arrendatario arrendatario) {
+        try {
+            Arrendatario updatedarrendatario = repository.save(arrendatario);
+            return updatedarrendatario;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     
 
