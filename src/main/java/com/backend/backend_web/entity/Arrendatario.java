@@ -7,7 +7,10 @@ import lombok.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+
 import org.hibernate.annotations.Where;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
@@ -20,8 +23,8 @@ import org.hibernate.annotations.SQLDelete;
 public class Arrendatario {
     // Atributos y métodos específicos de Arrendatario
      @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
     private String nombre;
     private String apellido;
     private String correo;
