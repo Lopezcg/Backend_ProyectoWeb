@@ -22,14 +22,15 @@ import org.hibernate.annotations.SQLDelete;
 @SQLDelete(sql = "UPDATE arrendatario SET  status = 1 WHERE id=?")
 public class Arrendatario {
     // Atributos y métodos específicos de Arrendatario
-     @Id
+    @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
     private String nombre;
     private String apellido;
     private String correo;
     private String contrasena;
-    @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación inversa
+    @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
+                                                                                           // inversa
     private List<SolicitudArriendo> solicitudes;
     private Integer status = 0; // Valor predeterminado para el atributo status.
 

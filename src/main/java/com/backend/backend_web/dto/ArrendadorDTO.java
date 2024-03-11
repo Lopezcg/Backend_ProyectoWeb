@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArrendatarioDTO {
+public class ArrendadorDTO {
 
     private UUID id;
     private String nombre;
