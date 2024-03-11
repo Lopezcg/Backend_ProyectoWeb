@@ -1,5 +1,7 @@
 package com.backend.backend_web.dto;
 
+import java.util.UUID;
+
 import lombok.*;
 
 @Getter
@@ -7,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PropiedadDTO {
-    private long id;
+    private UUID id;
     private String nombre;
     private String descripcion;
     private Long valor;

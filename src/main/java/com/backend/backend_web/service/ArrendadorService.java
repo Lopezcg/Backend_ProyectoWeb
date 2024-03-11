@@ -1,7 +1,9 @@
 package com.backend.backend_web.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,11 @@ public class ArrendadorService {
         return arrendadorDTO;
     }
 
-    public Iterable<Arrendador> get() {
-        return repository.findAll();
+    public List<ArrendadorDTO> get() {
+        List<Arrendador> arrendadores = (List<Arrendador>) repository.findAll();
+        List<ArrendadorDTO> arrendadoresDTO = arrendadores.stream()
+                .map(arrendador -> modelMapper.map(arrendador, ArrendadorDTO.class)).collect(Collectors.toList());
+        return arrendadoresDTO;
     }
 
     public ArrendadorDTO save(ArrendadorDTO arrendadorDTO) {

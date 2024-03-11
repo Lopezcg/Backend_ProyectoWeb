@@ -1,5 +1,6 @@
 package com.backend.backend_web.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.print.attribute.standard.Media;
@@ -45,7 +46,7 @@ public class ArrendadorController {
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Arrendador> readAllArrendador() {
+    public List<ArrendadorDTO> readAllArrendador() {
         return service.get();
     }
 
