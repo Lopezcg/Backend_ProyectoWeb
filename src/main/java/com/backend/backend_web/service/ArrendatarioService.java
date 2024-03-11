@@ -11,7 +11,6 @@ import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
 
-import ch.qos.logback.core.status.Status;
 
 import java.util.stream.Collectors;
 
@@ -51,7 +50,7 @@ public class ArrendatarioService {
     public ArrendatarioDTO update(ArrendatarioDTO arrendatarioDTO) throws ValidationException {
         arrendatarioDTO = get(arrendatarioDTO.getId());
         if (arrendatarioDTO == null) {
-            throw new ValidationException(null);
+            throw new RuntimeException("Registro no encontrado");
         }
         Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
         arrendatario.setStatus(0);
