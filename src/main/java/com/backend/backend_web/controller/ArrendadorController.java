@@ -2,14 +2,22 @@ package com.backend.backend_web.controller;
 
 import java.util.UUID;
 
+import javax.print.attribute.standard.Media;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.repository.ArrendadorRepository;
+import com.backend.backend_web.service.ArrendadorService;
+
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,54 +27,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ArrendadorController {
     @Autowired
-    private ArrendadorRepository repository;
+    private ArrendadorService service;
 
-    @PostMapping("")
-    public ResponseEntity<Arrendador> createArrendador(@RequestBody Arrendador arrendador) {
+    @CrossOrigin
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody ArrendadorDTO arrendador) {
         try {
             if (arrendador == null) {
                 return ResponseEntity.badRequest().build();
             }
-            Arrendador savedarrendador = repository.save(arrendador);
+            ArrendadorDTO savedarrendador = service.save(arrendador);
             return ResponseEntity.ok().body(savedarrendador);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    @GetMapping("")
+    @CrossOrigin
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Arrendador> readAllArrendador() {
-        return repository.findAll();
+        return service.get();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
-    public ResponseEntity<Arrendador> readArrendador(@PathVariable UUID id) {
-        try {
-            if (id == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            return repository.findById(id)
-                    .map(arrendador -> ResponseEntity.ok().body(arrendador))
-                    .orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<ArrendadorDTO> readArrendador(@PathVariable UUID id) {
+        return ResponseEntity.ok().body(service.get(id));
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArrendador(@PathVariable UUID id) {
+        service.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendadorDTO> updateArrendador(@RequestBody ArrendadorDTO arrendador) {
         try {
-            if (id == null) {
-                throw new IllegalArgumentException("id is null");
+            if (arrendador == null) {
+                return ResponseEntity.badRequest().build();
             }
-            return repository.findById(id)
-                    .map(arrendador -> {
-                        repository.deleteById(id);
-                        return ResponseEntity.ok().build();
-                    })
-                    .orElseGet(() -> ResponseEntity.notFound().build());
+            ArrendadorDTO updatedArrendador = service.update(arrendador);
+            return ResponseEntity.ok().body(updatedArrendador);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 }

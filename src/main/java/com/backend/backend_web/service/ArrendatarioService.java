@@ -2,7 +2,6 @@ package com.backend.backend_web.service;
 
 import java.util.UUID;
 
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import ch.qos.logback.core.status.Status;
 
 import java.util.stream.Collectors;
 
-import java.util.List; 
+import java.util.List;
 
 @Service
 public class ArrendatarioService {
@@ -28,14 +27,16 @@ public class ArrendatarioService {
     public ArrendatarioDTO get(UUID id) {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
         ArrendatarioDTO arrendatarioDTO = null;
-        if(arrendatarioOptional!=null){
+        if (arrendatarioOptional != null) {
             arrendatarioDTO = modelMapper.map(arrendatarioOptional.get(), ArrendatarioDTO.class);
-        }	
+        }
         return arrendatarioDTO;
     }
+
     public List<ArrendatarioDTO> get() {
         List<Arrendatario> arrendatarios = (List<Arrendatario>) repository.findAll();
-        List<ArrendatarioDTO> arrendatariosDTO = arrendatarios.stream().map(arrendatario -> modelMapper.map(arrendatario, ArrendatarioDTO.class)).collect(Collectors.toList());
+        List<ArrendatarioDTO> arrendatariosDTO = arrendatarios.stream()
+                .map(arrendatario -> modelMapper.map(arrendatario, ArrendatarioDTO.class)).collect(Collectors.toList());
         return arrendatariosDTO;
     }
 
@@ -46,6 +47,7 @@ public class ArrendatarioService {
         arrendatarioDTO.setId(arrendatario.getId());
         return arrendatarioDTO;
     }
+
     public ArrendatarioDTO update(ArrendatarioDTO arrendatarioDTO) throws ValidationException {
         arrendatarioDTO = get(arrendatarioDTO.getId());
         if (arrendatarioDTO == null) {
@@ -57,6 +59,7 @@ public class ArrendatarioService {
         arrendatarioDTO = modelMapper.map(arrendatario, ArrendatarioDTO.class);
         return arrendatarioDTO;
     }
+
     public void delete(UUID id) {
         repository.deleteById(id);
     }

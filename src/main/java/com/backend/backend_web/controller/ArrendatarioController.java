@@ -1,4 +1,5 @@
 package com.backend.backend_web.controller;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ import org.springframework.http.MediaType;
 public class ArrendatarioController {
     @Autowired
     private ArrendatarioService service;
+
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrendatarioDTO createArrendatario(@RequestBody ArrendatarioDTO arrendatarioDTO) {
@@ -42,21 +44,25 @@ public class ArrendatarioController {
             throw new RuntimeException(e);
         }
     }
+
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ArrendatarioDTO> readAllArrendatario() {
         return service.get();
     }
+
     @CrossOrigin
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrendatarioDTO readArrendatario(@PathVariable UUID id) {
         return service.get(id);
     }
+
     @CrossOrigin
-    @DeleteMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteArrendatario(@PathVariable UUID id) {
         service.delete(id);
     }
+
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ArrendatarioDTO updateArrendatario(@RequestBody ArrendatarioDTO arrendatario) {
@@ -67,6 +73,5 @@ public class ArrendatarioController {
             throw new RuntimeException(e);
         }
     }
-    
 
 }
