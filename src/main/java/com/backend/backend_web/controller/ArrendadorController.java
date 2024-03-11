@@ -1,5 +1,7 @@
 package com.backend.backend_web.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,22 +31,23 @@ public class ArrendadorController {
             throw new RuntimeException(e);
         }
     }
+
     @GetMapping("")
     public Iterable<Arrendador> readAllArrendador() {
         return repository.findAll();
     }
 
-
     @GetMapping("/{id}")
-    public Arrendador readArrendador(@PathVariable Long id) {
+    public Arrendador readArrendador(@PathVariable UUID id) {
         try {
             return repository.findById(id).get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     @DeleteMapping("/{id}")
-    public void deleteArrendador(@PathVariable Long id) {
+    public void deleteArrendador(@PathVariable UUID id) {
         try {
             repository.deleteById(id);
         } catch (Exception e) {
