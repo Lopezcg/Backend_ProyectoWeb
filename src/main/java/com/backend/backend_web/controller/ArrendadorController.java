@@ -3,7 +3,7 @@ package com.backend.backend_web.controller;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.entity.Arrendador;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/arrendador")
@@ -23,10 +22,13 @@ public class ArrendadorController {
     private ArrendadorRepository repository;
 
     @PostMapping("")
-    public Arrendador createArrendador(@PathVariable Arrendador arrendador) {
+    public ResponseEntity<Arrendador> createArrendador(@RequestBody Arrendador arrendador) {
         try {
+            if (arrendador == null) {
+                return ResponseEntity.badRequest().build();
+            }
             Arrendador savedarrendador = repository.save(arrendador);
-            return savedarrendador;
+            return ResponseEntity.ok().body(savedarrendador);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -38,18 +40,31 @@ public class ArrendadorController {
     }
 
     @GetMapping("/{id}")
-    public Arrendador readArrendador(@PathVariable UUID id) {
+    public ResponseEntity<Arrendador> readArrendador(@PathVariable UUID id) {
         try {
-            return repository.findById(id).get();
+            if (id == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            return repository.findById(id)
+                    .map(arrendador -> ResponseEntity.ok().body(arrendador))
+                    .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArrendador(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteArrendador(@PathVariable UUID id) {
         try {
-            repository.deleteById(id);
+            if (id == null) {
+                throw new IllegalArgumentException("id is null");
+            }
+            return repository.findById(id)
+                    .map(arrendador -> {
+                        repository.deleteById(id);
+                        return ResponseEntity.ok().build();
+                    })
+                    .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
