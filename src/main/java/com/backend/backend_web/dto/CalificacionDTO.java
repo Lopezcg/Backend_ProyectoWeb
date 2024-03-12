@@ -6,19 +6,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CalificacionDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
     private String comentario;
     private float puntuacion;
-    @Column(name = "arrendatario_id")
-    private Integer arrendatarioId;
-    @Column(name = "arrendador_id")
-    private Integer arrendadorId;
-    @Column(name = "solicitud_id")
-    private Integer solicitudId;
-    private Integer status = 0; // Valor predeterminado para el atributo status.
-
 }
