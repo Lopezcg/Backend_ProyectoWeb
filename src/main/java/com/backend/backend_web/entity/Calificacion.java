@@ -1,4 +1,6 @@
 package com.backend.backend_web.entity;
+import java.util.UUID;
+
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -26,7 +28,7 @@ import lombok.Setter;
 public class Calificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private UUID id;
     private String comentario;
     private float puntuacion;
     @Column(name = "arrendatario_id")
