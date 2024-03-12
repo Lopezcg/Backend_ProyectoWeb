@@ -27,7 +27,7 @@ import lombok.Setter;
 @SQLDelete(sql = "UPDATE calificacion SET  status = 1 WHERE id=?")
 public class Calificacion {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private String comentario;
     private float puntuacion;

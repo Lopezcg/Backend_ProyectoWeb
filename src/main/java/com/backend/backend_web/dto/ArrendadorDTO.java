@@ -1,6 +1,9 @@
 package com.backend.backend_web.dto;
 
+import java.util.List;
 import java.util.UUID;
+
+import com.backend.backend_web.entity.Propiedad;
 
 import lombok.*;
 
@@ -14,5 +17,7 @@ public class ArrendadorDTO {
     private String nombre;
     private String apellido;
     private String correo;
+    private String telefono;
+    private List<Propiedad> propiedades;
 
 }

@@ -14,7 +14,5 @@ public class PropiedadDTO {
     private String descripcion;
     private Long valor;
     private String estado;
-    private ArrendadorDTO arrendador;
-    private Integer status = 0;
 
 }

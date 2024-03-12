@@ -3,7 +3,6 @@ package com.backend.backend_web.controller;
 import java.util.List;
 import java.util.UUID;
 
-import javax.print.attribute.standard.Media;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendadorDTO;
-import com.backend.backend_web.entity.Arrendador;
-import com.backend.backend_web.repository.ArrendadorRepository;
 import com.backend.backend_web.service.ArrendadorService;
 
 import org.springframework.web.bind.annotation.PostMapping;

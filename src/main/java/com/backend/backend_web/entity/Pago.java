@@ -29,7 +29,7 @@ import lombok.Setter;
 @SQLDelete(sql = "UPDATE pago SET  status = 1 WHERE id=?")
 public class Pago {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private long valor;
     private String banco;

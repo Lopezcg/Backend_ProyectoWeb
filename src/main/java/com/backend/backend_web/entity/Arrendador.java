@@ -1,11 +1,9 @@
 package com.backend.backend_web.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.Where;
@@ -21,7 +19,7 @@ import org.hibernate.annotations.SQLDelete;
 public class Arrendador {
     // Atributos y métodos específicos de Arrendador
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
     private UUID id;
     private String nombre;
     private String apellido;
