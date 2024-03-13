@@ -35,8 +35,7 @@ public class Pago {
     private String banco;
     private long numCuenta;
     private Integer status = 0; // Valor predeterminado para el atributo status.
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "solicitudarriendo_id")
+    @OneToOne(mappedBy = "pago")
     private SolicitudArriendo solicitudArriendo;
     
 

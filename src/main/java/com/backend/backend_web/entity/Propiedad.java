@@ -40,7 +40,7 @@ public class Propiedad {
     private Long valor;
     private String estado;
     @ManyToOne(fetch = FetchType.LAZY) // Establece una relación de muchos a uno
-    @JoinColumn(name = "arrendador_id", referencedColumnName = "id") // Define la columna de unión
+    @JoinColumn(name = "arrendador", referencedColumnName = "id") // Define la columna de unión
     private Arrendador arrendador; // Relación con Arrendador
     private Integer status = 0; // Valor predeterminado para el atributo status.
     @OneToMany(mappedBy = "propiedad", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación

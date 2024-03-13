@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 
 import com.backend.backend_web.entity.Arrendatario;
+import com.backend.backend_web.entity.Pago;
 import com.backend.backend_web.entity.Propiedad;
 
 import jakarta.persistence.Column;
@@ -29,4 +30,5 @@ public class SolicitudArriendoDTO {
     private int cantidadPersonas;
     private Propiedad propiedad;
     private Arrendatario arrendatario;
+    private Pago pago;
 }

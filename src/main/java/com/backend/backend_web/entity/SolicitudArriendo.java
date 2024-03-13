@@ -8,6 +8,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.cglib.core.Local;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +46,9 @@ public class SolicitudArriendo {
     @ManyToOne // Establece una relación de muchos a uno
     @JoinColumn(name = "arrendatario", referencedColumnName = "id") // Define la columna de unión
     private Arrendatario arrendatario; //
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pago_id", referencedColumnName = "id")
+    private Pago pago;
     private Integer status = 0; 
 
 }
