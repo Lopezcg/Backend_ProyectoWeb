@@ -2,7 +2,7 @@ package com.backend.backend_web.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -22,7 +22,7 @@ public class SolicitudArriendoService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public SolicitudArriendoDTO get(UUID id) {
+    public SolicitudArriendoDTO get(Long id) {
         Optional<SolicitudArriendo> solicitudOptional = repository.findById(id);
         SolicitudArriendoDTO solicitudDTO = null;
         if (solicitudOptional.isPresent()) {
@@ -57,7 +57,7 @@ public class SolicitudArriendoService {
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

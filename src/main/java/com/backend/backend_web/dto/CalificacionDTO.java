@@ -1,6 +1,6 @@
 package com.backend.backend_web.dto;
 
-import java.util.UUID;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +16,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CalificacionDTO {
-    private UUID id;
+    private Long id;
     private String comentario;
     private float puntuacion;
+    private Integer arrendatarioId;
+    private Integer arrendadorId;
+    private Integer solicitudId;
 }

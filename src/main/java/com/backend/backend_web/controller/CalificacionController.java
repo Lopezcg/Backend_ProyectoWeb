@@ -1,7 +1,7 @@
 package com.backend.backend_web.controller;
 
 import java.util.List;
-import java.util.UUID;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class CalificacionController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> updateCalificacion(@PathVariable UUID id, @RequestBody CalificacionDTO Calificacion) {
+    public ResponseEntity<CalificacionDTO> updateCalificacion(@PathVariable Long id, @RequestBody CalificacionDTO Calificacion) {
         try {
             if (Calificacion == null) {
                 return ResponseEntity.badRequest().build();
@@ -63,7 +63,7 @@ public class CalificacionController {
 
     @CrossOrigin
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteCalificacion(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteCalificacion(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

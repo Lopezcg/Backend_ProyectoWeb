@@ -1,6 +1,6 @@
 package com.backend.backend_web.service;
 
-import java.util.UUID;
+
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
@@ -23,7 +23,7 @@ public class ArrendatarioService {
     @Autowired
     ModelMapper modelMapper;
 
-    public ArrendatarioDTO get(UUID id) {
+    public ArrendatarioDTO get(Long id) {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
         ArrendatarioDTO arrendatarioDTO = null;
         if (arrendatarioOptional != null) {
@@ -59,7 +59,7 @@ public class ArrendatarioService {
         return arrendatarioDTO;
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 

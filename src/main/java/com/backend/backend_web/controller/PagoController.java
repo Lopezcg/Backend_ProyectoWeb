@@ -1,7 +1,7 @@
 package com.backend.backend_web.controller;
 
 import java.util.List;
-import java.util.UUID;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class PagoController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagoDTO> readPago(@PathVariable UUID id) {
+    public ResponseEntity<PagoDTO> readPago(@PathVariable Long id) {
         PagoDTO pagoDTO = service.get(id);
         if (pagoDTO != null) {
             return ResponseEntity.ok().body(pagoDTO);
@@ -60,7 +60,7 @@ public class PagoController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deletePago(@PathVariable UUID id) {
+    public ResponseEntity<?> deletePago(@PathVariable Long id) {
         try {
             service.delete(id);
             return ResponseEntity.ok().build();

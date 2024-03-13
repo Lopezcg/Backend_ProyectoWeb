@@ -1,6 +1,7 @@
 package com.backend.backend_web.dto;
-import java.util.UUID;
 
+
+import com.backend.backend_web.entity.SolicitudArriendo;
 
 import lombok.*;
 @Getter
@@ -9,7 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 public class PagoDTO {
    
-    private UUID id;
+    private Long id;
     private long valor;
+    private String banco;
+    private long numCuenta;
+     private SolicitudArriendo solicitudArriendo;
 
 }

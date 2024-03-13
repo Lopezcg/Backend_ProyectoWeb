@@ -1,6 +1,7 @@
 package com.backend.backend_web.dto;
 
-import java.util.UUID;
+import java.time.LocalDate;
+
 
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.Propiedad;
@@ -21,8 +22,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SolicitudArriendoDTO {
-    private UUID id;
-    private String fechainicio;
-    private String fechafin;
+    private Long id;
+    private LocalDate fechainicio;
+    private LocalDate fechafin;
+    private boolean estado;
     private int cantidadPersonas;
+    private Propiedad propiedad;
+    private Arrendatario arrendatario;
 }

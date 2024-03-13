@@ -2,7 +2,7 @@ package com.backend.backend_web.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -21,7 +21,7 @@ public class ArrendadorService {
     @Autowired
     ModelMapper modelMapper;
 
-    public ArrendadorDTO get(UUID id) {
+    public ArrendadorDTO get(Long id) {
         Optional<Arrendador> arrendadorOptional = repository.findById(id);
         ArrendadorDTO arrendadorDTO = null;
         if (arrendadorOptional != null) {
@@ -57,7 +57,7 @@ public class ArrendadorService {
         return arrendadorDTO;
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 

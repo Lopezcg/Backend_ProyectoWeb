@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 import org.hibernate.annotations.Where;
 import org.hibernate.annotations.SQLDelete;
@@ -19,11 +19,12 @@ import org.hibernate.annotations.SQLDelete;
 public class Arrendador {
     // Atributos y métodos específicos de Arrendador
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
     private String apellido;
     private String correo;
+    private String telefono;
     private String contrasena;
     @OneToMany(mappedBy = "arrendador", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
                                                                                          // inversa

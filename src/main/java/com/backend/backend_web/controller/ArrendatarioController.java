@@ -1,7 +1,7 @@
 package com.backend.backend_web.controller;
 
 import java.util.List;
-import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,13 +50,13 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> readArrendatario(@PathVariable UUID id) {
+    public ResponseEntity<ArrendatarioDTO> readArrendatario(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteArrendatario(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteArrendatario(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

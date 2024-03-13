@@ -2,7 +2,7 @@ package com.backend.backend_web.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -20,7 +20,7 @@ public class CalificacionService {
     @Autowired
     ModelMapper modelMapper;
 
-    public CalificacionDTO get(UUID id) {
+    public CalificacionDTO get(Long id) {
         Optional<Calificacion> CalificacionOptional = repository.findById(id);
         CalificacionDTO CalificacionDTO = null;
         if (CalificacionOptional != null) {
@@ -56,7 +56,7 @@ public class CalificacionService {
         return CalificacionDTO;
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 

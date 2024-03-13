@@ -1,7 +1,7 @@
 package com.backend.backend_web.controller;
 
 import java.util.List;
-import java.util.UUID;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +49,13 @@ public class ArrendadorController {
 
     @CrossOrigin
     @GetMapping("/{id}")
-    public ResponseEntity<ArrendadorDTO> readArrendador(@PathVariable UUID id) {
+    public ResponseEntity<ArrendadorDTO> readArrendador(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @CrossOrigin
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteArrendador(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteArrendador(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

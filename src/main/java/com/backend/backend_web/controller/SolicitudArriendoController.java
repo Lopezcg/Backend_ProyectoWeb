@@ -1,7 +1,7 @@
 package com.backend.backend_web.controller;
 
 import java.util.List;
-import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -48,7 +48,7 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> readSolicitudArriendo(@PathVariable UUID id) {
+    public ResponseEntity<SolicitudArriendoDTO> readSolicitudArriendo(@PathVariable Long id) {
         SolicitudArriendoDTO solicitud = service.get(id);
         if (solicitud != null) {
             return ResponseEntity.ok().body(solicitud);
@@ -59,7 +59,7 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(@PathVariable UUID id, @RequestBody SolicitudArriendoDTO solicitudArriendo) {
+    public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(@PathVariable Long id, @RequestBody SolicitudArriendoDTO solicitudArriendo) {
         try {
             if (solicitudArriendo == null || !id.equals(solicitudArriendo.getId())) {
                 return ResponseEntity.badRequest().build();
@@ -77,7 +77,7 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteSolicitudArriendo(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteSolicitudArriendo(@PathVariable Long id) {
         try {
             service.delete(id);
             return ResponseEntity.ok().build();

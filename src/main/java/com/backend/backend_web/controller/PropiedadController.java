@@ -1,7 +1,7 @@
     package com.backend.backend_web.controller;
 
     import java.util.List;
-    import java.util.UUID;
+    
 
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.MediaType;
@@ -48,7 +48,7 @@
 
         @CrossOrigin
         @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<PropiedadDTO> updatePropiedad(@PathVariable UUID id, @RequestBody PropiedadDTO propiedad) {
+        public ResponseEntity<PropiedadDTO> updatePropiedad(@PathVariable Long id, @RequestBody PropiedadDTO propiedad) {
             try {
                 if (propiedad == null) {
                     return ResponseEntity.badRequest().build();
@@ -62,7 +62,7 @@
 
         @CrossOrigin
         @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<?> deletePropiedad(@PathVariable UUID id) {
+        public ResponseEntity<?> deletePropiedad(@PathVariable Long id) {
             service.delete(id);
             return ResponseEntity.ok().build();
         }

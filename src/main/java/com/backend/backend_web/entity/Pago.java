@@ -1,5 +1,5 @@
 package com.backend.backend_web.entity;
-import java.util.UUID;
+
 
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.SQLDelete;
@@ -29,8 +29,8 @@ import lombok.Setter;
 @SQLDelete(sql = "UPDATE pago SET  status = 1 WHERE id=?")
 public class Pago {
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private long valor;
     private String banco;
     private long numCuenta;

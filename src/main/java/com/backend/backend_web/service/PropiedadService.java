@@ -1,7 +1,7 @@
 package com.backend.backend_web.service;
 
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -22,7 +22,7 @@ public class PropiedadService {
     @Autowired
     ModelMapper modelMapper;
 
-    public PropiedadDTO get(UUID id) {
+    public PropiedadDTO get(Long id) {
         Optional<Propiedad> propiedadOptional = repository.findById(id);
         PropiedadDTO propiedadDTO = null;
         if (propiedadOptional != null) {
@@ -58,7 +58,7 @@ public class PropiedadService {
         return propiedadDTO;
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 

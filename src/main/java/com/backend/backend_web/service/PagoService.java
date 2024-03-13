@@ -1,6 +1,6 @@
 package com.backend.backend_web.service;
 
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -23,7 +23,7 @@ public class PagoService {
     @Autowired
     ModelMapper modelMapper;
 
-    public PagoDTO get(UUID id) {
+    public PagoDTO get(Long id) {
         Optional<Pago> pagoOptional = repository.findById(id);
         PagoDTO pagoDTO = null;
         if (pagoOptional.isPresent()) { // Mejorado para usar isPresent()
@@ -59,7 +59,7 @@ public class PagoService {
         return pagoDTO;
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }
