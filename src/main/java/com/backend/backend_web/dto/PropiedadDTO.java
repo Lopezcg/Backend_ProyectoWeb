@@ -2,7 +2,8 @@ package com.backend.backend_web.dto;
 
 import java.util.List;
 
-import com.backend.backend_web.entity.Arrendatario;
+
+import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.SolicitudArriendo;
 
 import lombok.*;
@@ -11,13 +12,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArrendatarioDTO {
-
+public class PropiedadDTO {
     private Long id;
     private String nombre;
-    private String apellido;
-    private String correo;
-    private String telefono;
+    private String descripcion;
+    private Long valor;
+    private String estado;
+     private Arrendador arrendador;
     private List<SolicitudArriendo> solicitudes;
 
 }

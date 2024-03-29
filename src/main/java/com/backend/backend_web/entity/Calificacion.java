@@ -1,4 +1,6 @@
 package com.backend.backend_web.entity;
+
+
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,15 +29,9 @@ import lombok.Setter;
 public class Calificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String comentario;
     private float puntuacion;
-    @Column(name = "arrendatario_id")
-    private Integer arrendatarioId;
-    @Column(name = "arrendador_id")
-    private Integer arrendadorId;
-    @Column(name = "solicitud_id")
-    private Integer solicitudId;
     private Integer status = 0; // Valor predeterminado para el atributo status.
 
 

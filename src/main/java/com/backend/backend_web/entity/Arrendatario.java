@@ -7,7 +7,7 @@ import lombok.*;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
+
 
 import org.hibernate.annotations.Where;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,14 +22,16 @@ import org.hibernate.annotations.SQLDelete;
 @SQLDelete(sql = "UPDATE arrendatario SET  status = 1 WHERE id=?")
 public class Arrendatario {
     // Atributos y métodos específicos de Arrendatario
-     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
     private String apellido;
     private String correo;
+    private String telefono;
     private String contrasena;
-    @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación inversa
+    @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
+                                                                                           
     private List<SolicitudArriendo> solicitudes;
     private Integer status = 0; // Valor predeterminado para el atributo status.
 
