@@ -66,7 +66,7 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> updateArrendatario(@RequestBody ArrendatarioDTO arrendatario) {
+    public ResponseEntity<ArrendatarioDTO> updateArrendatario(@RequestBody Arrendatario arrendatario) {
         try {
             if (arrendatario == null) {
                 return ResponseEntity.badRequest().build();

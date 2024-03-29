@@ -44,16 +44,20 @@ public class ArrendatarioService {
         return arrendatarioDTO;
     }
 
-    public ArrendatarioDTO update(ArrendatarioDTO arrendatarioDTO) throws ValidationException {
-        arrendatarioDTO = get(arrendatarioDTO.getId());
-        if (arrendatarioDTO == null) {
+    public ArrendatarioDTO update(Arrendatario arrendatarioDTO) throws ValidationException {
+        Arrendatario test = modelMapper.map(get(arrendatarioDTO.getId()), Arrendatario.class);
+        if (test == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
-        arrendatario.setStatus(0);
-        arrendatario = repository.save(arrendatario);
-        arrendatarioDTO = modelMapper.map(arrendatario, ArrendatarioDTO.class);
-        return arrendatarioDTO;
+        test.setStatus(0);
+        test.setApellido(arrendatarioDTO.getApellido());
+        test.setNombre(arrendatarioDTO.getNombre());
+        test.setCorreo(arrendatarioDTO.getCorreo());
+        test.setTelefono(arrendatarioDTO.getTelefono());
+        test.setContrasena(arrendatarioDTO.getContrasena());
+        test = repository.save(test);
+        ArrendatarioDTO testDTO = modelMapper.map(test, ArrendatarioDTO.class);
+        return testDTO;
     }
 
     public void delete(Long id) {
