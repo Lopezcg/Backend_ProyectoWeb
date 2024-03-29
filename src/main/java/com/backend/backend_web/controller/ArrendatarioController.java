@@ -2,12 +2,12 @@ package com.backend.backend_web.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendatarioDTO;
-
+import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.service.ArrendatarioService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,13 +30,16 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody ArrendatarioDTO arrendatarioDTO) {
+    public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO) {
         try {
             if (arrendatarioDTO == null) {
                 return ResponseEntity.badRequest().build();
             }
-            ArrendatarioDTO savedarrendatario = service.save(arrendatarioDTO);
-            return ResponseEntity.ok().body(savedarrendatario);
+            Arrendatario savedarrendatario = service.save(arrendatarioDTO);
+            // Convert Arrendador to ArrendadorDTO
+            ArrendatarioDTO test = ArrendatarioDTO.from(savedarrendatario);
+
+            return ResponseEntity.ok().body(test);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -69,7 +72,7 @@ public class ArrendatarioController {
                 return ResponseEntity.badRequest().build();
             }
             ArrendatarioDTO updatedarrendatario = service.update(arrendatario);
-                return ResponseEntity.ok().body(updatedarrendatario);  
+            return ResponseEntity.ok().body(updatedarrendatario);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

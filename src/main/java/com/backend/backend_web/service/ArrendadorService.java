@@ -37,7 +37,7 @@ public class ArrendadorService {
         return arrendadoresDTO;
     }
 
-    public ArrendadorDTO save(ArrendadorDTO arrendadorDTO) {
+    public Arrendador save(Arrendador arrendadorDTO) {
         Arrendador arrendador = modelMapper.map(arrendadorDTO, Arrendador.class);
         arrendador.setStatus(0); // Replace Status.ACTIVE with the appropriate value
         arrendador = repository.save(arrendador);

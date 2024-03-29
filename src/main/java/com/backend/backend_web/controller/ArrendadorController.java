@@ -2,14 +2,13 @@ package com.backend.backend_web.controller;
 
 import java.util.List;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendadorDTO;
+import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.service.ArrendadorService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +28,15 @@ public class ArrendadorController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody ArrendadorDTO arrendador) {
+    public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody Arrendador arrendador) {
         try {
             if (arrendador == null) {
                 return ResponseEntity.badRequest().build();
             }
-            ArrendadorDTO savedarrendador = service.save(arrendador);
-            return ResponseEntity.ok().body(savedarrendador);
+            Arrendador savedarrendador = service.save(arrendador);
+            // Convert Arrendador to ArrendadorDTO
+            ArrendadorDTO arrendadorDTO = ArrendadorDTO.from(savedarrendador);
+            return ResponseEntity.ok().body(arrendadorDTO);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

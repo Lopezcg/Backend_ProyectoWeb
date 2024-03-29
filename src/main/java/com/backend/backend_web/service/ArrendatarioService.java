@@ -1,7 +1,5 @@
 package com.backend.backend_web.service;
 
-
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import java.util.Optional;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
-
 
 import java.util.stream.Collectors;
 
@@ -39,7 +36,7 @@ public class ArrendatarioService {
         return arrendatariosDTO;
     }
 
-    public ArrendatarioDTO save(ArrendatarioDTO arrendatarioDTO) {
+    public Arrendatario save(Arrendatario arrendatarioDTO) {
         Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
         arrendatario.setStatus(0); // Replace Status.ACTIVE with the appropriate value
         arrendatario = repository.save(arrendatario);
