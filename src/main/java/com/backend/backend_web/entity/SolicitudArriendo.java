@@ -49,6 +49,9 @@ public class SolicitudArriendo {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pago_id", referencedColumnName = "id")
     private Pago pago;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "calificacion_id", referencedColumnName = "id")
+    private Calificacion calificacion;
     private Integer status = 0; 
 
 }

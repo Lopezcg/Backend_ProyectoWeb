@@ -14,6 +14,6 @@ public class PagoDTO {
     private long valor;
     private String banco;
     private long numCuenta;
-     private SolicitudArriendo solicitudArriendo;
+     
 
 }

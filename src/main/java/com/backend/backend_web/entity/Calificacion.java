@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,12 +32,6 @@ public class Calificacion {
     private Long id;
     private String comentario;
     private float puntuacion;
-    @Column(name = "arrendatario_id")
-    private Integer arrendatarioId;
-    @Column(name = "arrendador_id")
-    private Integer arrendadorId;
-    @Column(name = "solicitud_id")
-    private Integer solicitudId;
     private Integer status = 0; // Valor predeterminado para el atributo status.
 
 

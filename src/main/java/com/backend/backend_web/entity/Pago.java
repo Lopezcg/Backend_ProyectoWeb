@@ -35,9 +35,6 @@ public class Pago {
     private String banco;
     private long numCuenta;
     private Integer status = 0; // Valor predeterminado para el atributo status.
-    @OneToOne(mappedBy = "pago")
-    private SolicitudArriendo solicitudArriendo;
-    
 
     
 
