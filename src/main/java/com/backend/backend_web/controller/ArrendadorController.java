@@ -66,13 +66,13 @@ public class ArrendadorController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> updateArrendador(@RequestBody ArrendadorDTO arrendador) {
+    public ResponseEntity<ArrendadorDTO> updateArrendador(@RequestBody Arrendador arrendador) {
         try {
             if (arrendador == null) {
                 return ResponseEntity.badRequest().build();
             }
-            ArrendadorDTO updatedArrendador = service.update(arrendador);
-            return ResponseEntity.ok().body(updatedArrendador);
+            ArrendadorDTO test=service.update(arrendador);
+            return ResponseEntity.ok().body(test);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
