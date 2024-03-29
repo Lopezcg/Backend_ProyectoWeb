@@ -2,6 +2,7 @@ package com.backend.backend_web.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArrendadorController {
     @Autowired
     private ArrendadorService service;
+    @Autowired
+     ModelMapper modelMapper;
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +38,7 @@ public class ArrendadorController {
             }
             Arrendador savedarrendador = service.save(arrendador);
             // Convert Arrendador to ArrendadorDTO
-            ArrendadorDTO arrendadorDTO = ArrendadorDTO.from(savedarrendador);
+            ArrendadorDTO arrendadorDTO = modelMapper.map(savedarrendador, ArrendadorDTO.class);
             return ResponseEntity.ok().body(arrendadorDTO);
         } catch (Exception e) {
             throw new RuntimeException(e);

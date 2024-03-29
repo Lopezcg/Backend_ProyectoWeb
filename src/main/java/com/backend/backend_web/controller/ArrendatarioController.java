@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendatarioDTO;
-import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.service.ArrendatarioService;
 
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 
@@ -27,7 +26,8 @@ import org.springframework.http.MediaType;
 public class ArrendatarioController {
     @Autowired
     private ArrendatarioService service;
-
+    @Autowired
+    ModelMapper modelMapper;
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO) {
@@ -37,7 +37,7 @@ public class ArrendatarioController {
             }
             Arrendatario savedarrendatario = service.save(arrendatarioDTO);
             // Convert Arrendador to ArrendadorDTO
-            ArrendatarioDTO test = ArrendatarioDTO.from(savedarrendatario);
+            ArrendatarioDTO test = modelMapper.map(savedarrendatario, ArrendatarioDTO.class);
 
             return ResponseEntity.ok().body(test);
         } catch (Exception e) {
