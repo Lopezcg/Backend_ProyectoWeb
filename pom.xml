@@ -16,7 +16,7 @@
 	<properties>
 	<!-- Configura las propiedades de SonarQube -->
 		<sonar.host.url>http://sonarjaveriana.dynaco.co/</sonar.host.url>
-		<sonar.login>sqp_78906ccad1e5811a8df5eabd2f5b18d22a1c2a94</sonar.login>
+		<sonar.login>sqp_8e2f43b282dd90367d74b6886902b39add178745</sonar.login>
 		<sonar.projectKey>ProyectoWeb_2_6</sonar.projectKey> 
 		<sonar.projectName>ProyectoWeb_2_6</sonar.projectName>
 		<sonar.projectVersion>1.0</sonar.projectVersion>
