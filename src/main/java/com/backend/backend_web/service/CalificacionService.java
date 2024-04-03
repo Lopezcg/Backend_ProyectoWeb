@@ -1,6 +1,7 @@
 package com.backend.backend_web.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import java.util.stream.Collectors;
@@ -21,12 +22,11 @@ public class CalificacionService {
     ModelMapper modelMapper;
 
     public CalificacionDTO get(Long id) {
-        Optional<Calificacion> CalificacionOptional = repository.findById(id);
-        CalificacionDTO CalificacionDTO = null;
-        if (CalificacionOptional != null) {
-            CalificacionDTO = modelMapper.map(CalificacionOptional.get(), CalificacionDTO.class);
+        Optional<Calificacion> calificacionOptional = repository.findById(id);
+        if (!calificacionOptional.isPresent()) {
+            throw new NoSuchElementException("No se encontró una Calificación con el ID: " + id);
         }
-        return CalificacionDTO;
+        return modelMapper.map(calificacionOptional.get(), CalificacionDTO.class);
     }
 
     public List<CalificacionDTO> get() {
@@ -59,6 +59,5 @@ public class CalificacionService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
-
 
 }

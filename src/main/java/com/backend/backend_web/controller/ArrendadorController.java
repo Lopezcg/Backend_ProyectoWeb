@@ -3,7 +3,6 @@ package com.backend.backend_web.controller;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/arrendador")
 @RestController
 public class ArrendadorController {
-    @Autowired
-    private ArrendadorService service;
-    @Autowired
-     ModelMapper modelMapper;
+    private final ArrendadorService service;
+    private final ModelMapper modelMapper;
+
+    public ArrendadorController(ArrendadorService service, ModelMapper modelMapper) {
+        this.service = service;
+        this.modelMapper = modelMapper;
+    }
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +73,7 @@ public class ArrendadorController {
             if (arrendador == null) {
                 return ResponseEntity.badRequest().build();
             }
-            ArrendadorDTO test=service.update(arrendador);
+            ArrendadorDTO test = service.update(arrendador);
             return ResponseEntity.ok().body(test);
         } catch (Exception e) {
             throw new RuntimeException(e);

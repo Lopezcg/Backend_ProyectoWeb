@@ -13,6 +13,8 @@ import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.repository.ArrendadorRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ArrendadorService {
 
@@ -23,11 +25,12 @@ public class ArrendadorService {
 
     public ArrendadorDTO get(Long id) {
         Optional<Arrendador> arrendadorOptional = repository.findById(id);
-        ArrendadorDTO arrendadorDTO = null;
-        if (arrendadorOptional != null) {
-            arrendadorDTO = modelMapper.map(arrendadorOptional.get(), ArrendadorDTO.class);
+
+        if (arrendadorOptional.isPresent()) {
+            return modelMapper.map(arrendadorOptional.get(), ArrendadorDTO.class);
+        } else {
+            throw new EntityNotFoundException("Arrendador no encontrado con el ID: " + id);
         }
-        return arrendadorDTO;
     }
 
     public List<ArrendadorDTO> get() {

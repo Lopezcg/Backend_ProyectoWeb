@@ -12,6 +12,8 @@ import com.backend.backend_web.dto.PropiedadDTO;
 import com.backend.backend_web.entity.Propiedad;
 import com.backend.backend_web.repository.PropiedadRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
 
 @Service
@@ -24,11 +26,10 @@ public class PropiedadService {
 
     public PropiedadDTO get(Long id) {
         Optional<Propiedad> propiedadOptional = repository.findById(id);
-        PropiedadDTO propiedadDTO = null;
-        if (propiedadOptional != null) {
-            propiedadDTO = modelMapper.map(propiedadOptional.get(), PropiedadDTO.class);
+        if (!propiedadOptional.isPresent()) {
+            throw new EntityNotFoundException("Propiedad no encontrada con el ID: " + id);
         }
-        return propiedadDTO;
+        return modelMapper.map(propiedadOptional.get(), PropiedadDTO.class);
     }
 
     public List<PropiedadDTO> get() {
