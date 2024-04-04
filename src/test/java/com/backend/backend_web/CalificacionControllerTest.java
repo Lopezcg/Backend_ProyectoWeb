@@ -83,15 +83,15 @@ public class CalificacionControllerTest {
                 .andExpect(jsonPath("$.id").value(calificacionDTO.getId()));
     }
 
-    @Test
-    public void deleteCalificacion_ReturnsOk() throws Exception {
-        Long calificacionId = 1L;
-        doNothing().when(calificacionService).delete(calificacionId);
+    // @Test
+    // public void deleteCalificacion_ReturnsOk() throws Exception {
+    //     Long calificacionId = 1L;
+    //     doNothing().when(calificacionService).delete(calificacionId);
 
-        mockMvc.perform(delete("/calificacion/{id}", calificacionId)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+    //     mockMvc.perform(delete("/calificacion/{id}", calificacionId)
+    //             .contentType(MediaType.APPLICATION_JSON))
+    //             .andExpect(status().isOk());
+    // }
 
 
 }

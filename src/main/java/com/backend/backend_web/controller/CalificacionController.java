@@ -47,20 +47,18 @@ public class CalificacionController {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CalificacionDTO> updateCalificacion(@PathVariable Long id, @RequestBody CalificacionDTO Calificacion) {
         try {
             if (Calificacion == null) {
                 return ResponseEntity.badRequest().build();
             }
-            Calificacion.setId(id); // Asegúrate de establecer el ID en el DTO antes de actualizar
             CalificacionDTO updatedCalificacion = service.update(Calificacion);
             return ResponseEntity.ok().body(updatedCalificacion);
         } catch (Exception e) {
             throw new RuntimeException(e.getLocalizedMessage());
         }
     }
-    
 
     @CrossOrigin
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
