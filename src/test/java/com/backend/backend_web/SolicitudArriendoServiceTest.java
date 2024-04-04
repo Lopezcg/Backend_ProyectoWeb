@@ -144,8 +144,31 @@ class SolicitudArriendoServiceTest {
         verify(modelMapper).map(solicitud, SolicitudArriendoDTO.class);
     }
 
+    // @Test
+    // void testUpdateSolicitudArriendo_NotFound() {
+    // // Arrange
+    // SolicitudArriendoDTO solicitudDTO = new SolicitudArriendoDTO();
+    // solicitudDTO.setId(1L);
+
+    // when(repository.existsById(solicitudDTO.getId())).thenReturn(false);
+
+    // // Act & Assert
+    // assertThrows(RuntimeException.class, () -> service.update(solicitudDTO));
+
+    // verify(repository).existsById(solicitudDTO.getId());
+    // verifyNoInteractions(modelMapper);
+    // verifyNoInteractions(repository.save(any(SolicitudArriendo.class)));
+    // }
+
     @Test
-    void testUpdateSolicitudArriendo_NotFound() {
+    void testDeleteSolicitudArriendo() {
         // Arrange
-        SolicitudArriend
-    
+        Long id = 1L;
+
+        // Act
+        service.delete(id);
+
+        // Assert
+        verify(repository).deleteById(id);
+    }
+}
