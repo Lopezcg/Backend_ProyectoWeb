@@ -30,52 +30,52 @@ import jakarta.persistence.EntityNotFoundException;
 class ArrendadorServiceTest {
     @Mock
     private ArrendadorRepository repository;
-    
+
     @Mock
     private ModelMapper modelMapper;
-    
+
     @InjectMocks
     private ArrendadorService service;
-    
+
     @Test
     public void testGetArrendadorWhenFound() {
         Long id = 1L;
-        Arrendador arrendador = new Arrendador(); 
-        ArrendadorDTO arrendadorDTO = new ArrendadorDTO(); 
-        
+        Arrendador arrendador = new Arrendador();
+        ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
+
         when(repository.findById(id)).thenReturn(Optional.of(arrendador));
         when(modelMapper.map(any(Arrendador.class), eq(ArrendadorDTO.class))).thenReturn(arrendadorDTO);
-        
+
         ArrendadorDTO result = service.get(id);
-        
+
         assertNotNull(result);
         verify(repository).findById(id);
         verify(modelMapper).map(arrendador, ArrendadorDTO.class);
     }
-    
+
     @Test
     public void testGetArrendadorWhenNotFound() {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
-        
+
         Exception exception = assertThrows(EntityNotFoundException.class, () -> {
             service.get(id);
         });
-        
+
         String expectedMessage = "Arrendador no encontrado con el ID: " + id;
         String actualMessage = exception.getMessage();
-        
+
         assertTrue(actualMessage.contains(expectedMessage));
         verify(repository).findById(id);
     }
 
     @Test
     void testGetAllArrendadores() {
-        Arrendador arrendador1 = new Arrendador(); 
-        Arrendador arrendador2 = new Arrendador(); 
+        Arrendador arrendador1 = new Arrendador();
+        Arrendador arrendador2 = new Arrendador();
         List<Arrendador> listaArrendadores = Arrays.asList(arrendador1, arrendador2);
-        ArrendadorDTO arrendadorDTO1 = new ArrendadorDTO(); 
-        ArrendadorDTO arrendadorDTO2 = new ArrendadorDTO(); 
+        ArrendadorDTO arrendadorDTO1 = new ArrendadorDTO();
+        ArrendadorDTO arrendadorDTO2 = new ArrendadorDTO();
 
         when(repository.findAll()).thenReturn(listaArrendadores);
         when(modelMapper.map(arrendador1, ArrendadorDTO.class)).thenReturn(arrendadorDTO1);
@@ -98,7 +98,7 @@ class ArrendadorServiceTest {
         // Crear la instancia de Arrendador con datos para la prueba
         Arrendador arrendador = new Arrendador();
         arrendador.setStatus(0); // Supongamos que esta es la forma de establecer el estado inicial
-        
+
         // Simular que el repositorio devuelve la entidad con un ID tras guardar
         Arrendador arrendadorConId = new Arrendador();
         arrendadorConId.setId(1L); // Establecer un ID como si fuera asignado por la base de datos
@@ -126,17 +126,15 @@ class ArrendadorServiceTest {
         Arrendador arrendador = new Arrendador();
         arrendador.setId(1L);
         when(repository.save(any(Arrendador.class))).thenReturn(arrendador);
-        
+
         // Act
         Arrendador result = service.save(arrendador);
-        
+
         // Assert
         assertNotNull(result);
         assertNotNull(result.getId());
         verify(repository).save(arrendador);
     }
-
-    
 
     @Test
     void delete_ShouldInvokeDeleteById() {
@@ -146,7 +144,7 @@ class ArrendadorServiceTest {
 
         // Act
         service.delete(id);
-        
+
         // Assert
         verify(repository).deleteById(id);
     }
