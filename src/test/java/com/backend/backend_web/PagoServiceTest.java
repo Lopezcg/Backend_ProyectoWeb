@@ -1,4 +1,4 @@
-package com.backend.backend_web.service;
+package com.backend.backend_web;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import com.backend.backend_web.dto.PagoDTO;
 import com.backend.backend_web.entity.Pago;
 import com.backend.backend_web.repository.PagoRepository;
+import com.backend.backend_web.service.PagoService;
 
 import java.util.Arrays;
 import java.util.List;

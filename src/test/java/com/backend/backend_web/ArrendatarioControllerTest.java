@@ -1,4 +1,4 @@
-package com.backend.backend_web.service;
+package com.backend.backend_web;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
