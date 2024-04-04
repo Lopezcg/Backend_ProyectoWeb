@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class PagoServiceTest {
+class PagoServiceTest {
 
     @Mock
     private PagoRepository repository;
@@ -33,12 +33,12 @@ public class PagoServiceTest {
     private PagoService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // Mockito annotations are initialized before each test
     }
 
     @Test
-    public void testGetByIdWhenFound() {
+    void testGetByIdWhenFound() {
         Long id = 1L;
         Pago pago = new Pago();
         PagoDTO pagoDTO = new PagoDTO();
@@ -52,7 +52,7 @@ public class PagoServiceTest {
     }
 
     @Test
-    public void testGetByIdWhenNotFound() {
+    void testGetByIdWhenNotFound() {
         Long id = 2L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
@@ -62,7 +62,7 @@ public class PagoServiceTest {
     }
 
     @Test
-    public void testGetAll() {
+    void testGetAll() {
         Pago pago1 = new Pago();
         Pago pago2 = new Pago();
         List<Pago> pagos = Arrays.asList(pago1, pago2);
@@ -80,7 +80,7 @@ public class PagoServiceTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         PagoDTO pagoDTO = new PagoDTO();
         Pago pago = new Pago();
         pago.setId(1L);
@@ -95,7 +95,7 @@ public class PagoServiceTest {
     }
 
     @Test
-    public void testUpdateWhenFound() {
+    void testUpdateWhenFound() {
         Long id = 1L;
         PagoDTO pagoDTO = new PagoDTO();
         pagoDTO.setId(id);
@@ -114,7 +114,7 @@ public class PagoServiceTest {
     }
 
     @Test
-    public void testUpdateWhenNotFound() {
+    void testUpdateWhenNotFound() {
         Long id = 2L;
         PagoDTO pagoDTO = new PagoDTO();
         pagoDTO.setId(id);
@@ -127,7 +127,7 @@ public class PagoServiceTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         Long id = 1L;
 
         doNothing().when(repository).deleteById(id);

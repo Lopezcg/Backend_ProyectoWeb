@@ -38,7 +38,7 @@ class ArrendadorServiceTest {
     private ArrendadorService service;
 
     @Test
-    public void testGetArrendadorWhenFound() {
+    void testGetArrendadorWhenFound() {
         Long id = 1L;
         Arrendador arrendador = new Arrendador();
         ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
@@ -54,7 +54,7 @@ class ArrendadorServiceTest {
     }
 
     @Test
-    public void testGetArrendadorWhenNotFound() {
+    void testGetArrendadorWhenNotFound() {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
@@ -184,28 +184,4 @@ class ArrendadorServiceTest {
         verify(modelMapper).map(arrendadorActualizado, ArrendadorDTO.class);
     }
 
-    // @Test
-    // void update_ShouldThrowRuntimeExceptionWhenNotFound() {
-    // // Arrange
-    // Long id = 1L;
-    // Arrendador arrendadorDTO = modelMapper.map(service.get(id),
-    // Arrendador.class);
-
-    // if (arrendadorDTO == null) {
-    // throw new RuntimeException("Arrendador no encontrado con el ID: " + id);
-    // }
-
-    // // Act & Assert
-    // EntityNotFoundException exception =
-    // assertThrows(EntityNotFoundException.class,
-    // () -> service.update(arrendadorDTO));
-
-    // String expectedMessage = "Arrendador no encontrado con el ID: " + id;
-    // String actualMessage = exception.getMessage();
-
-    // assertEquals(expectedMessage, actualMessage);
-
-    // // Verify
-    // verify(service).get(id);
-    // }
 }

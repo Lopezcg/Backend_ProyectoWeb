@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
-public class ArrendatarioControllerTest {
+class ArrendatarioControllerTest {
 
     private MockMvc mockMvc;
 
@@ -36,12 +36,12 @@ public class ArrendatarioControllerTest {
     private ArrendatarioController controller;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mockMvc = standaloneSetup(controller).build();
     }
 
     @Test
-    public void testCreateArrendatario() throws Exception {
+    void testCreateArrendatario() throws Exception {
         Arrendatario inputArrendatario = new Arrendatario();
         ArrendatarioDTO resultDTO = new ArrendatarioDTO();
         when(service.save(any(Arrendatario.class))).thenReturn(inputArrendatario);
