@@ -45,12 +45,13 @@ public class PagoService {
     }
 
     public PagoDTO update(PagoDTO pagoDTO) {
-        PagoDTO existingPagoDTO = get(pagoDTO.getId());
-        if (existingPagoDTO == null) {
+        if (pagoDTO == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        Pago pago = modelMapper.map(pagoDTO, Pago.class);
-        pago.setStatus(0);
+        Pago pago = modelMapper.map(pagoDTO.getId(), Pago.class);
+        pago.setBanco(pagoDTO.getBanco());
+        pago.setNumCuenta(pagoDTO.getNumCuenta());
+        pago.setValor(pagoDTO.getValor());
         pago = repository.save(pago);
         return modelMapper.map(pago, PagoDTO.class);
     }
