@@ -7,7 +7,7 @@ import com.backend.backend_web.entity.Pago;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class PagoTest {
+class PagoTest {
 
     @Test
     void testConstructorAndGettersSetters() {

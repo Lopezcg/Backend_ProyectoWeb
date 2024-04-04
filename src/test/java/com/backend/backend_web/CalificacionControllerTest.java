@@ -1,9 +1,9 @@
 package com.backend.backend_web;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import com.backend.backend_web.service.CalificacionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
-public class CalificacionControllerTest {
+class CalificacionControllerTest {
 
     private MockMvc mockMvc;
 
@@ -70,19 +70,18 @@ public class CalificacionControllerTest {
         verify(service).get();
     }
 
-
     // @Test
     // void testUpdateCalificacion() throws Exception {
-    //     CalificacionDTO calificacionDTO = new CalificacionDTO();
-    //     // Configura valores para calificacionDTO
-    //     when(service.update(any(CalificacionDTO.class))).thenReturn(calificacionDTO);
+    // CalificacionDTO calificacionDTO = new CalificacionDTO();
+    // // Configura valores para calificacionDTO
+    // when(service.update(any(CalificacionDTO.class))).thenReturn(calificacionDTO);
 
-    //     mockMvc.perform(put("/calificacion/{id}", 1L)
-    //             .contentType(MediaType.APPLICATION_JSON)
-    //             .content(objectMapper.writeValueAsString(calificacionDTO)))
-    //             .andExpect(status().isOk());
+    // mockMvc.perform(put("/calificacion/{id}", 1L)
+    // .contentType(MediaType.APPLICATION_JSON)
+    // .content(objectMapper.writeValueAsString(calificacionDTO)))
+    // .andExpect(status().isOk());
 
-    //     verify(service).update(any(CalificacionDTO.class));
+    // verify(service).update(any(CalificacionDTO.class));
     // }
 
     @Test
