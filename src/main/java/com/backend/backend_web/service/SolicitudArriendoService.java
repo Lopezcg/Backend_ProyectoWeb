@@ -51,7 +51,7 @@ public class SolicitudArriendoService {
         if (!repository.existsById(solicitudDTO.getId())) {
             throw new RuntimeException("Registro no encontrado");
         }
-        SolicitudArriendo solicitud = modelMapper.map(solicitudDTO, SolicitudArriendo.class);
+        SolicitudArriendo solicitud = modelMapper.map(get(solicitudDTO.getId()), SolicitudArriendo.class);
         solicitud.setEstado(true); // Adjust the status as necessary
         solicitud = repository.save(solicitud);
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);

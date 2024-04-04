@@ -53,12 +53,13 @@ public class ArrendadorService {
         if (test == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        test.setStatus(204);
+        test.setStatus(0);
         test.setApellido(arrendadorDTO.getApellido());
         test.setNombre(arrendadorDTO.getNombre());
         test.setCorreo(arrendadorDTO.getCorreo());
         test.setTelefono(arrendadorDTO.getTelefono());
         test.setContrasena(arrendadorDTO.getContrasena());
+        System.out.println(test);
         test = repository.save(test);
         ArrendadorDTO testDTO = modelMapper.map(test, ArrendadorDTO.class);
         return testDTO;
