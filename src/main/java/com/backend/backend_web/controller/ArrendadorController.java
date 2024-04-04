@@ -56,8 +56,13 @@ public class ArrendadorController {
     @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<ArrendadorDTO> readArrendador(@PathVariable Long id) {
-        return ResponseEntity.ok().body(service.get(id));
+        ArrendadorDTO arrendadorDTO = service.get(id);
+        if (arrendadorDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(arrendadorDTO);
     }
+
 
     @CrossOrigin
     @DeleteMapping("/{id}")
