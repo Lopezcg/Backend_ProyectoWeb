@@ -1,6 +1,13 @@
 package com.backend.backend_web;
 
 import org.junit.jupiter.api.Test;
+
+import com.backend.backend_web.entity.Arrendatario;
+import com.backend.backend_web.entity.Calificacion;
+import com.backend.backend_web.entity.Pago;
+import com.backend.backend_web.entity.Propiedad;
+import com.backend.backend_web.entity.SolicitudArriendo;
+
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
