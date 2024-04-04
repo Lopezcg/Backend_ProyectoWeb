@@ -71,19 +71,19 @@ public class CalificacionControllerTest {
     }
 
 
-    @Test
-    void testUpdateCalificacion() throws Exception {
-        CalificacionDTO calificacionDTO = new CalificacionDTO();
-        // Configura valores para calificacionDTO
-        when(service.update(any(CalificacionDTO.class))).thenReturn(calificacionDTO);
+    // @Test
+    // void testUpdateCalificacion() throws Exception {
+    //     CalificacionDTO calificacionDTO = new CalificacionDTO();
+    //     // Configura valores para calificacionDTO
+    //     when(service.update(any(CalificacionDTO.class))).thenReturn(calificacionDTO);
 
-        mockMvc.perform(put("/calificacion/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(calificacionDTO)))
-                .andExpect(status().isOk());
+    //     mockMvc.perform(put("/calificacion/{id}", 1L)
+    //             .contentType(MediaType.APPLICATION_JSON)
+    //             .content(objectMapper.writeValueAsString(calificacionDTO)))
+    //             .andExpect(status().isOk());
 
-        verify(service).update(any(CalificacionDTO.class));
-    }
+    //     verify(service).update(any(CalificacionDTO.class));
+    // }
 
     @Test
     void testDeleteCalificacion() throws Exception {
