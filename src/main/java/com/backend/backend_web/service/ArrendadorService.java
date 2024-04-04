@@ -53,7 +53,7 @@ public class ArrendadorService {
         if (test == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        test.setStatus(0);
+        test.setStatus(204);
         test.setApellido(arrendadorDTO.getApellido());
         test.setNombre(arrendadorDTO.getNombre());
         test.setCorreo(arrendadorDTO.getCorreo());
