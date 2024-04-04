@@ -85,10 +85,13 @@ public class CalificacionControllerTest {
 
     @Test
     public void deleteCalificacion_ReturnsOk() throws Exception {
-        doNothing().when(calificacionService).delete(calificacionDTO.getId());
+        Long calificacionId = 1L;
+        doNothing().when(calificacionService).delete(calificacionId);
 
-        mockMvc.perform(delete("/calificacion/{id}", calificacionDTO.getId())
+        mockMvc.perform(delete("/calificacion/{id}", calificacionId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
+
 }
