@@ -48,12 +48,15 @@ public class PropiedadService {
     }
 
     public PropiedadDTO update(PropiedadDTO propiedadDTO) {
-        propiedadDTO = get(propiedadDTO.getId());
         if (propiedadDTO == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        Propiedad propiedad = modelMapper.map(propiedadDTO, Propiedad.class);
-        propiedad.setStatus(0);
+        Propiedad propiedad = modelMapper.map(get(propiedadDTO.getId()), Propiedad.class);
+        propiedad.setNombre(propiedadDTO.getNombre());
+        propiedad.setDescripcion(propiedadDTO.getDescripcion());
+        propiedad.setValor(propiedadDTO.getValor());
+        propiedad.setEstado(propiedadDTO.getEstado());
+
         propiedad = repository.save(propiedad);
         propiedadDTO = modelMapper.map(propiedad, PropiedadDTO.class);
         return propiedadDTO;
