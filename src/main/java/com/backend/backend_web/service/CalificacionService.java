@@ -15,7 +15,8 @@ import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.repository.CalificacionRepository;
 
 @Service
-public class CalificacionService {
+public
+class CalificacionService {
     @Autowired
     CalificacionRepository repository;
     @Autowired
