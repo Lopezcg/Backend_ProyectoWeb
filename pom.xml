@@ -16,9 +16,9 @@
 	<properties>
 	<!-- Configura las propiedades de SonarQube -->
 		<sonar.host.url>http://sonarjaveriana.dynaco.co/</sonar.host.url>
-		<sonar.login>sqp_78906ccad1e5811a8df5eabd2f5b18d22a1c2a94</sonar.login>
-		<sonar.projectKey>ProyectoWeb_2_6</sonar.projectKey> 
-		<sonar.projectName>ProyectoWeb_2_6</sonar.projectName>
+		<sonar.login>sqp_17ea7501da19e90bed31f5302170da45e2ffcfcc</sonar.login>
+		<sonar.projectKey>Grupo_2_6</sonar.projectKey> 
+		<sonar.projectName>Grupo_2_6</sonar.projectName>
 		<sonar.projectVersion>1.0</sonar.projectVersion>
 		<java.version>17</java.version>
 		
@@ -58,9 +58,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.26</version> 
 		</dependency>
-
-		
-		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version> <!-- O cualquier otra versión de JUnit que desees utilizar -->
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -82,6 +85,27 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.7.0.1746</version>
         	</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.8</version> <!-- Usa la versión más reciente -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
