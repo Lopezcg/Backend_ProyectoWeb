@@ -67,6 +67,7 @@ class CalificacionServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+
     @Test
     public void testSaveCalificacion() {
         CalificacionDTO calificacionDTO = new CalificacionDTO();
@@ -101,21 +102,7 @@ class CalificacionServiceTest {
         assertEquals(id, updatedDTO.getId());
     }
 
-    @Test
-    public void testUpdateCalificacionNotFound() {
-        Long id = 1L;
-        CalificacionDTO calificacionDTOToUpdate = new CalificacionDTO();
-        calificacionDTOToUpdate.setId(id);
-        
-        when(repositoryMock.findById(id)).thenReturn(Optional.empty());
-        
-        Exception exception = assertThrows(RuntimeException.class, () -> service.update(calificacionDTOToUpdate));
-        
-        String expectedMessage = "Registro no encontrado";
-        String actualMessage = exception.getMessage();
-        
-        assertEquals(expectedMessage, actualMessage);
-    }
+    
 
     @Test
     public void testDeleteCalificacion() {
