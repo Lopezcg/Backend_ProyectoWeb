@@ -55,6 +55,7 @@ class CalificacionService {
             throw new RuntimeException("Registro no encontrado");
         }
         Calificacion Calificacion = modelMapper.map(get(CalificacionDTO.getId()), Calificacion.class);
+       Calificacion.setStatus(0);
         Calificacion.setComentario(CalificacionDTO.getComentario());
         Calificacion.setPuntuacion(CalificacionDTO.getPuntuacion());
         
