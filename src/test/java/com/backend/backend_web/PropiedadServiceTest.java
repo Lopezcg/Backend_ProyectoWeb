@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PropiedadServiceTest {
+class PropiedadServiceTest {
 
     @Mock
     private PropiedadRepository propiedadRepository;
@@ -37,7 +37,7 @@ public class PropiedadServiceTest {
     private PropiedadDTO propiedadDTO;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         propiedad = new Propiedad();
         propiedad.setId(1L);
         propiedad.setNombre("Casa Test");
@@ -48,7 +48,7 @@ public class PropiedadServiceTest {
     }
 
     @Test
-    public void whenGetById_thenPropiedadDTOShouldBeReturned() {
+    void whenGetById_thenPropiedadDTOShouldBeReturned() {
         when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
         when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
@@ -59,7 +59,7 @@ public class PropiedadServiceTest {
     }
 
     @Test
-    public void whenGetById_thenThrowEntityNotFoundException() {
+    void whenGetById_thenThrowEntityNotFoundException() {
         when(propiedadRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> propiedadService.get(1L))
@@ -68,7 +68,7 @@ public class PropiedadServiceTest {
     }
 
     @Test
-    public void whenGetAll_thenPropiedadDTOListShouldBeReturned() {
+    void whenGetAll_thenPropiedadDTOListShouldBeReturned() {
         when(propiedadRepository.findAll()).thenReturn(Arrays.asList(propiedad));
         when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
@@ -79,7 +79,7 @@ public class PropiedadServiceTest {
     }
 
     @Test
-    public void whenSave_thenPropiedadDTOShouldBeReturned() {
+    void whenSave_thenPropiedadDTOShouldBeReturned() {
         lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
         lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
         lenient().when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
@@ -91,7 +91,7 @@ public class PropiedadServiceTest {
     }
 
     @Test
-    public void whenUpdate_thenPropiedadDTOShouldBeReturned() {
+    void whenUpdate_thenPropiedadDTOShouldBeReturned() {
         lenient().when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
         lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
         lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
@@ -104,7 +104,7 @@ public class PropiedadServiceTest {
     }
 
     @Test
-    public void whenDelete_thenRepositoryShouldBeCalled() {
+    void whenDelete_thenRepositoryShouldBeCalled() {
         doNothing().when(propiedadRepository).deleteById(1L);
 
         propiedadService.delete(1L);

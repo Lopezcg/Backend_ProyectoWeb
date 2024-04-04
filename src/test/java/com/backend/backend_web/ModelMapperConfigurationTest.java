@@ -5,10 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ModelMapperConfigurationTest {
+class ModelMapperConfigurationTest {
 
     @Test
-    public void modelMapperBean_ShouldBeConfiguredWithStrictMatchingStrategy() {
+    void modelMapperBean_ShouldBeConfiguredWithStrictMatchingStrategy() {
         // Configuración
         ModelMapperConfiguration configuration = new ModelMapperConfiguration();
 
