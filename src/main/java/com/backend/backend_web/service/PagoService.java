@@ -49,6 +49,7 @@ public class PagoService {
             throw new RuntimeException("Registro no encontrado");
         }
         Pago pago = modelMapper.map(pagoDTO.getId(), Pago.class);
+        pago.setStatus(0);
         pago.setBanco(pagoDTO.getBanco());
         pago.setNumCuenta(pagoDTO.getNumCuenta());
         pago.setValor(pagoDTO.getValor());
