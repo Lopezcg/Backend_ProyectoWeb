@@ -43,12 +43,12 @@ public class PropiedadServiceTest {
         propiedad = new Propiedad();
         propiedad.setId(1L);
         propiedad.setNombre("Casa Test");
-        // Configure más atributos según sea necesario...
+        // Agrega más configuraciones si es necesario...
 
         propiedadDTO = new PropiedadDTO();
         propiedadDTO.setId(propiedad.getId());
         propiedadDTO.setNombre(propiedad.getNombre());
-        // Copie los atributos necesarios del objeto entidad al DTO...
+        // Copia los atributos necesarios del objeto entidad al DTO...
     }
 
     @Test
@@ -84,27 +84,34 @@ public class PropiedadServiceTest {
 
     @Test
     public void whenSave_thenPropiedadDTOShouldBeReturned() {
+        PropiedadDTO newPropiedadDTO = new PropiedadDTO();
+        newPropiedadDTO.setNombre("Casa Test");
+
         when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
         when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
         when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
-        PropiedadDTO saved = propiedadService.save(new PropiedadDTO());
+        PropiedadDTO result = propiedadService.save(newPropiedadDTO);
 
-        assertThat(saved).isNotNull();
-        assertThat(saved.getId()).isEqualTo(propiedad.getId());
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(propiedad.getId());
     }
 
     @Test
     public void whenUpdate_thenPropiedadDTOShouldBeReturned() {
+        PropiedadDTO updatePropiedadDTO = new PropiedadDTO();
+        updatePropiedadDTO.setId(1L);
+        updatePropiedadDTO.setNombre("Casa Actualizada");
+
         when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
         when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
         when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
-        when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
+        when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(updatePropiedadDTO);
 
-        PropiedadDTO updated = propiedadService.update(propiedadDTO);
+        PropiedadDTO updated = propiedadService.update(updatePropiedadDTO);
 
         assertThat(updated).isNotNull();
-        assertThat(updated.getId()).isEqualTo(propiedadDTO.getId());
+        assertThat(updated.getNombre()).isEqualTo("Casa Actualizada");
     }
 
     @Test
