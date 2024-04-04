@@ -217,4 +217,26 @@ class SolicitudArriendoControllerTest {
 
         verify(service).delete(id);
     }
+
+    @Test
+    void testCreateSolicitudArriendo_Exception() {
+        // Arrange
+        SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();
+        when(service.save(any(SolicitudArriendoDTO.class))).thenThrow(new RuntimeException("Error saving solicitud"));
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> controller.createSolicitudArriendo(solicitudArriendoDTO));
+    }
+
+    @Test
+    void testUpdateSolicitudArriendo_Exception() {
+        // Arrange
+        Long id = 1L;
+        SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();
+        solicitudArriendoDTO.setId(id);
+        when(service.update(eq(solicitudArriendoDTO))).thenThrow(new RuntimeException("Error updating solicitud"));
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> controller.updateSolicitudArriendo(id, solicitudArriendoDTO));
+    }
 }
