@@ -15,18 +15,19 @@ import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.repository.CalificacionRepository;
 
 @Service
+public
 class CalificacionService {
     @Autowired
     CalificacionRepository repository;
     @Autowired
     ModelMapper modelMapper;
 
-    CalificacionService(CalificacionRepository repository, ModelMapper modelMapper) {
+    public CalificacionService(CalificacionRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
     }
 
-    CalificacionDTO get(Long id) {
+    public CalificacionDTO get(Long id) {
         Optional<Calificacion> calificacionOptional = repository.findById(id);
         if (!calificacionOptional.isPresent()) {
             throw new NoSuchElementException("No se encontró una Calificación con el ID: " + id);
@@ -34,14 +35,14 @@ class CalificacionService {
         return modelMapper.map(calificacionOptional.get(), CalificacionDTO.class);
     }
 
-    List<CalificacionDTO> get() {
+    public List<CalificacionDTO> get() {
         List<Calificacion> Calificaciones = (List<Calificacion>) repository.findAll();
         List<CalificacionDTO> CalificacionesDTO = Calificaciones.stream()
                 .map(Calificacion -> modelMapper.map(Calificacion, CalificacionDTO.class)).collect(Collectors.toList());
         return CalificacionesDTO;
     }
 
-    CalificacionDTO save(CalificacionDTO CalificacionDTO) {
+    public CalificacionDTO save(CalificacionDTO CalificacionDTO) {
         Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
         Calificacion.setStatus(0); // Replace Status.ACTIVE with the appropriate value
         Calificacion = repository.save(Calificacion);
@@ -49,7 +50,7 @@ class CalificacionService {
         return CalificacionDTO;
     }
 
-    CalificacionDTO update(CalificacionDTO CalificacionDTO) {
+    public CalificacionDTO update(CalificacionDTO CalificacionDTO) {
         CalificacionDTO = get(CalificacionDTO.getId());
         if (CalificacionDTO == null) {
             throw new RuntimeException("Registro no encontrado");
@@ -61,7 +62,7 @@ class CalificacionService {
         return CalificacionDTO;
     }
 
-    void delete(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
