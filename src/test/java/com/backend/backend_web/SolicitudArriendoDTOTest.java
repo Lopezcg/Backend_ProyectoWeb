@@ -1,5 +1,4 @@
 package com.backend.backend_web;
-package com.backend.backend_web.dto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +6,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.entity.Pago;
