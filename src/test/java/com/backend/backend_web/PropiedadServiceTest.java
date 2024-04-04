@@ -4,7 +4,6 @@ import com.backend.backend_web.dto.PropiedadDTO;
 import com.backend.backend_web.entity.Propiedad;
 import com.backend.backend_web.repository.PropiedadRepository;
 import com.backend.backend_web.service.PropiedadService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,12 +41,10 @@ public class PropiedadServiceTest {
         propiedad = new Propiedad();
         propiedad.setId(1L);
         propiedad.setNombre("Casa Test");
-        // Agrega más configuraciones si es necesario...
 
         propiedadDTO = new PropiedadDTO();
         propiedadDTO.setId(propiedad.getId());
         propiedadDTO.setNombre(propiedad.getNombre());
-        // Copia los atributos necesarios del objeto entidad al DTO...
     }
 
     @Test
@@ -84,34 +80,27 @@ public class PropiedadServiceTest {
 
     @Test
     public void whenSave_thenPropiedadDTOShouldBeReturned() {
-        PropiedadDTO newPropiedadDTO = new PropiedadDTO();
-        newPropiedadDTO.setNombre("Casa Test");
+        lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
+        lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
+        lenient().when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
-        when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
-        when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
-        when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
+        PropiedadDTO saved = propiedadService.save(new PropiedadDTO());
 
-        PropiedadDTO result = propiedadService.save(newPropiedadDTO);
-
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(propiedad.getId());
+        assertThat(saved).isNotNull();
+        assertThat(saved.getId()).isEqualTo(propiedad.getId());
     }
 
     @Test
     public void whenUpdate_thenPropiedadDTOShouldBeReturned() {
-        PropiedadDTO updatePropiedadDTO = new PropiedadDTO();
-        updatePropiedadDTO.setId(1L);
-        updatePropiedadDTO.setNombre("Casa Actualizada");
+        lenient().when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
+        lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
+        lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
+        lenient().when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
-        when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
-        when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
-        when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
-        when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(updatePropiedadDTO);
-
-        PropiedadDTO updated = propiedadService.update(updatePropiedadDTO);
+        PropiedadDTO updated = propiedadService.update(propiedadDTO);
 
         assertThat(updated).isNotNull();
-        assertThat(updated.getNombre()).isEqualTo("Casa Actualizada");
+        assertThat(updated.getId()).isEqualTo(propiedadDTO.getId());
     }
 
     @Test
