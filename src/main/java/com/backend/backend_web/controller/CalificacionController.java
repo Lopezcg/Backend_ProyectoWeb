@@ -1,8 +1,5 @@
 package com.backend.backend_web.controller;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +39,20 @@ public class CalificacionController {
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<CalificacionDTO>> readCalificacion() {
+    public ResponseEntity<Iterable<CalificacionDTO>> readAllCalificacion() {
         return ResponseEntity.ok().body(service.get());
     }
 
     @CrossOrigin
+    @GetMapping("/{id}")
+    public ResponseEntity<CalificacionDTO> readCalificacion(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.get(id));
+    }
+
+    @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> updateCalificacion(@PathVariable Long id, @RequestBody CalificacionDTO Calificacion) {
+    public ResponseEntity<CalificacionDTO> updateCalificacion(@PathVariable Long id,
+            @RequestBody CalificacionDTO Calificacion) {
         try {
             if (Calificacion == null) {
                 return ResponseEntity.badRequest().build();
@@ -61,7 +65,7 @@ public class CalificacionController {
     }
 
     @CrossOrigin
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCalificacion(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();

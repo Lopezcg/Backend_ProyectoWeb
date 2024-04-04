@@ -1,7 +1,5 @@
 package com.backend.backend_web;
 
-package com.backend.backend_web.dto;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
