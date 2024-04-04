@@ -51,12 +51,13 @@ class CalificacionService {
     }
 
     public CalificacionDTO update(CalificacionDTO CalificacionDTO) {
-        CalificacionDTO = get(CalificacionDTO.getId());
         if (CalificacionDTO == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
-        Calificacion.setStatus(0);
+        Calificacion Calificacion = modelMapper.map(get(CalificacionDTO.getId()), Calificacion.class);
+        Calificacion.setComentario(CalificacionDTO.getComentario());
+        Calificacion.setPuntuacion(CalificacionDTO.getPuntuacion());
+        
         Calificacion = repository.save(Calificacion);
         CalificacionDTO = modelMapper.map(Calificacion, CalificacionDTO.class);
         return CalificacionDTO;
