@@ -144,7 +144,8 @@ class SolicitudArriendoServiceTest {
         verify(modelMapper).map(solicitud, SolicitudArriendoDTO.class);
     }
 
-@Test
+    @Test
     void testUpdateSolicitudArriendo_NotFound() {
         // Arrange
         SolicitudArriend
+    
