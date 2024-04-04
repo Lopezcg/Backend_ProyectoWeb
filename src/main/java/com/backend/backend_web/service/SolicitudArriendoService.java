@@ -9,12 +9,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
+import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.entity.SolicitudArriendo;
 import com.backend.backend_web.repository.SolicitudArrendamientoRepository;
+import com.backend.backend_web.service.CalificacionService;
 
 @Service
 public class SolicitudArriendoService {
+
+    @Autowired
+    private CalificacionService calificacionService;
 
     @Autowired
     private SolicitudArrendamientoRepository repository;
@@ -42,6 +48,7 @@ public class SolicitudArriendoService {
     public SolicitudArriendoDTO save(SolicitudArriendoDTO solicitudDTO) {
         SolicitudArriendo solicitud = modelMapper.map(solicitudDTO, SolicitudArriendo.class);
         solicitud.setEstado(true); // Assuming true is for active status, adjust accordingly
+        solicitud.setStatus(0); // Assuming 0 is for active status, adjust accordingly
         solicitud = repository.save(solicitud);
         solicitudDTO.setId(solicitud.getId());
         return solicitudDTO;
