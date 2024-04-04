@@ -1,15 +1,19 @@
 package com.backend.backend_web;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -19,6 +23,7 @@ import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.service.CalificacionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@ExtendWith(MockitoExtension.class)
 public class CalificacionControllerTest {
 
     private MockMvc mockMvc;
@@ -52,8 +57,11 @@ public class CalificacionControllerTest {
 
     @Test
     void testReadCalificacion() throws Exception {
-        Iterable<CalificacionDTO> calificaciones = mock(Iterable.class); // Simula tu lista de calificaciones
-        when(service.get()).thenReturn((List<CalificacionDTO>) calificaciones);
+        List<CalificacionDTO> calificaciones = new ArrayList<CalificacionDTO>();
+        // Agrega objetos CalificacionDTO a la lista si es necesario
+        // Ejemplo: calificaciones.add(new CalificacionDTO());
+
+        when(service.get()).thenReturn(calificaciones);
 
         mockMvc.perform(get("/calificacion")
                 .accept(MediaType.APPLICATION_JSON))
@@ -61,6 +69,7 @@ public class CalificacionControllerTest {
 
         verify(service).get();
     }
+
 
     @Test
     void testUpdateCalificacion() throws Exception {
