@@ -148,4 +148,64 @@ class ArrendadorServiceTest {
         // Assert
         verify(repository).deleteById(id);
     }
+
+    @Test
+    void update_ShouldUpdateArrendador() {
+        // Arrange
+        Long id = 1L;
+        Arrendador arrendadorOriginal = new Arrendador();
+        arrendadorOriginal.setId(id);
+        arrendadorOriginal.setNombre("Nombre Original");
+
+        ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
+        arrendadorDTO.setId(id);
+        arrendadorDTO.setNombre("Nombre Nuevo");
+
+        Arrendador arrendadorActualizado = new Arrendador();
+        arrendadorActualizado.setId(id);
+        arrendadorActualizado.setNombre("Nombre Nuevo");
+
+        when(repository.findById(id)).thenReturn(Optional.of(arrendadorOriginal));
+        when(modelMapper.map(any(ArrendadorDTO.class), eq(Arrendador.class))).thenReturn(arrendadorOriginal);
+        when(repository.save(any(Arrendador.class))).thenReturn(arrendadorActualizado);
+        when(modelMapper.map(any(Arrendador.class), eq(ArrendadorDTO.class))).thenReturn(arrendadorDTO);
+
+        // Act
+        ArrendadorDTO result = service.update(arrendadorActualizado);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals("Nombre Nuevo", result.getNombre());
+
+        // Verificar que el repositorio fue llamado correctamente
+        verify(repository).findById(id);
+        verify(repository).save(arrendadorOriginal);
+        verify(modelMapper).map(arrendadorDTO, Arrendador.class);
+        verify(modelMapper).map(arrendadorActualizado, ArrendadorDTO.class);
+    }
+
+    // @Test
+    // void update_ShouldThrowRuntimeExceptionWhenNotFound() {
+    // // Arrange
+    // Long id = 1L;
+    // Arrendador arrendadorDTO = modelMapper.map(service.get(id),
+    // Arrendador.class);
+
+    // if (arrendadorDTO == null) {
+    // throw new RuntimeException("Arrendador no encontrado con el ID: " + id);
+    // }
+
+    // // Act & Assert
+    // EntityNotFoundException exception =
+    // assertThrows(EntityNotFoundException.class,
+    // () -> service.update(arrendadorDTO));
+
+    // String expectedMessage = "Arrendador no encontrado con el ID: " + id;
+    // String actualMessage = exception.getMessage();
+
+    // assertEquals(expectedMessage, actualMessage);
+
+    // // Verify
+    // verify(service).get(id);
+    // }
 }
