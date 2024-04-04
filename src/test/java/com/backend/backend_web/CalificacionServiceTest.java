@@ -33,14 +33,14 @@ class CalificacionServiceTest {
     private CalificacionService service;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         repositoryMock = mock(CalificacionRepository.class);
         modelMapperMock = mock(ModelMapper.class);
         service = new CalificacionService(repositoryMock, modelMapperMock);
     }
 
     @Test
-    public void testGetCalificacionExists() {
+    void testGetCalificacionExists() {
         Long id = 1L;
         Calificacion calificacion = new Calificacion();
         CalificacionDTO expectedDTO = new CalificacionDTO();
@@ -55,7 +55,7 @@ class CalificacionServiceTest {
     }
 
     @Test
-    public void testGetCalificacionNotFound() {
+    void testGetCalificacionNotFound() {
         Long id = 2L;
         when(repositoryMock.findById(id)).thenReturn(Optional.empty());
         
@@ -69,7 +69,7 @@ class CalificacionServiceTest {
 
 
     @Test
-    public void testSaveCalificacion() {
+    void testSaveCalificacion() {
         CalificacionDTO calificacionDTO = new CalificacionDTO();
         Calificacion calificacion = new Calificacion();
         calificacion.setId(1L);
@@ -84,7 +84,7 @@ class CalificacionServiceTest {
     }
 
     @Test
-    public void testUpdateCalificacionExists() {
+    void testUpdateCalificacionExists() {
         Long id = 1L;
         CalificacionDTO calificacionDTOToUpdate = new CalificacionDTO();
         calificacionDTOToUpdate.setId(id);
@@ -105,7 +105,7 @@ class CalificacionServiceTest {
     
 
     @Test
-    public void testDeleteCalificacion() {
+    void testDeleteCalificacion() {
         Long id = 1L;
         doNothing().when(repositoryMock).deleteById(id);
         
