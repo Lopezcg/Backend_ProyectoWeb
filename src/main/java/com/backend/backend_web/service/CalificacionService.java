@@ -21,6 +21,11 @@ public class CalificacionService {
     @Autowired
     ModelMapper modelMapper;
 
+    public CalificacionService(CalificacionRepository repository, ModelMapper modelMapper) {
+        this.repository = repository;
+        this.modelMapper = modelMapper;
+    }
+
     public CalificacionDTO get(Long id) {
         Optional<Calificacion> calificacionOptional = repository.findById(id);
         if (!calificacionOptional.isPresent()) {
