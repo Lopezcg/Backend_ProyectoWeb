@@ -77,5 +77,12 @@ public class ArrendatarioController {
             throw new RuntimeException(e);
         }
     }
+    @CrossOrigin
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendatarioDTO> loginArrendador(@RequestBody Arrendatario arrendatario) {
+        return service.login(arrendatario.getCorreo(), arrendatario.getContrasena())
+                      .map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+    }
 
 }
