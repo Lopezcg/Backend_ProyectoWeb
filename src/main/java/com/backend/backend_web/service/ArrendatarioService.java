@@ -65,7 +65,6 @@ public class ArrendatarioService {
     }
     public Optional<ArrendatarioDTO> login(String correo, String contrasena) {
         Optional<Arrendatario> arrendatario = repository.findByCorreoAndContrasena(correo, contrasena);
-        System.out.println(arrendatario);
         return arrendatario.map(a -> modelMapper.map(a, ArrendatarioDTO.class));
     }
 

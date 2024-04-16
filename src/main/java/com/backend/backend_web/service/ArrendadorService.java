@@ -64,9 +64,7 @@ public class ArrendadorService {
         repository.deleteById(id);
     }
     public Optional<ArrendadorDTO> login(String correo, String contrasena) {
-        System.out.println(correo + " " + contrasena);
         Optional<Arrendador> arrendador = repository.findByCorreoAndContrasena(correo, contrasena);
-        System.out.println(arrendador);
         return arrendador.map(a -> modelMapper.map(a, ArrendadorDTO.class));
     }
     
