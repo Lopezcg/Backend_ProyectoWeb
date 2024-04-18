@@ -1,15 +1,12 @@
 package com.backend.backend_web.service;
 
-
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 import com.backend.backend_web.dto.PagoDTO;
 import com.backend.backend_web.entity.Pago;
@@ -17,26 +14,26 @@ import com.backend.backend_web.repository.PagoRepository;
 
 @Service
 public class PagoService {
-@Autowired
-    PagoRepository repository;
+
+    private final PagoRepository repository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    ModelMapper modelMapper;
+    public PagoService(PagoRepository repository, ModelMapper modelMapper) {
+        this.repository = repository;
+        this.modelMapper = modelMapper;
+    }
 
     public PagoDTO get(Long id) {
         Optional<Pago> pagoOptional = repository.findById(id);
-        PagoDTO pagoDTO = null;
-        if (pagoOptional.isPresent()) { // Mejorado para usar isPresent()
-            pagoDTO = modelMapper.map(pagoOptional.get(), PagoDTO.class);
-        }
-        return pagoDTO;
+        return pagoOptional.map(pago -> modelMapper.map(pago, PagoDTO.class)).orElse(null);
     }
 
     public List<PagoDTO> get() {
         List<Pago> pagos = (List<Pago>) repository.findAll();
-        List<PagoDTO> pagosDTO = pagos.stream()
-                .map(pago -> modelMapper.map(pago, PagoDTO.class)).collect(Collectors.toList());
-        return pagosDTO;
+        return pagos.stream()
+                .map(pago -> modelMapper.map(pago, PagoDTO.class))
+                .collect(Collectors.toList());
     }
 
     public PagoDTO save(PagoDTO pagoDTO) {
@@ -47,20 +44,20 @@ public class PagoService {
         return pagoDTO;
     }
 
-    public PagoDTO update(PagoDTO pagoDTO) throws ValidationException {
-        PagoDTO existingPagoDTO = get(pagoDTO.getId());
-        if (existingPagoDTO == null) {
+    public PagoDTO update(PagoDTO pagoDTO) {
+        if (pagoDTO == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        Pago pago = modelMapper.map(pagoDTO, Pago.class);
+        Pago pago = modelMapper.map(pagoDTO.getId(), Pago.class);
         pago.setStatus(0);
+        pago.setBanco(pagoDTO.getBanco());
+        pago.setNumCuenta(pagoDTO.getNumCuenta());
+        pago.setValor(pagoDTO.getValor());
         pago = repository.save(pago);
-        pagoDTO = modelMapper.map(pago, PagoDTO.class);
-        return pagoDTO;
+        return modelMapper.map(pago, PagoDTO.class);
     }
 
     public void delete(Long id) {
         repository.deleteById(id);
     }
 }
-

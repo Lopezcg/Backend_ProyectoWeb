@@ -1,6 +1,5 @@
 package com.backend.backend_web.entity;
 
-
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -18,7 +17,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
@@ -33,7 +31,4 @@ public class Calificacion {
     private String comentario;
     private float puntuacion;
     private Integer status = 0; // Valor predeterminado para el atributo status.
-
-
-
 }

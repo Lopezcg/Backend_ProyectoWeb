@@ -58,7 +58,7 @@ public class SolicitudArriendoController {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}" ,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(@PathVariable Long id, @RequestBody SolicitudArriendoDTO solicitudArriendo) {
         try {
             if (solicitudArriendo == null || !id.equals(solicitudArriendo.getId())) {

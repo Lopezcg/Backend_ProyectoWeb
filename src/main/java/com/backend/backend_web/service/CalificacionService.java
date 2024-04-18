@@ -1,6 +1,7 @@
 package com.backend.backend_web.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import java.util.stream.Collectors;
@@ -14,19 +15,24 @@ import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.repository.CalificacionRepository;
 
 @Service
-public class CalificacionService {
+public
+class CalificacionService {
     @Autowired
     CalificacionRepository repository;
     @Autowired
     ModelMapper modelMapper;
 
+    public CalificacionService(CalificacionRepository repository, ModelMapper modelMapper) {
+        this.repository = repository;
+        this.modelMapper = modelMapper;
+    }
+
     public CalificacionDTO get(Long id) {
-        Optional<Calificacion> CalificacionOptional = repository.findById(id);
-        CalificacionDTO CalificacionDTO = null;
-        if (CalificacionOptional != null) {
-            CalificacionDTO = modelMapper.map(CalificacionOptional.get(), CalificacionDTO.class);
+        Optional<Calificacion> calificacionOptional = repository.findById(id);
+        if (!calificacionOptional.isPresent()) {
+            throw new NoSuchElementException("No se encontró una Calificación con el ID: " + id);
         }
-        return CalificacionDTO;
+        return modelMapper.map(calificacionOptional.get(), CalificacionDTO.class);
     }
 
     public List<CalificacionDTO> get() {
@@ -45,12 +51,14 @@ public class CalificacionService {
     }
 
     public CalificacionDTO update(CalificacionDTO CalificacionDTO) {
-        CalificacionDTO = get(CalificacionDTO.getId());
         if (CalificacionDTO == null) {
             throw new RuntimeException("Registro no encontrado");
         }
-        Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
-        Calificacion.setStatus(0);
+        Calificacion Calificacion = modelMapper.map(get(CalificacionDTO.getId()), Calificacion.class);
+       Calificacion.setStatus(0);
+        Calificacion.setComentario(CalificacionDTO.getComentario());
+        Calificacion.setPuntuacion(CalificacionDTO.getPuntuacion());
+        
         Calificacion = repository.save(Calificacion);
         CalificacionDTO = modelMapper.map(Calificacion, CalificacionDTO.class);
         return CalificacionDTO;
@@ -59,6 +67,5 @@ public class CalificacionService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
-
 
 }
