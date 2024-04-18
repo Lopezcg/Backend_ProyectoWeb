@@ -3,6 +3,8 @@ package com.backend.backend_web.controller;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +85,13 @@ public class ArrendadorController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    @CrossOrigin
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendadorDTO> loginArrendador(@RequestBody Arrendador arrendador) {
+        return service.login(arrendador.getCorreo(), arrendador.getContrasena())
+                      .map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
 }

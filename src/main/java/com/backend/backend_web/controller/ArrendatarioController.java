@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @RequestMapping("/arrendatario")
@@ -76,6 +77,13 @@ public class ArrendatarioController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    @CrossOrigin
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendatarioDTO> loginArrendador(@RequestBody Arrendatario arrendatario) {
+        return service.login(arrendatario.getCorreo(), arrendatario.getContrasena())
+                      .map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
 }

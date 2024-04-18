@@ -41,9 +41,8 @@ public class ArrendadorService {
     }
 
     public Arrendador save(Arrendador arrendadorDTO) {
-        Arrendador arrendador = modelMapper.map(arrendadorDTO, Arrendador.class);
+        Arrendador arrendador = modelMapper.map(repository.save(arrendadorDTO), Arrendador.class);
         arrendador.setStatus(0); // Replace Status.ACTIVE with the appropriate value
-        arrendador = repository.save(arrendador);
         arrendadorDTO.setId(arrendador.getId());
         return arrendadorDTO;
     }
@@ -68,5 +67,10 @@ public class ArrendadorService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+    public Optional<ArrendadorDTO> login(String correo, String contrasena) {
+        Optional<Arrendador> arrendador = repository.findByCorreoAndContrasena(correo, contrasena);
+        return arrendador.map(a -> modelMapper.map(a, ArrendadorDTO.class));
+    }
+    
 
 }

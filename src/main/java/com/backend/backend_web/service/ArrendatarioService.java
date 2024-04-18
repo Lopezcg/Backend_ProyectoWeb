@@ -64,5 +64,9 @@ public class ArrendatarioService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+    public Optional<ArrendatarioDTO> login(String correo, String contrasena) {
+        Optional<Arrendatario> arrendatario = repository.findByCorreoAndContrasena(correo, contrasena);
+        return arrendatario.map(a -> modelMapper.map(a, ArrendatarioDTO.class));
+    }
 
 }
