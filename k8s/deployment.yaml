@@ -16,7 +16,7 @@ spec:
       imagePullSecrets:
          - name: github-secret
       containers:
-         - name: backend2_6
+         - name: backend2-6
            image: localhost:5000/backend2-6:latest
            ports:
               - containerPort: 8080
