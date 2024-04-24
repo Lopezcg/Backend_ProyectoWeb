@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/arrendador")
 @RestController
 public class ArrendadorController {
+    @Autowired
     private final ArrendadorService service;
     private final ModelMapper modelMapper;
 
@@ -65,7 +66,6 @@ public class ArrendadorController {
         return ResponseEntity.ok().body(arrendadorDTO);
     }
 
-
     @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArrendador(@PathVariable Long id) {
@@ -86,12 +86,13 @@ public class ArrendadorController {
             throw new RuntimeException(e);
         }
     }
+
     @CrossOrigin
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrendadorDTO> loginArrendador(@RequestBody Arrendador arrendador) {
         return service.login(arrendador.getCorreo(), arrendador.getContrasena())
-                      .map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
 }

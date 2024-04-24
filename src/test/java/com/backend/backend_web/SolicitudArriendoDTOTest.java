@@ -3,6 +3,7 @@ package com.backend.backend_web;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class SolicitudArriendoDTOTest {
         Propiedad propiedad = new Propiedad();
         Arrendatario arrendatario = new Arrendatario();
         Pago pago = new Pago();
-        Calificacion calificacion = new Calificacion();
+        List<Calificacion> calificacion = (List<Calificacion>) new Calificacion();
 
         // Act
         SolicitudArriendoDTO solicitudDTO = new SolicitudArriendoDTO();

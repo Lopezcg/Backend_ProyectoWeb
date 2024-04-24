@@ -1,7 +1,7 @@
 package com.backend.backend_web.dto;
 
 import java.time.LocalDate;
-
+import java.util.List;
 
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.Calificacion;
@@ -25,5 +25,5 @@ public class SolicitudArriendoDTO {
     private Propiedad propiedad;
     private Arrendatario arrendatario;
     private Pago pago;
-     private Calificacion calificacion;
+    private List<Calificacion>  calificacion;
 }

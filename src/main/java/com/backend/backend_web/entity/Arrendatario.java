@@ -8,7 +8,6 @@ import lombok.*;
 import java.util.List;
 import java.util.Set;
 
-
 import org.hibernate.annotations.Where;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
@@ -31,8 +30,9 @@ public class Arrendatario {
     private String telefono;
     private String contrasena;
     @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
-                                                                                           
     private List<SolicitudArriendo> solicitudes;
+    @OneToMany(mappedBy = "arrendatario", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
+    private List<Calificacion> calificaciones;
     private Integer status = 0; // Valor predeterminado para el atributo status.
 
 }

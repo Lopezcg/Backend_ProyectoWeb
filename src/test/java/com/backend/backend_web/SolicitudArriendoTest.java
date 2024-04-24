@@ -9,6 +9,8 @@ import com.backend.backend_web.entity.Propiedad;
 import com.backend.backend_web.entity.SolicitudArriendo;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -25,7 +27,7 @@ class SolicitudArriendoTest {
         Propiedad propiedad = new Propiedad();
         Arrendatario arrendatario = new Arrendatario();
         Pago pago = new Pago();
-        Calificacion calificacion = new Calificacion();
+        List<Calificacion> calificacion = (List<Calificacion>) new Calificacion();
         Integer status = 0;
 
         // Act
