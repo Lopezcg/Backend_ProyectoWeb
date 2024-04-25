@@ -57,13 +57,10 @@ public class SolicitudArriendoService {
         SolicitudArriendo solicitud = modelMapper.map(get(solicitudDTO.getId()), SolicitudArriendo.class);
         solicitud.setEstado(true); 
         solicitud.setStatus(0);
-        solicitud.setArrendatario(solicitudDTO.getArrendatario());
-        solicitud.setCalificacion(solicitudDTO.getCalificacion());
+       
         solicitud.setCantidadPersonas(solicitudDTO.getCantidadPersonas());
         solicitud.setFechafin(solicitudDTO.getFechainicio());
-        solicitud.setFechafin(solicitudDTO.getFechafin());
-        solicitud.setPropiedad(solicitudDTO.getPropiedad());
-        solicitud.setPago(solicitudDTO.getPago());// Adjust the status as necessary
+        solicitud.setFechafin(solicitudDTO.getFechafin());// Adjust the status as necessary
         solicitud = repository.save(solicitud);
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);
     }
