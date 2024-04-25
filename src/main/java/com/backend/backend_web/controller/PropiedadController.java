@@ -39,6 +39,11 @@ public class PropiedadController {
     public ResponseEntity<Iterable<PropiedadDTO>> readAllPropiedad() {
         return ResponseEntity.ok().body(service.get());
     }
+    @CrossOrigin
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PropiedadDTO> readPropiedad(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.get(id));
+    }
 
     @CrossOrigin
     @PutMapping(value = "/{id}" ,produces = MediaType.APPLICATION_JSON_VALUE)
