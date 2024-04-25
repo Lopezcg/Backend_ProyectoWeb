@@ -15,8 +15,7 @@ import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.repository.CalificacionRepository;
 
 @Service
-public
-class CalificacionService {
+public class CalificacionService {
     @Autowired
     CalificacionRepository repository;
     @Autowired
@@ -42,6 +41,13 @@ class CalificacionService {
         return CalificacionesDTO;
     }
 
+    public List<CalificacionDTO> getCalificacionBySolicitud(Long id) {
+        List<Calificacion> Calificaciones = repository.findBySolicitudArriendo_Id(id);
+        List<CalificacionDTO> CalificacionesDTO = Calificaciones.stream()
+                .map(Calificacion -> modelMapper.map(Calificacion, CalificacionDTO.class)).collect(Collectors.toList());
+        return CalificacionesDTO;
+    }
+
     public CalificacionDTO save(CalificacionDTO CalificacionDTO) {
         Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
         Calificacion.setStatus(0); // Replace Status.ACTIVE with the appropriate value
@@ -55,10 +61,10 @@ class CalificacionService {
             throw new RuntimeException("Registro no encontrado");
         }
         Calificacion Calificacion = modelMapper.map(get(CalificacionDTO.getId()), Calificacion.class);
-       Calificacion.setStatus(0);
+        Calificacion.setStatus(0);
         Calificacion.setComentario(CalificacionDTO.getComentario());
         Calificacion.setPuntuacion(CalificacionDTO.getPuntuacion());
-        
+
         Calificacion = repository.save(Calificacion);
         CalificacionDTO = modelMapper.map(Calificacion, CalificacionDTO.class);
         return CalificacionDTO;

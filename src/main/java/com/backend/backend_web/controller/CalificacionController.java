@@ -48,6 +48,10 @@ public class CalificacionController {
     public ResponseEntity<CalificacionDTO> readCalificacion(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
+    @GetMapping("/solicitud/{id}")
+    public ResponseEntity<Iterable<CalificacionDTO>> readCalificacionBySolicitud(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getCalificacionBySolicitud(id));
+    }
 
     
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)

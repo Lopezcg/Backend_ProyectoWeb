@@ -1,4 +1,5 @@
 package com.backend.backend_web.entity;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,7 +24,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
@@ -32,10 +32,10 @@ import lombok.Setter;
 @Where(clause = "status = 0")
 @SQLDelete(sql = "UPDATE solicitud_arriendo SET  status = 1 WHERE id=?")
 public class SolicitudArriendo {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+
     private Long id;
     private LocalDate fechainicio;
     private LocalDate fechafin;
@@ -50,8 +50,8 @@ public class SolicitudArriendo {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pago_id", referencedColumnName = "id")
     private Pago pago;
-    @OneToMany(mappedBy = "solicitud_arriendo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Calificacion>  calificacion;
-    private Integer status = 0; 
+    @OneToMany(mappedBy = "solicitudArriendo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Calificacion> calificacion;
+    private Integer status = 0;
 
 }
