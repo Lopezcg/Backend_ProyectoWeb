@@ -38,6 +38,11 @@ public class Propiedad {
     private String descripcion;
     private Long valor;
     private String estado;
+    private Boolean piscina;
+    private Long banos;
+    private Long habitaciones;
+    private Boolean asador;
+    private Boolean mascotas;
     @ManyToOne(fetch = FetchType.LAZY) // Establece una relación de muchos a uno
     @JoinColumn(name = "arrendador", referencedColumnName = "id") // Define la columna de unión
     private Arrendador arrendador; // Relación con Arrendador
