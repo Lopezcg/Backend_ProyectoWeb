@@ -49,9 +49,9 @@ public class CalificacionController {
         return ResponseEntity.ok().body(service.get(id));
     }
     @CrossOrigin
-    @GetMapping("/solicitud/{id}")
-    public ResponseEntity<Iterable<CalificacionDTO>> readCalificacionBySolicitud(@PathVariable Long id) {
-        return ResponseEntity.ok().body(service.getCalificacionBySolicitud(id));
+    @GetMapping("/propiedad/{id}")
+    public ResponseEntity<Iterable<CalificacionDTO>> readCalificacionByPropiedad(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getCalificacionByPropiedad(id));
     }
 
     @CrossOrigin

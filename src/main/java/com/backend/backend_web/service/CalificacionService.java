@@ -41,8 +41,8 @@ public class CalificacionService {
         return CalificacionesDTO;
     }
 
-    public List<CalificacionDTO> getCalificacionBySolicitud(Long id) {
-        List<Calificacion> Calificaciones = repository.findBySolicitudArriendo_Id(id);
+    public List<CalificacionDTO> getCalificacionByPropiedad(Long id) {
+        List<Calificacion> Calificaciones = repository.findByPropiedadId(id);
         List<CalificacionDTO> CalificacionesDTO = Calificaciones.stream()
                 .map(Calificacion -> modelMapper.map(Calificacion, CalificacionDTO.class)).collect(Collectors.toList());
         return CalificacionesDTO;
