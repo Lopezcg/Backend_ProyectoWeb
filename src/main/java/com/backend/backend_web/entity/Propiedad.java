@@ -2,7 +2,6 @@ package com.backend.backend_web.entity;
 
 import java.util.List;
 
-
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
@@ -44,7 +43,13 @@ public class Propiedad {
     private Arrendador arrendador; // Relación con Arrendador
     private Integer status = 0; // Valor predeterminado para el atributo status.
     @OneToMany(mappedBy = "propiedad", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
-                                                                                           
+
     private List<SolicitudArriendo> solicitudes;
+
+    private Boolean piscina;
+    private Long banos;
+    private Long habitaciones;
+    private Boolean asador;
+    private Boolean mascotas;
 
 }
