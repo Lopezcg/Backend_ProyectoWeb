@@ -90,6 +90,7 @@ public class ArrendadorController {
     @CrossOrigin
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrendadorDTO> loginArrendador(@RequestBody Arrendador arrendador) {
+        System.out.println("HOLAAA");
         return service.login(arrendador.getCorreo(), arrendador.getContrasena())
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
