@@ -25,7 +25,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/arrendador/login").permitAll()
+                        .requestMatchers("/arrendatario/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/arrendador").permitAll() // Permite solo POST para
+                        .requestMatchers(HttpMethod.POST, "/arrendatario").permitAll() // Permite solo POST para
                         .requestMatchers(HttpMethod.GET, "/propiedad").permitAll() // Permite solo POST para
 
                         .anyRequest().authenticated())

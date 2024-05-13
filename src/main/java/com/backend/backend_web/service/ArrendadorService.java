@@ -58,7 +58,6 @@ public class ArrendadorService {
         test.setCorreo(arrendadorDTO.getCorreo());
         test.setTelefono(arrendadorDTO.getTelefono());
         test.setContrasena(arrendadorDTO.getContrasena());
-        System.out.println(test);
         test = repository.save(test);
         ArrendadorDTO testDTO = modelMapper.map(test, ArrendadorDTO.class);
         return testDTO;

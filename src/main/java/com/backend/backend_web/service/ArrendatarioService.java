@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import com.backend.backend_web.entity.Arrendatario;
-import com.backend.backend_web.dto.ArrendatarioDTO;
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,51 +22,52 @@ public class ArrendatarioService {
     @Autowired
     ModelMapper modelMapper;
 
-    public ArrendatarioDTO get(Long id) {
+    public ArrendadorDTO get(Long id) {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
         if (!arrendatarioOptional.isPresent()) {
             throw new EntityNotFoundException("Arrendatario no encontrado con el ID: " + id);
         }
-        return modelMapper.map(arrendatarioOptional.get(), ArrendatarioDTO.class);
+        return modelMapper.map(arrendatarioOptional.get(), ArrendadorDTO.class);
     }
 
-    public List<ArrendatarioDTO> get() {
+    public List<ArrendadorDTO> get() {
         List<Arrendatario> arrendatarios = (List<Arrendatario>) repository.findAll();
-        List<ArrendatarioDTO> arrendatariosDTO = arrendatarios.stream()
-                .map(arrendatario -> modelMapper.map(arrendatario, ArrendatarioDTO.class)).collect(Collectors.toList());
+        List<ArrendadorDTO> arrendatariosDTO = arrendatarios.stream()
+                .map(arrendatario -> modelMapper.map(arrendatario, ArrendadorDTO.class)).collect(Collectors.toList());
         return arrendatariosDTO;
     }
 
-    public Arrendatario save(Arrendatario arrendatarioDTO) {
-        Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
+    public Arrendatario save(Arrendatario ArrendadorDTO) {
+        Arrendatario arrendatario = modelMapper.map(ArrendadorDTO, Arrendatario.class);
         arrendatario.setStatus(0); // Replace Status.ACTIVE with the appropriate value
         arrendatario = repository.save(arrendatario);
-        arrendatarioDTO.setId(arrendatario.getId());
-        return arrendatarioDTO;
+        ArrendadorDTO.setId(arrendatario.getId());
+        return ArrendadorDTO;
     }
 
-    public ArrendatarioDTO update(Arrendatario arrendatarioDTO) throws ValidationException {
-        Arrendatario test = modelMapper.map(get(arrendatarioDTO.getId()), Arrendatario.class);
+    public ArrendadorDTO update(Arrendatario ArrendadorDTO) throws ValidationException {
+        Arrendatario test = modelMapper.map(get(ArrendadorDTO.getId()), Arrendatario.class);
         if (test == null) {
             throw new RuntimeException("Registro no encontrado");
         }
         test.setStatus(0);
-        test.setApellido(arrendatarioDTO.getApellido());
-        test.setNombre(arrendatarioDTO.getNombre());
-        test.setCorreo(arrendatarioDTO.getCorreo());
-        test.setTelefono(arrendatarioDTO.getTelefono());
-        test.setContrasena(arrendatarioDTO.getContrasena());
+        test.setApellido(ArrendadorDTO.getApellido());
+        test.setNombre(ArrendadorDTO.getNombre());
+        test.setCorreo(ArrendadorDTO.getCorreo());
+        test.setTelefono(ArrendadorDTO.getTelefono());
+        test.setContrasena(ArrendadorDTO.getContrasena());
         test = repository.save(test);
-        ArrendatarioDTO testDTO = modelMapper.map(test, ArrendatarioDTO.class);
+        ArrendadorDTO testDTO = modelMapper.map(test, ArrendadorDTO.class);
         return testDTO;
     }
 
     public void delete(Long id) {
         repository.deleteById(id);
     }
-    public Optional<ArrendatarioDTO> login(String correo, String contrasena) {
+
+    public Optional<ArrendadorDTO> login(String correo, String contrasena) {
         Optional<Arrendatario> arrendatario = repository.findByCorreoAndContrasena(correo, contrasena);
-        return arrendatario.map(a -> modelMapper.map(a, ArrendatarioDTO.class));
+        return arrendatario.map(a -> modelMapper.map(a, ArrendadorDTO.class));
     }
 
 }

@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ArrendadorController {
     @Autowired
-    private final ArrendadorService service;
-    private final ModelMapper modelMapper;
+    private ArrendadorService service;
+    private ModelMapper modelMapper;
     @Autowired
     JWTTokenService jwtTokenService;
 

@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 import com.backend.backend_web.controller.ArrendatarioController;
-import com.backend.backend_web.dto.ArrendatarioDTO;
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.service.ArrendatarioService;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,17 +43,16 @@ class ArrendatarioControllerTest {
     @Test
     void testCreateArrendatario() throws Exception {
         Arrendatario inputArrendatario = new Arrendatario();
-        ArrendatarioDTO resultDTO = new ArrendatarioDTO();
+        ArrendadorDTO resultDTO = new ArrendadorDTO();
         when(service.save(any(Arrendatario.class))).thenReturn(inputArrendatario);
-        when(modelMapper.map(any(Arrendatario.class), eq(ArrendatarioDTO.class))).thenReturn(resultDTO);
+        when(modelMapper.map(any(Arrendatario.class), eq(ArrendadorDTO.class))).thenReturn(resultDTO);
 
         mockMvc.perform(post("/arrendatario")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(inputArrendatario)))
                 .andExpect(status().isOk());
-        
+
         verify(service, times(1)).save(any(Arrendatario.class));
     }
 
-    
 }
