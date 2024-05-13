@@ -50,11 +50,4 @@ public class Propiedad {
     @OneToMany(mappedBy = "propiedad", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
 
     private List<SolicitudArriendo> solicitudes;
-
-    private Boolean piscina;
-    private Long banos;
-    private Long habitaciones;
-    private Boolean asador;
-    private Boolean mascotas;
-
 }
