@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/arrendador/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/arrendador").permitAll() // Permite solo POST para
-                                                                                     // /arrendador.
+                        .requestMatchers(HttpMethod.GET, "/propiedad").permitAll() // Permite solo POST para
+
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
