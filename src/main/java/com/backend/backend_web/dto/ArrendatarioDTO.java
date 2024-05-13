@@ -2,7 +2,6 @@ package com.backend.backend_web.dto;
 
 import java.util.List;
 
-import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.SolicitudArriendo;
 
 import lombok.*;
@@ -18,5 +17,5 @@ public class ArrendatarioDTO {
     private String apellido;
     private String correo;
     private String telefono;
-    private List<SolicitudArriendo> solicitudes;
+    
 }

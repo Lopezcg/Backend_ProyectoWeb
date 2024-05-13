@@ -3,6 +3,7 @@ package com.backend.backend_web;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +23,7 @@ class SolicitudArriendoDTOTest {
         LocalDate fechaFin = LocalDate.now().plusDays(7);
         boolean estado = true;
         int cantidadPersonas = 3;
-        Propiedad propiedad = new Propiedad();
-        Arrendatario arrendatario = new Arrendatario();
-        Pago pago = new Pago();
-        Calificacion calificacion = new Calificacion();
+       
 
         // Act
         SolicitudArriendoDTO solicitudDTO = new SolicitudArriendoDTO();
@@ -34,10 +32,7 @@ class SolicitudArriendoDTOTest {
         solicitudDTO.setFechafin(fechaFin);
         solicitudDTO.setEstado(estado);
         solicitudDTO.setCantidadPersonas(cantidadPersonas);
-        solicitudDTO.setPropiedad(propiedad);
-        solicitudDTO.setArrendatario(arrendatario);
-        solicitudDTO.setPago(pago);
-        solicitudDTO.setCalificacion(calificacion);
+      
 
         // Assert
         assertEquals(id, solicitudDTO.getId());
@@ -45,9 +40,6 @@ class SolicitudArriendoDTOTest {
         assertEquals(fechaFin, solicitudDTO.getFechafin());
         assertEquals(estado, solicitudDTO.isEstado());
         assertEquals(cantidadPersonas, solicitudDTO.getCantidadPersonas());
-        assertEquals(propiedad, solicitudDTO.getPropiedad());
-        assertEquals(arrendatario, solicitudDTO.getArrendatario());
-        assertEquals(pago, solicitudDTO.getPago());
-        assertEquals(calificacion, solicitudDTO.getCalificacion());
+        
     }
 }

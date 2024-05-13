@@ -1,6 +1,7 @@
 package com.backend.backend_web.entity;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
+import java.util.List;
 
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,12 +17,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 @Entity
 @Getter
@@ -31,10 +32,10 @@ import lombok.Setter;
 @Where(clause = "status = 0")
 @SQLDelete(sql = "UPDATE solicitud_arriendo SET  status = 1 WHERE id=?")
 public class SolicitudArriendo {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
+
     private Long id;
     private LocalDate fechainicio;
     private LocalDate fechafin;
@@ -49,9 +50,8 @@ public class SolicitudArriendo {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pago_id", referencedColumnName = "id")
     private Pago pago;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "calificacion_id", referencedColumnName = "id")
-    private Calificacion calificacion;
-    private Integer status = 0; 
+    @OneToMany(mappedBy = "solicitudArriendo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Calificacion> calificacion;
+    private Integer status = 0;
 
 }
