@@ -31,8 +31,7 @@ class PropiedadDTOTest {
         propiedadDTO.setDescripcion(descripcion);
         propiedadDTO.setValor(valor);
         propiedadDTO.setEstado(estado);
-        propiedadDTO.setArrendador(arrendador);
-        propiedadDTO.setSolicitudes(solicitudes);
+      
 
         // Assert
         assertEquals(id, propiedadDTO.getId());
@@ -40,7 +39,6 @@ class PropiedadDTOTest {
         assertEquals(descripcion, propiedadDTO.getDescripcion());
         assertEquals(valor, propiedadDTO.getValor());
         assertEquals(estado, propiedadDTO.getEstado());
-        assertEquals(arrendador, propiedadDTO.getArrendador());
-        assertEquals(solicitudes, propiedadDTO.getSolicitudes());
+      
     }
 }

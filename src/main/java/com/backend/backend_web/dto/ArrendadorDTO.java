@@ -17,7 +17,6 @@ public class ArrendadorDTO {
     private String apellido;
     private String correo;
     private String telefono;
-    private List<Propiedad> propiedades;
 
     
 

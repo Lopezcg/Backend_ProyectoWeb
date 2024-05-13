@@ -17,5 +17,5 @@ public class ArrendatarioDTO {
     private String apellido;
     private String correo;
     private String telefono;
-    private List<SolicitudArriendo> solicitudes;
+    
 }

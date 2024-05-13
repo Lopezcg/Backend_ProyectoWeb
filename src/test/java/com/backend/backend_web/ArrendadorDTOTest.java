@@ -27,7 +27,7 @@ class ArrendadorDTOTest {
         arrendadorDTO.setApellido(apellido);
         arrendadorDTO.setCorreo(correo);
         arrendadorDTO.setTelefono(telefono);
-        arrendadorDTO.setPropiedades(propiedades);
+       
 
         // Assert
         assertNotNull(arrendadorDTO);
@@ -36,6 +36,5 @@ class ArrendadorDTOTest {
         assertEquals(apellido, arrendadorDTO.getApellido());
         assertEquals(correo, arrendadorDTO.getCorreo());
         assertEquals(telefono, arrendadorDTO.getTelefono());
-        assertEquals(propiedades, arrendadorDTO.getPropiedades());
     }
 }
