@@ -128,7 +128,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testDeleteArrendador_Success() {
+    void testDeleteArrendador_Success() throws RegistroNoEncontradoException {
         doNothing().when(service).delete(arrendadorId);
 
         ResponseEntity<?> response = controller.deleteArrendador(arrendadorId);
@@ -138,7 +138,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testDeleteArrendador_Exception() {
+    void testDeleteArrendador_Exception() throws RegistroNoEncontradoException {
         doThrow(RuntimeException.class).when(service).delete(arrendadorId);
 
         assertThrows(RuntimeException.class, () -> controller.deleteArrendador(arrendadorId));

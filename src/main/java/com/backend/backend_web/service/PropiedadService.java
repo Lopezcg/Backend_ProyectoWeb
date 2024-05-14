@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.backend.backend_web.dto.PropiedadDTO;
+import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Propiedad;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.PropiedadRepository;
@@ -98,7 +99,12 @@ public class PropiedadService {
         return updatedPropiedadDTO;
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws RegistroNoEncontradoException {
+        Optional<Propiedad> propiedad = repository.findById(id);
+        if (!propiedad.isPresent()) {
+            throw new RegistroNoEncontradoException(
+                    "Propiedad no encontrada con ID " + id + " por lo tanto no se puede eliminar");
+        }
         repository.deleteById(id);
     }
 

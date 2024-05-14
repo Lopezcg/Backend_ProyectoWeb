@@ -191,7 +191,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testDeleteSolicitudArriendo() {
+    void testDeleteSolicitudArriendo() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 
@@ -205,7 +205,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testDeleteSolicitudArriendo_NotFound() {
+    void testDeleteSolicitudArriendo_NotFound() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         doThrow(new RuntimeException("Error deleting solicitud with id: " + id)).when(service).delete(id);

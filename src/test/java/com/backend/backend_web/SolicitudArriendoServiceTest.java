@@ -165,7 +165,7 @@ class SolicitudArriendoServiceTest {
     // }
 
     @Test
-    void testDeleteSolicitudArriendo() {
+    void testDeleteSolicitudArriendo() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 

@@ -130,7 +130,7 @@ class PagoServiceTest {
     // }
 
     @Test
-    void testDelete() {
+    void testDelete() throws RegistroNoEncontradoException {
         Long id = 1L;
 
         doNothing().when(repository).deleteById(id);

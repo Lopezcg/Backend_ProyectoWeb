@@ -65,7 +65,7 @@ public class PropiedadController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deletePropiedad(@PathVariable Long id) {
+    public ResponseEntity<?> deletePropiedad(@PathVariable Long id) throws RegistroNoEncontradoException {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

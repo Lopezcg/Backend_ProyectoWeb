@@ -77,7 +77,7 @@ public class ArrendadorController {
 
     @CrossOrigin
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteArrendador(@PathVariable Long id) {
+    public ResponseEntity<?> deleteArrendador(@PathVariable Long id) throws RegistroNoEncontradoException {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

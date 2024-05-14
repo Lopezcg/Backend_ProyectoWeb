@@ -169,7 +169,7 @@ class ArrendatarioServiceTest {
     // }
 
     @Test
-    void testDelete() {
+    void testDelete() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 

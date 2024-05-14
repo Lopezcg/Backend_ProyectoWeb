@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.backend.backend_web.dto.PagoDTO;
+import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Pago;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.PagoRepository;
@@ -93,7 +94,12 @@ public class PagoService {
         return modelMapper.map(pago, PagoDTO.class);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws RegistroNoEncontradoException {
+        Optional<Pago> pago = repository.findById(id);
+        if (!pago.isPresent()) {
+            throw new RegistroNoEncontradoException(
+                    "Pago no encontrado con ID " + id + " por lo tanto no se puede eliminar");
+        }
         repository.deleteById(id);
     }
 }

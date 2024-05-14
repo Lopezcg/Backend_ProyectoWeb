@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
+import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.SolicitudArriendo;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.SolicitudArrendamientoRepository;
@@ -98,7 +99,12 @@ public class SolicitudArriendoService {
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws RegistroNoEncontradoException {
+        Optional<SolicitudArriendo> solicitud = repository.findById(id);
+        if (!solicitud.isPresent()) {
+            throw new RegistroNoEncontradoException(
+                    "Solicitud no encontrada con ID " + id + " por lo tanto no se puede eliminar");
+        }
         repository.deleteById(id);
     }
 }

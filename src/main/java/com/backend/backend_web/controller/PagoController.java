@@ -64,13 +64,10 @@ public class PagoController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deletePago(@PathVariable Long id) {
-        try {
-            service.delete(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    public ResponseEntity<?> deletePago(@PathVariable Long id) throws RegistroNoEncontradoException {
+        service.delete(id);
+        return ResponseEntity.ok().build();
+
     }
 
     @CrossOrigin

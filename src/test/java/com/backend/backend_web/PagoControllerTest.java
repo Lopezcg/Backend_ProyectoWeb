@@ -116,7 +116,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testDeletePago() {
+    void testDeletePago() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 
@@ -210,7 +210,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testDeletePago_Exception() {
+    void testDeletePago_Exception() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         doThrow(new RuntimeException("Error deleting pago with id: " + id)).when(service).delete(id);

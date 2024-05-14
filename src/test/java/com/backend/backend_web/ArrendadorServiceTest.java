@@ -138,7 +138,7 @@ class ArrendadorServiceTest {
     }
 
     @Test
-    void delete_ShouldInvokeDeleteById() {
+    void delete_ShouldInvokeDeleteById() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         doNothing().when(repository).deleteById(id);

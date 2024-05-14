@@ -69,7 +69,7 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteArrendatario(@PathVariable Long id) {
+    public ResponseEntity<?> deleteArrendatario(@PathVariable Long id) throws RegistroNoEncontradoException {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

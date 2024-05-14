@@ -96,7 +96,12 @@ public class ArrendatarioService {
         return testDTO;
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws RegistroNoEncontradoException {
+        Optional<Arrendatario> arrendatario = repository.findById(id);
+        if (!arrendatario.isPresent()) {
+            throw new RegistroNoEncontradoException(
+                    "Arrendatario no encontrado con el ID: " + id + " por lo tanto no se puede eliminar");
+        }
         repository.deleteById(id);
     }
 

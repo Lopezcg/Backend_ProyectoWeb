@@ -70,7 +70,7 @@ public class CalificacionController {
 
     @CrossOrigin
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCalificacion(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCalificacion(@PathVariable Long id) throws RegistroNoEncontradoException {
         service.delete(id);
         return ResponseEntity.ok().build();
     }

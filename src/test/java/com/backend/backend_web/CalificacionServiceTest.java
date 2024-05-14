@@ -103,7 +103,7 @@ class CalificacionServiceTest {
     }
 
     @Test
-    void testDeleteCalificacion() {
+    void testDeleteCalificacion() throws RegistroNoEncontradoException {
         Long id = 1L;
         doNothing().when(repositoryMock).deleteById(id);
 
