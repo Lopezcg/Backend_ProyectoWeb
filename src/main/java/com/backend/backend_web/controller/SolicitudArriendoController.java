@@ -2,7 +2,6 @@ package com.backend.backend_web.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,8 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> createSolicitudArriendo(@RequestBody SolicitudArriendoDTO solicitudArriendo) {
+    public ResponseEntity<SolicitudArriendoDTO> createSolicitudArriendo(
+            @RequestBody SolicitudArriendoDTO solicitudArriendo) {
         try {
             if (solicitudArriendo == null) {
                 return ResponseEntity.badRequest().build();
@@ -58,20 +58,17 @@ public class SolicitudArriendoController {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/{id}" ,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(@PathVariable Long id, @RequestBody SolicitudArriendoDTO solicitudArriendo) {
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(
+            @RequestBody SolicitudArriendoDTO solicitudArriendo) {
         try {
-            if (solicitudArriendo == null || !id.equals(solicitudArriendo.getId())) {
+            if (solicitudArriendo == null) {
                 return ResponseEntity.badRequest().build();
             }
             SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo);
-            if (updatedSolicitud != null) {
-                return ResponseEntity.ok().body(updatedSolicitud);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            return ResponseEntity.ok().body(updatedSolicitud);
         } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 

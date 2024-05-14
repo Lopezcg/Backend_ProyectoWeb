@@ -9,14 +9,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.entity.SolicitudArriendo;
 import com.backend.backend_web.repository.SolicitudArrendamientoRepository;
 
 @Service
 public class SolicitudArriendoService {
-
 
     @Autowired
     private SolicitudArrendamientoRepository repository;
@@ -51,17 +49,20 @@ public class SolicitudArriendoService {
     }
 
     public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO) {
-        if (!repository.existsById(solicitudDTO.getId())) {
-            throw new RuntimeException("Registro no encontrado");
-        }
-        SolicitudArriendo solicitud = modelMapper.map(get(solicitudDTO.getId()), SolicitudArriendo.class);
-        solicitud.setEstado(true); 
+        SolicitudArriendo solicitud = repository.findById(solicitudDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+
+        // Actualizamos los campos necesarios de la entidad
+        solicitud.setEstado(solicitudDTO.isEstado()); // Asumiendo que esto es un estado activo/inactivo
         solicitud.setStatus(0);
-       
         solicitud.setCantidadPersonas(solicitudDTO.getCantidadPersonas());
-        solicitud.setFechafin(solicitudDTO.getFechainicio());
-        solicitud.setFechafin(solicitudDTO.getFechafin());// Adjust the status as necessary
+        solicitud.setFechainicio(solicitudDTO.getFechainicio()); // Asumiendo que el método se llama setFechaInicio
+        solicitud.setFechafin(solicitudDTO.getFechafin());
+
+        // Guardamos la entidad actualizada
         solicitud = repository.save(solicitud);
+
+        // Convertimos la entidad guardada de vuelta a DTO y la retornamos
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);
     }
 

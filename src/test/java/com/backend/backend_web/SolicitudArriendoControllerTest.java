@@ -126,7 +126,7 @@ class SolicitudArriendoControllerTest {
         when(service.update(eq(solicitudArriendoDTO))).thenReturn(updatedSolicitudArriendoDTO);
 
         // Act
-        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(id,
+        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(
                 solicitudArriendoDTO);
 
         // Assert
@@ -144,7 +144,7 @@ class SolicitudArriendoControllerTest {
         SolicitudArriendoDTO solicitudArriendoDTO = null;
 
         // Act
-        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(id,
+        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(
                 solicitudArriendoDTO);
 
         // Assert
@@ -161,7 +161,7 @@ class SolicitudArriendoControllerTest {
         solicitudArriendoDTO.setId(id + 1);
 
         // Act
-        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(id,
+        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(
                 solicitudArriendoDTO);
 
         // Assert
@@ -180,7 +180,7 @@ class SolicitudArriendoControllerTest {
         when(service.update(eq(solicitudArriendoDTO))).thenReturn(null);
 
         // Act
-        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(id,
+        ResponseEntity<SolicitudArriendoDTO> responseEntity = controller.updateSolicitudArriendo(
                 solicitudArriendoDTO);
 
         // Assert
@@ -237,6 +237,6 @@ class SolicitudArriendoControllerTest {
         when(service.update(eq(solicitudArriendoDTO))).thenThrow(new RuntimeException("Error updating solicitud"));
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> controller.updateSolicitudArriendo(id, solicitudArriendoDTO));
+        assertThrows(RuntimeException.class, () -> controller.updateSolicitudArriendo(solicitudArriendoDTO));
     }
 }
