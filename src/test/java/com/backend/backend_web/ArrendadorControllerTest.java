@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import com.backend.backend_web.controller.ArrendadorController;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.ArrendadorService;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testReadArrendador_Success() {
+    void testReadArrendador_Success() throws RegistroNoEncontradoException {
         when(service.get(arrendadorId)).thenReturn(arrendadorDTO);
 
         ResponseEntity<ArrendadorDTO> response = controller.readArrendador(arrendadorId);
@@ -94,7 +95,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testReadArrendador_NotFound() {
+    void testReadArrendador_NotFound() throws RegistroNoEncontradoException {
         when(service.get(arrendadorId)).thenReturn(null);
 
         ResponseEntity<ArrendadorDTO> response = controller.readArrendador(arrendadorId);
@@ -103,7 +104,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testUpdateArrendador_Success() {
+    void testUpdateArrendador_Success() throws RegistroNoEncontradoException {
         when(service.update(any(Arrendador.class))).thenReturn(arrendadorDTO);
 
         ResponseEntity<ArrendadorDTO> response = controller.updateArrendador(arrendador);
@@ -120,7 +121,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testUpdateArrendador_Exception() {
+    void testUpdateArrendador_Exception() throws RegistroNoEncontradoException {
         when(service.update(any(Arrendador.class))).thenThrow(RuntimeException.class);
 
         assertThrows(RuntimeException.class, () -> controller.updateArrendador(arrendador));

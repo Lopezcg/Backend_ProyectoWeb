@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.entity.Arrendatario;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendatarioRepository;
 import com.backend.backend_web.service.ArrendatarioService;
 
@@ -44,7 +45,7 @@ class ArrendatarioServiceTest {
     }
 
     @Test
-    void testGetById() {
+    void testGetById() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         Arrendatario arrendatario = new Arrendatario();

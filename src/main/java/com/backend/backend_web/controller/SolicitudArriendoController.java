@@ -2,8 +2,8 @@ package com.backend.backend_web.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.SolicitudArriendoService;
 
 @RequestMapping("/solicitudArriendo")
@@ -28,16 +29,18 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> createSolicitudArriendo(@RequestBody SolicitudArriendoDTO solicitudArriendo) {
-        try {
-            if (solicitudArriendo == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            SolicitudArriendoDTO savedSolicitud = service.save(solicitudArriendo);
-            return ResponseEntity.ok().body(savedSolicitud);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage());
-        }
+    public ResponseEntity<SolicitudArriendoDTO> createSolicitudArriendo(
+            @RequestBody SolicitudArriendoDTO solicitudArriendo) throws IllegalArgumentException, IllegalStateException,
+            DataIntegrityViolationException {
+        // try {
+        // if (solicitudArriendo == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        SolicitudArriendoDTO savedSolicitud = service.save(solicitudArriendo);
+        return ResponseEntity.ok().body(savedSolicitud);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e.getLocalizedMessage());
+        // }
     }
 
     @CrossOrigin
@@ -48,18 +51,16 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> readSolicitudArriendo(@PathVariable Long id) {
+    public ResponseEntity<SolicitudArriendoDTO> readSolicitudArriendo(@PathVariable Long id)
+            throws RegistroNoEncontradoException {
         SolicitudArriendoDTO solicitud = service.get(id);
-        if (solicitud != null) {
-            return ResponseEntity.ok().body(solicitud);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().body(solicitud);
     }
 
     @CrossOrigin
-    @PutMapping(value = "/{id}" ,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(@PathVariable Long id, @RequestBody SolicitudArriendoDTO solicitudArriendo) {
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(@PathVariable Long id,
+            @RequestBody SolicitudArriendoDTO solicitudArriendo) {
         try {
             if (solicitudArriendo == null || !id.equals(solicitudArriendo.getId())) {
                 return ResponseEntity.badRequest().build();

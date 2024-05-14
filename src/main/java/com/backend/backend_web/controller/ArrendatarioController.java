@@ -3,10 +3,12 @@ package com.backend.backend_web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.entity.Arrendatario;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.ArrendatarioService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,21 +31,24 @@ public class ArrendatarioController {
     private ArrendatarioService service;
     @Autowired
     ModelMapper modelMapper;
+
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO) {
-        try {
-            if (arrendatarioDTO == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            Arrendatario savedarrendatario = service.save(arrendatarioDTO);
-            // Convert Arrendador to ArrendadorDTO
-            ArrendatarioDTO test = modelMapper.map(savedarrendatario, ArrendatarioDTO.class);
+    public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO)
+            throws IllegalArgumentException, IllegalStateException,
+            DataIntegrityViolationException {
+        // try {
+        // if (arrendatarioDTO == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        Arrendatario savedarrendatario = service.save(arrendatarioDTO);
+        // Convert Arrendador to ArrendadorDTO
+        ArrendatarioDTO test = modelMapper.map(savedarrendatario, ArrendatarioDTO.class);
 
-            return ResponseEntity.ok().body(test);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return ResponseEntity.ok().body(test);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e);
+        // }
     }
 
     @CrossOrigin
@@ -54,7 +59,8 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> readArrendatario(@PathVariable Long id) {
+    public ResponseEntity<ArrendatarioDTO> readArrendatario(@PathVariable Long id)
+            throws RegistroNoEncontradoException {
         return ResponseEntity.ok().body(service.get(id));
     }
 
@@ -78,12 +84,13 @@ public class ArrendatarioController {
             throw new RuntimeException(e);
         }
     }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ArrendatarioDTO> loginArrendador(@RequestBody Arrendatario arrendatario) {
         return service.login(arrendatario.getCorreo(), arrendatario.getContrasena())
-                      .map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
 }

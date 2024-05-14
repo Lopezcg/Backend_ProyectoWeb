@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.entity.SolicitudArriendo;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.SolicitudArrendamientoRepository;
 import com.backend.backend_web.service.SolicitudArriendoService;
 
@@ -36,7 +37,7 @@ class SolicitudArriendoServiceTest {
     private SolicitudArriendoService service;
 
     @Test
-    void testGetSolicitudArriendo() {
+    void testGetSolicitudArriendo() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendo solicitud = new SolicitudArriendo();
@@ -57,7 +58,7 @@ class SolicitudArriendoServiceTest {
     }
 
     @Test
-    void testGetSolicitudArriendo_NotFound() {
+    void testGetSolicitudArriendo_NotFound() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 
@@ -122,7 +123,7 @@ class SolicitudArriendoServiceTest {
     }
 
     @Test
-    void testUpdateSolicitudArriendo() {
+    void testUpdateSolicitudArriendo() throws RegistroNoEncontradoException {
         // Arrange
         SolicitudArriendoDTO solicitudDTO = new SolicitudArriendoDTO();
         solicitudDTO.setId(1L);

@@ -8,10 +8,12 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.entity.Calificacion;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.CalificacionRepository;
 
 @Service
@@ -26,10 +28,10 @@ public class CalificacionService {
         this.modelMapper = modelMapper;
     }
 
-    public CalificacionDTO get(Long id) {
+    public CalificacionDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Calificacion> calificacionOptional = repository.findById(id);
         if (!calificacionOptional.isPresent()) {
-            throw new NoSuchElementException("No se encontró una Calificación con el ID: " + id);
+            throw new RegistroNoEncontradoException("Calificación no encontrada con el ID: " + id);
         }
         return modelMapper.map(calificacionOptional.get(), CalificacionDTO.class);
     }
@@ -48,15 +50,31 @@ public class CalificacionService {
         return CalificacionesDTO;
     }
 
-    public CalificacionDTO save(CalificacionDTO CalificacionDTO) {
+    public CalificacionDTO save(CalificacionDTO CalificacionDTO)
+            throws IllegalArgumentException, IllegalStateException,
+            DataIntegrityViolationException {
+        if (CalificacionDTO == null) {
+            throw new IllegalArgumentException("El DTO de Calificación no puede ser nulo");
+        }
+
+        if (CalificacionDTO.getComentario() == null || CalificacionDTO.getPuntuacion() == null) {
+            throw new IllegalArgumentException("Faltan campos requeridos en el DTO de Calificación");
+        }
+
         Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
-        Calificacion.setStatus(0); // Replace Status.ACTIVE with the appropriate value
-        Calificacion = repository.save(Calificacion);
+
+        Calificacion.setStatus(0);
+        try {
+            Calificacion = repository.save(Calificacion);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("Error al guardar la calificación debido a una violación de integridad", e);
+        }
+
         CalificacionDTO.setId(Calificacion.getId());
         return CalificacionDTO;
     }
 
-    public CalificacionDTO update(CalificacionDTO CalificacionDTO) {
+    public CalificacionDTO update(CalificacionDTO CalificacionDTO) throws RegistroNoEncontradoException {
         if (CalificacionDTO == null) {
             throw new RuntimeException("Registro no encontrado");
         }
