@@ -55,8 +55,7 @@ public class CalificacionController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> updateCalificacion(@PathVariable Long id,
-            @RequestBody CalificacionDTO calificacion) {
+    public ResponseEntity<CalificacionDTO> updateCalificacion(@RequestBody CalificacionDTO calificacion) {
         try {
             if (calificacion == null) {
                 return ResponseEntity.badRequest().build();

@@ -70,18 +70,32 @@ public class PropiedadService {
 
     public PropiedadDTO update(PropiedadDTO propiedadDTO) throws RegistroNoEncontradoException {
         if (propiedadDTO == null) {
-            throw new RuntimeException("Registro no encontrado");
+            throw new IllegalArgumentException("El objeto PropiedadDTO proporcionado es nulo");
         }
-        Propiedad propiedad = modelMapper.map(get(propiedadDTO.getId()), Propiedad.class);
+        
+        // Recuperar la entidad Propiedad existente desde la base de datos
+        Propiedad propiedad = repository.findById(propiedadDTO.getId())
+            .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+    
+        // Actualizar los campos con los valores proporcionados desde el DTO
         propiedad.setNombre(propiedadDTO.getNombre());
         propiedad.setDescripcion(propiedadDTO.getDescripcion());
         propiedad.setValor(propiedadDTO.getValor());
         propiedad.setEstado(propiedadDTO.getEstado());
-
+        propiedad.setAsador(propiedadDTO.getAsador());
+        propiedad.setBanos(propiedadDTO.getBanos());
+        propiedad.setHabitaciones(propiedadDTO.getHabitaciones());
+        propiedad.setPiscina(propiedadDTO.getPiscina());
+        propiedad.setMascotas(propiedadDTO.getMascotas());
+    
+        // Guardar la entidad Propiedad actualizada en la base de datos
         propiedad = repository.save(propiedad);
-        propiedadDTO = modelMapper.map(propiedad, PropiedadDTO.class);
-        return propiedadDTO;
+    
+        // Mapear la entidad actualizada de vuelta a DTO para devolverla
+        PropiedadDTO updatedPropiedadDTO = modelMapper.map(propiedad, PropiedadDTO.class);
+        return updatedPropiedadDTO;
     }
+    
 
     public void delete(Long id) {
         repository.deleteById(id);

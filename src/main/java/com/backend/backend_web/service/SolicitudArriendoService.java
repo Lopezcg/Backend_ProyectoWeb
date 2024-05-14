@@ -74,18 +74,21 @@ public class SolicitudArriendoService {
         return solicitudDTO;
     }
 
-    public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO) throws RegistroNoEncontradoException {
-        if (!repository.existsById(solicitudDTO.getId())) {
-            throw new RuntimeException("Registro no encontrado");
-        }
-        SolicitudArriendo solicitud = modelMapper.map(get(solicitudDTO.getId()), SolicitudArriendo.class);
-        solicitud.setEstado(true);
-        solicitud.setStatus(0);
+    public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO) {
+        SolicitudArriendo solicitud = repository.findById(solicitudDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
 
+        // Actualizamos los campos necesarios de la entidad
+        solicitud.setEstado(solicitudDTO.isEstado()); // Asumiendo que esto es un estado activo/inactivo
+        solicitud.setStatus(0);
         solicitud.setCantidadPersonas(solicitudDTO.getCantidadPersonas());
-        solicitud.setFechafin(solicitudDTO.getFechainicio());
-        solicitud.setFechafin(solicitudDTO.getFechafin());// Adjust the status as necessary
+        solicitud.setFechainicio(solicitudDTO.getFechainicio()); // Asumiendo que el método se llama setFechaInicio
+        solicitud.setFechafin(solicitudDTO.getFechafin());
+
+        // Guardamos la entidad actualizada
         solicitud = repository.save(solicitud);
+
+        // Convertimos la entidad guardada de vuelta a DTO y la retornamos
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);
     }
 

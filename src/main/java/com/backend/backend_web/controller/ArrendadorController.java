@@ -14,6 +14,9 @@ import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.ArrendadorService;
+import com.backend.backend_web.service.JWTTokenService;
+
+import java.util.Collections;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,8 +31,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ArrendadorController {
     @Autowired
-    private final ArrendadorService service;
-    private final ModelMapper modelMapper;
+    private ArrendadorService service;
+    private ModelMapper modelMapper;
+    @Autowired
+    JWTTokenService jwtTokenService;
 
     public ArrendadorController(ArrendadorService service, ModelMapper modelMapper) {
         this.service = service;
@@ -93,10 +98,19 @@ public class ArrendadorController {
 
     @CrossOrigin
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> loginArrendador(@RequestBody Arrendador arrendador) {
-        return service.login(arrendador.getCorreo(), arrendador.getContrasena())
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+    public ResponseEntity<?> loginArrendador(@RequestBody Arrendador arrendador) {
+        try {
+            return service.login(arrendador.getCorreo(), arrendador.getContrasena())
+                    .map((ArrendadorDTO arrendadorDTO) -> {
+                        String token = jwtTokenService.generarToken(arrendadorDTO);
+                        System.out.println("TOKEN: " + token);
+                        return ResponseEntity.ok().body(Collections.singletonMap("token", token));
+                    })
+                    .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+        } catch (Exception e) {
+            System.out.println("Error during login: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

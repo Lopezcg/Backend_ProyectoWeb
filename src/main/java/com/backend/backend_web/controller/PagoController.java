@@ -83,6 +83,7 @@ public class PagoController {
             PagoDTO updatedPago = service.update(pagoDTO);
             return ResponseEntity.ok().body(updatedPago);
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

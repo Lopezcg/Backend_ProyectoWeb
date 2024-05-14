@@ -1,5 +1,6 @@
 package com.backend.backend_web.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.entity.Propiedad;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendadorRepository;
 
@@ -70,20 +72,25 @@ public class ArrendadorService {
         return arrendadorDTO;
     }
 
-    public ArrendadorDTO update(Arrendador arrendadorDTO) throws RegistroNoEncontradoException {
-        Arrendador test = modelMapper.map(get(arrendadorDTO.getId()), Arrendador.class);
-        if (test == null) {
-            throw new RuntimeException("Registro no encontrado");
-        }
-        test.setStatus(0);
-        test.setApellido(arrendadorDTO.getApellido());
-        test.setNombre(arrendadorDTO.getNombre());
-        test.setCorreo(arrendadorDTO.getCorreo());
-        test.setTelefono(arrendadorDTO.getTelefono());
-        test.setContrasena(arrendadorDTO.getContrasena());
-        System.out.println(test);
-        test = repository.save(test);
-        ArrendadorDTO testDTO = modelMapper.map(test, ArrendadorDTO.class);
+    public ArrendadorDTO update(Arrendador arrendadorDTO) {
+        System.out.println("ENTREEEEE");
+        Arrendador arrendadorExistente = repository.findById(arrendadorDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+
+        // Actualizar los campos escalares
+        arrendadorExistente.setApellido(arrendadorDTO.getApellido());
+        arrendadorExistente.setNombre(arrendadorDTO.getNombre());
+        arrendadorExistente.setCorreo(arrendadorDTO.getCorreo());
+        arrendadorExistente.setTelefono(arrendadorDTO.getTelefono());
+        arrendadorExistente.setContrasena(arrendadorDTO.getContrasena());
+
+        // No modificar la colección de propiedades aquí
+
+        // Guardar los cambios en la base de datos
+        arrendadorExistente = repository.save(arrendadorExistente);
+
+        // Convertir de nuevo a DTO para devolver
+        ArrendadorDTO testDTO = modelMapper.map(arrendadorExistente, ArrendadorDTO.class);
         return testDTO;
     }
 

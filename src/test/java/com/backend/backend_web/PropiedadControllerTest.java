@@ -106,7 +106,7 @@ class PropiedadControllerTest {
         Long id = 1L;
 
         // Act
-        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad(id, null);
+        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad( null);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
