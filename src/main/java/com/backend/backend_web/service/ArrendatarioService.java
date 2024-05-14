@@ -5,6 +5,8 @@ import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+
+import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
@@ -45,19 +47,25 @@ public class ArrendatarioService {
         return ArrendadorDTO;
     }
 
-    public ArrendadorDTO update(Arrendatario ArrendadorDTO) throws ValidationException {
-        Arrendatario test = modelMapper.map(get(ArrendadorDTO.getId()), Arrendatario.class);
-        if (test == null) {
-            throw new RuntimeException("Registro no encontrado");
-        }
-        test.setStatus(0);
-        test.setApellido(ArrendadorDTO.getApellido());
-        test.setNombre(ArrendadorDTO.getNombre());
-        test.setCorreo(ArrendadorDTO.getCorreo());
-        test.setTelefono(ArrendadorDTO.getTelefono());
-        test.setContrasena(ArrendadorDTO.getContrasena());
-        test = repository.save(test);
-        ArrendadorDTO testDTO = modelMapper.map(test, ArrendadorDTO.class);
+    public ArrendadorDTO update(Arrendatario arrendatarioDTO) throws ValidationException {
+        System.out.println("ENTREEEEE");
+        Arrendatario arrendatarioExistente = repository.findById(arrendatarioDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+
+        // Actualizar los campos escalares
+        arrendatarioExistente.setApellido(arrendatarioDTO.getApellido());
+        arrendatarioExistente.setNombre(arrendatarioDTO.getNombre());
+        arrendatarioExistente.setCorreo(arrendatarioDTO.getCorreo());
+        arrendatarioExistente.setTelefono(arrendatarioDTO.getTelefono());
+        arrendatarioExistente.setContrasena(arrendatarioDTO.getContrasena());
+
+        // No modificar la colección de propiedades aquí
+
+        // Guardar los cambios en la base de datos
+        arrendatarioExistente = repository.save(arrendatarioExistente);
+
+        // Convertir de nuevo a DTO para devolver
+        ArrendadorDTO testDTO = modelMapper.map(arrendatarioExistente, ArrendadorDTO.class);
         return testDTO;
     }
 
