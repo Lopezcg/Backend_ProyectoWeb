@@ -27,7 +27,6 @@ public class Arrendador {
     private String telefono;
     private String contrasena;
     @OneToMany(mappedBy = "arrendador", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
-                                                                                         // inversa
     private List<Propiedad> propiedades;
     private Integer status = 0; // Valor predeterminado para el atributo status.
 
