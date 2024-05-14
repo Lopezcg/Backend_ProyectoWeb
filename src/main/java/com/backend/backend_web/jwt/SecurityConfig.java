@@ -28,8 +28,10 @@ public class SecurityConfig {
                         .requestMatchers("/arrendatario/login").permitAll()
                         // .requestMatchers(HttpMethod.POST, "/arrendador").permitAll() // Permite solo
                         // POST para
+                        //TOCA PONER SOLO LOS NECESARIOS
                         .requestMatchers("/arrendador").permitAll()
                         .requestMatchers("/arrendatario").permitAll()
+                        .requestMatchers("/calificacion").permitAll()
                         .requestMatchers(HttpMethod.POST, "/arrendatario").permitAll() // Permite solo POST para
                         .requestMatchers(HttpMethod.GET, "/propiedad").permitAll() // Permite solo POST para
 
