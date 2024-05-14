@@ -46,8 +46,8 @@ public class PropiedadController {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/{id}" ,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PropiedadDTO> updatePropiedad(@PathVariable Long id, @RequestBody PropiedadDTO propiedad) {
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PropiedadDTO> updatePropiedad( @RequestBody PropiedadDTO propiedad) {
         try {
             if (propiedad == null) {
                 return ResponseEntity.badRequest().build();
