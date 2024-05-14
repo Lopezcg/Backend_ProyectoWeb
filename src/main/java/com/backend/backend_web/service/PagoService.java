@@ -45,15 +45,21 @@ public class PagoService {
     }
 
     public PagoDTO update(PagoDTO pagoDTO) {
-        if (pagoDTO == null) {
-            throw new RuntimeException("Registro no encontrado");
-        }
-        Pago pago = modelMapper.map(pagoDTO.getId(), Pago.class);
-        pago.setStatus(0);
+        System.out.println("ENTREEEEE2");
+        System.out.println(pagoDTO.getId());
+
+        // Recuperar el Pago existente desde la base de datos
+        Pago pago = repository.findById(pagoDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+
         pago.setBanco(pagoDTO.getBanco());
         pago.setNumCuenta(pagoDTO.getNumCuenta());
         pago.setValor(pagoDTO.getValor());
+
+        // Guardar el pago actualizado en la base de datos
         pago = repository.save(pago);
+
+        // Mapear el pago guardado de nuevo a DTO para devolver
         return modelMapper.map(pago, PagoDTO.class);
     }
 
