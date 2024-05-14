@@ -3,11 +3,13 @@ package com.backend.backend_web.service;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Arrendatario;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
 
@@ -24,10 +26,10 @@ public class ArrendatarioService {
     @Autowired
     ModelMapper modelMapper;
 
-    public ArrendadorDTO get(Long id) {
+    public ArrendadorDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
         if (!arrendatarioOptional.isPresent()) {
-            throw new EntityNotFoundException("Arrendatario no encontrado con el ID: " + id);
+            throw new RegistroNoEncontradoException("Arrendatario no encontrado con el ID: " + id);
         }
         return modelMapper.map(arrendatarioOptional.get(), ArrendadorDTO.class);
     }
@@ -39,18 +41,43 @@ public class ArrendatarioService {
         return arrendatariosDTO;
     }
 
-    public Arrendatario save(Arrendatario ArrendadorDTO) {
-        Arrendatario arrendatario = modelMapper.map(ArrendadorDTO, Arrendatario.class);
-        arrendatario.setStatus(0); // Replace Status.ACTIVE with the appropriate value
-        arrendatario = repository.save(arrendatario);
-        ArrendadorDTO.setId(arrendatario.getId());
-        return ArrendadorDTO;
+    public Arrendatario save(Arrendatario arrendatarioDTO) throws IllegalArgumentException, IllegalStateException,
+            DataIntegrityViolationException {
+        if (arrendatarioDTO == null) {
+            throw new IllegalArgumentException("El DTO de Arrendatario no puede ser nulo");
+        }
+
+        if (arrendatarioDTO.getNombre() == null || arrendatarioDTO.getCorreo() == null
+                || arrendatarioDTO.getApellido() == null
+                || arrendatarioDTO.getTelefono() == null || arrendatarioDTO.getContrasena() == null) {
+            throw new IllegalArgumentException("Faltan campos requeridos en el DTO de Arrendatario");
+        }
+
+        Arrendatario arrendatario;
+
+        try {
+            arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
+            arrendatario.setStatus(0); // Replace Status.ACTIVE with the appropriate value
+            arrendatario = repository.save(arrendatario);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalStateException("Error al guardar el arrendatario debido a una violación de integridad", e);
+        } catch (Exception e) {
+            throw new IllegalStateException("Error inesperado al guardar el arrendatario", e);
+        }
+
+        arrendatarioDTO.setId(arrendatario.getId());
+        return arrendatarioDTO;
     }
 
-    public ArrendadorDTO update(Arrendatario arrendatarioDTO) throws ValidationException {
-        System.out.println("ENTREEEEE");
+    public ArrendadorDTO update(Arrendatario arrendatarioDTO)
+            throws ValidationException, IllegalArgumentException, RegistroNoEncontradoException {
+        if (arrendatarioDTO == null) {
+            throw new IllegalArgumentException("El objeto ArrendatarioDTO proporcionado es nulo");
+        }
+
         Arrendatario arrendatarioExistente = repository.findById(arrendatarioDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + arrendatarioDTO.getId()));
 
         // Actualizar los campos escalares
         arrendatarioExistente.setApellido(arrendatarioDTO.getApellido());

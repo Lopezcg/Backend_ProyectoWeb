@@ -48,6 +48,5 @@ public class Propiedad {
     private Arrendador arrendador; // Relación con Arrendador
     private Integer status = 0; // Valor predeterminado para el atributo status.
     @OneToMany(mappedBy = "propiedad", cascade = CascadeType.ALL, orphanRemoval = true) // Configura la relación
-
     private List<SolicitudArriendo> solicitudes;
 }

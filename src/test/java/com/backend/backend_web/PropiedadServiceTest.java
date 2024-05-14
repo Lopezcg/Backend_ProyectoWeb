@@ -2,6 +2,7 @@ package com.backend.backend_web;
 
 import com.backend.backend_web.dto.PropiedadDTO;
 import com.backend.backend_web.entity.Propiedad;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.PropiedadRepository;
 import com.backend.backend_web.service.PropiedadService;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ class PropiedadServiceTest {
     }
 
     @Test
-    void whenGetById_thenPropiedadDTOShouldBeReturned() {
+    void whenGetById_thenPropiedadDTOShouldBeReturned() throws RegistroNoEncontradoException {
         when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
         when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
@@ -63,7 +64,7 @@ class PropiedadServiceTest {
         when(propiedadRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> propiedadService.get(1L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(RegistroNoEncontradoException.class)
                 .hasMessageContaining("Propiedad no encontrada con el ID: 1");
     }
 
@@ -91,7 +92,7 @@ class PropiedadServiceTest {
     }
 
     @Test
-    void whenUpdate_thenPropiedadDTOShouldBeReturned() {
+    void whenUpdate_thenPropiedadDTOShouldBeReturned() throws RegistroNoEncontradoException {
         lenient().when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
         lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
         lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
@@ -104,7 +105,7 @@ class PropiedadServiceTest {
     }
 
     @Test
-    void whenDelete_thenRepositoryShouldBeCalled() {
+    void whenDelete_thenRepositoryShouldBeCalled() throws RegistroNoEncontradoException {
         doNothing().when(propiedadRepository).deleteById(1L);
 
         propiedadService.delete(1L);

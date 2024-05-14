@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.backend.backend_web.controller.PropiedadController;
 import com.backend.backend_web.dto.PropiedadDTO;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.PropiedadService;
 
 @SpringBootTest
@@ -100,12 +101,12 @@ class PropiedadControllerTest {
     // }
 
     @Test
-    void testUpdatePropiedad_NullInput() {
+    void testUpdatePropiedad_NullInput() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 
         // Act
-        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad( null);
+        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad(null);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -115,7 +116,7 @@ class PropiedadControllerTest {
     }
 
     @Test
-    void testDeletePropiedad() {
+    void testDeletePropiedad() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 

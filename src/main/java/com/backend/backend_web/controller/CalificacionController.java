@@ -1,11 +1,13 @@
 package com.backend.backend_web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.CalificacionDTO;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.CalificacionService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +27,11 @@ public class CalificacionController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> createCalificacion(@RequestBody CalificacionDTO Calificacion) {
-        try {
-            if (Calificacion == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            CalificacionDTO savedCalificacion = service.save(Calificacion);
-            return ResponseEntity.ok().body(savedCalificacion);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage());
-        }
+    public ResponseEntity<CalificacionDTO> createCalificacion(@RequestBody CalificacionDTO Calificacion)
+            throws IllegalArgumentException, IllegalStateException,
+            DataIntegrityViolationException {
+        CalificacionDTO savedCalificacion = service.save(Calificacion);
+        return ResponseEntity.ok().body(savedCalificacion);
     }
 
     @CrossOrigin
@@ -45,7 +42,8 @@ public class CalificacionController {
 
     @CrossOrigin
     @GetMapping("/{id}")
-    public ResponseEntity<CalificacionDTO> readCalificacion(@PathVariable Long id) {
+    public ResponseEntity<CalificacionDTO> readCalificacion(@PathVariable Long id)
+            throws RegistroNoEncontradoException {
         return ResponseEntity.ok().body(service.get(id));
     }
 
@@ -57,16 +55,17 @@ public class CalificacionController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> updateCalificacion(@RequestBody CalificacionDTO calificacion) {
-        try {
-            if (calificacion == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            CalificacionDTO updatedCalificacion = service.update(calificacion);
-            return ResponseEntity.ok().body(updatedCalificacion);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage());
-        }
+    public ResponseEntity<CalificacionDTO> updateCalificacion(@RequestBody CalificacionDTO calificacion)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (calificacion == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        CalificacionDTO updatedCalificacion = service.update(calificacion);
+        return ResponseEntity.ok().body(updatedCalificacion);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e.getLocalizedMessage());
+        // }
     }
 
     @CrossOrigin

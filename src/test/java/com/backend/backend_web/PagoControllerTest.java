@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.backend.backend_web.controller.PagoController;
 import com.backend.backend_web.dto.PagoDTO;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.PagoService;
 
 import org.springframework.http.HttpStatus;
@@ -69,7 +70,7 @@ class PagoControllerTest {
         when(service.get()).thenReturn(pagos);
 
         // Act
-        ResponseEntity<List<PagoDTO>> responseEntity = controller.readAllPagos();
+        ResponseEntity<Iterable<PagoDTO>> responseEntity = controller.readAllPagos();
 
         // Assert
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -80,7 +81,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testReadPago() {
+    void testReadPago() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         PagoDTO pagoDTO = new PagoDTO();
@@ -99,7 +100,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testReadPago_NotFound() {
+    void testReadPago_NotFound() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 
@@ -129,7 +130,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testUpdatePago() {
+    void testUpdatePago() throws IllegalArgumentException, RegistroNoEncontradoException {
         // Arrange
         PagoDTO pagoDTO = new PagoDTO();
         PagoDTO updatedPagoDTO = new PagoDTO();
@@ -148,7 +149,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testUpdatePago_NullInput() {
+    void testUpdatePago_NullInput() throws IllegalArgumentException, RegistroNoEncontradoException {
         // Arrange
         PagoDTO pagoDTO = null;
 
@@ -183,7 +184,7 @@ class PagoControllerTest {
         when(service.get()).thenThrow(new RuntimeException("Error getting pagos"));
 
         // Act
-        ResponseEntity<List<PagoDTO>> responseEntity = controller.readAllPagos();
+        ResponseEntity<Iterable<PagoDTO>> responseEntity = controller.readAllPagos();
 
         // Assert
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
@@ -193,7 +194,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testReadPago_Exception() {
+    void testReadPago_Exception() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         when(service.get(id)).thenThrow(new RuntimeException("Error getting pago with id: " + id));
@@ -225,7 +226,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testUpdatePago_Exception() {
+    void testUpdatePago_Exception() throws IllegalArgumentException, RegistroNoEncontradoException {
         // Arrange
         PagoDTO pagoDTO = new PagoDTO();
         when(service.update(any(PagoDTO.class))).thenThrow(new RuntimeException("Error updating pago"));

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.backend.backend_web.dto.PagoDTO;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.PagoService;
 
 @RequestMapping("/pago")
@@ -25,23 +26,22 @@ public class PagoController {
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PagoDTO> createPago(@RequestBody PagoDTO pagoDTO) {
-        try {
-            if (pagoDTO == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            PagoDTO savedPago = service.save(pagoDTO);
-            return ResponseEntity.ok().body(savedPago);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        // try {
+        // if (pagoDTO == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        PagoDTO savedPago = service.save(pagoDTO);
+        return ResponseEntity.ok().body(savedPago);
+        // } catch (Exception e) {
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        // }
     }
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PagoDTO>> readAllPagos() {
+    public ResponseEntity<Iterable<PagoDTO>> readAllPagos() {
         try {
-            List<PagoDTO> pagos = service.get();
-            return ResponseEntity.ok().body(pagos);
+            return ResponseEntity.ok().body(service.get());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
@@ -49,17 +49,17 @@ public class PagoController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagoDTO> readPago(@PathVariable Long id) {
-        try {
-            PagoDTO pagoDTO = service.get(id);
-            if (pagoDTO != null) {
-                return ResponseEntity.ok().body(pagoDTO);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    public ResponseEntity<PagoDTO> readPago(@PathVariable Long id) throws RegistroNoEncontradoException {
+        // try {
+        PagoDTO pagoDTO = service.get(id);
+        // if (pagoDTO != null) {
+        return ResponseEntity.ok().body(pagoDTO);
+        // } else {
+        // return ResponseEntity.notFound().build();
+        // }
+        // } catch (Exception e) {
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        // }
     }
 
     @CrossOrigin
@@ -75,16 +75,17 @@ public class PagoController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagoDTO> updatePago(@RequestBody PagoDTO pagoDTO) {
-        try {
-            if (pagoDTO == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            PagoDTO updatedPago = service.update(pagoDTO);
-            return ResponseEntity.ok().body(updatedPago);
-        } catch (Exception e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    public ResponseEntity<PagoDTO> updatePago(@RequestBody PagoDTO pagoDTO)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (pagoDTO == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        PagoDTO updatedPago = service.update(pagoDTO);
+        return ResponseEntity.ok().body(updatedPago);
+        // } catch (Exception e) {
+        // System.out.println(e);
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        // }
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.backend.backend_web.controller.SolicitudArriendoController;
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.SolicitudArriendoService;
 
 import org.springframework.http.HttpStatus;
@@ -81,7 +82,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testReadSolicitudArriendo() {
+    void testReadSolicitudArriendo() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();
@@ -100,7 +101,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testReadSolicitudArriendo_NotFound() {
+    void testReadSolicitudArriendo_NotFound() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 
@@ -116,7 +117,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testUpdateSolicitudArriendo() {
+    void testUpdateSolicitudArriendo() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();
@@ -138,7 +139,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testUpdateSolicitudArriendo_NullInput() {
+    void testUpdateSolicitudArriendo_NullInput() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendoDTO solicitudArriendoDTO = null;
@@ -154,7 +155,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testUpdateSolicitudArriendo_InvalidId() {
+    void testUpdateSolicitudArriendo_InvalidId() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();
@@ -171,7 +172,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testUpdateSolicitudArriendo_NotFound() {
+    void testUpdateSolicitudArriendo_NotFound() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();
@@ -229,7 +230,7 @@ class SolicitudArriendoControllerTest {
     }
 
     @Test
-    void testUpdateSolicitudArriendo_Exception() {
+    void testUpdateSolicitudArriendo_Exception() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         SolicitudArriendoDTO solicitudArriendoDTO = new SolicitudArriendoDTO();

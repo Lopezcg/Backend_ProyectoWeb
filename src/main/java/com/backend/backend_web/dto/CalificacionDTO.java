@@ -1,6 +1,5 @@
 package com.backend.backend_web.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,6 @@ import lombok.Setter;
 public class CalificacionDTO {
     private Long id;
     private String comentario;
-    private float puntuacion;
+    private Float puntuacion;
 
 }

@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendadorRepository;
 import com.backend.backend_web.service.ArrendadorService;
 
@@ -38,7 +39,7 @@ class ArrendadorServiceTest {
     private ArrendadorService service;
 
     @Test
-    void testGetArrendadorWhenFound() {
+    void testGetArrendadorWhenFound() throws RegistroNoEncontradoException {
         Long id = 1L;
         Arrendador arrendador = new Arrendador();
         ArrendadorDTO arrendadorDTO = new ArrendadorDTO();
@@ -150,7 +151,7 @@ class ArrendadorServiceTest {
     }
 
     @Test
-    void update_ShouldUpdateArrendador() {
+    void update_ShouldUpdateArrendador() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
         Arrendador arrendadorOriginal = new Arrendador();

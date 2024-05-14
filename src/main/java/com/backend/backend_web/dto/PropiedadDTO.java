@@ -21,5 +21,4 @@ public class PropiedadDTO {
     private Long habitaciones;
     private Boolean asador;
     private Boolean mascotas;
-
 }
