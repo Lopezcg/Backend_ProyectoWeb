@@ -75,16 +75,17 @@ public class PagoController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagoDTO> updatePago(@RequestBody PagoDTO pagoDTO) {
-        try {
-            if (pagoDTO == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            PagoDTO updatedPago = service.update(pagoDTO);
-            return ResponseEntity.ok().body(updatedPago);
-        } catch (Exception e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    public ResponseEntity<PagoDTO> updatePago(@RequestBody PagoDTO pagoDTO)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (pagoDTO == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        PagoDTO updatedPago = service.update(pagoDTO);
+        return ResponseEntity.ok().body(updatedPago);
+        // } catch (Exception e) {
+        // System.out.println(e);
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        // }
     }
 }

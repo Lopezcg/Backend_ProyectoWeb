@@ -84,16 +84,17 @@ public class ArrendadorController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> updateArrendador(@RequestBody Arrendador arrendador) {
-        try {
-            if (arrendador == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            ArrendadorDTO test = service.update(arrendador);
-            return ResponseEntity.ok().body(test);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<ArrendadorDTO> updateArrendador(@RequestBody Arrendador arrendador)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (arrendador == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        ArrendadorDTO test = service.update(arrendador);
+        return ResponseEntity.ok().body(test);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e);
+        // }
     }
 
     @CrossOrigin

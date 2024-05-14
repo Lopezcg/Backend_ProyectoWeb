@@ -26,7 +26,7 @@ public class ArrendatarioService {
     @Autowired
     ModelMapper modelMapper;
 
-    public ArrendatarioDTO get(Long id) throws RegistroNoEncontradoException {
+    public ArrendadorDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
         if (!arrendatarioOptional.isPresent()) {
             throw new RegistroNoEncontradoException("Arrendatario no encontrado con el ID: " + id);
@@ -69,10 +69,15 @@ public class ArrendatarioService {
         return arrendatarioDTO;
     }
 
-    public ArrendadorDTO update(Arrendatario arrendatarioDTO) throws ValidationException {
-        System.out.println("ENTREEEEE");
+    public ArrendadorDTO update(Arrendatario arrendatarioDTO)
+            throws ValidationException, IllegalArgumentException, RegistroNoEncontradoException {
+        if (arrendatarioDTO == null) {
+            throw new IllegalArgumentException("El objeto ArrendatarioDTO proporcionado es nulo");
+        }
+
         Arrendatario arrendatarioExistente = repository.findById(arrendatarioDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + arrendatarioDTO.getId()));
 
         // Actualizar los campos escalares
         arrendatarioExistente.setApellido(arrendatarioDTO.getApellido());

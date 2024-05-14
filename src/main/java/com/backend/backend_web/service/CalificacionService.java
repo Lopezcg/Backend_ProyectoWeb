@@ -74,14 +74,23 @@ public class CalificacionService {
         return CalificacionDTO;
     }
 
-    public CalificacionDTO update(CalificacionDTO CalificacionDTO) throws RegistroNoEncontradoException {
+    public CalificacionDTO update(CalificacionDTO CalificacionDTO)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
         if (CalificacionDTO == null) {
-            throw new RuntimeException("Registro no encontrado");
+            throw new IllegalArgumentException("El objeto CalificacionDTO proporcionado es nulo");
+
         }
-        Calificacion Calificacion = modelMapper.map(get(CalificacionDTO.getId()), Calificacion.class);
-        Calificacion.setStatus(0);
-        Calificacion.setComentario(CalificacionDTO.getComentario());
-        Calificacion.setPuntuacion(CalificacionDTO.getPuntuacion());
+
+        // Intentar recuperar la entidad Calificacion existente desde la base de datos
+        final CalificacionDTO finalCalificacionDTO = CalificacionDTO;
+        Calificacion Calificacion = repository.findById(finalCalificacionDTO.getId())
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + finalCalificacionDTO.getId()));
+
+        // Actualizar los campos de Calificacion
+        Calificacion.setStatus(0); // Suponiendo que 0 representa un estado particular
+        Calificacion.setComentario(finalCalificacionDTO.getComentario());
+        Calificacion.setPuntuacion(finalCalificacionDTO.getPuntuacion());
 
         Calificacion = repository.save(Calificacion);
         CalificacionDTO = modelMapper.map(Calificacion, CalificacionDTO.class);

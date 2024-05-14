@@ -37,7 +37,7 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO)
+    public ResponseEntity<ArrendadorDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         // try {
@@ -46,7 +46,7 @@ public class ArrendatarioController {
         // }
         Arrendatario savedarrendatario = service.save(arrendatarioDTO);
         // Convert Arrendador to ArrendadorDTO
-        ArrendatarioDTO test = modelMapper.map(savedarrendatario, ArrendatarioDTO.class);
+        ArrendadorDTO test = modelMapper.map(savedarrendatario, ArrendadorDTO.class);
 
         return ResponseEntity.ok().body(test);
         // } catch (Exception e) {
@@ -62,7 +62,7 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendatarioDTO> readArrendatario(@PathVariable Long id)
+    public ResponseEntity<ArrendadorDTO> readArrendatario(@PathVariable Long id)
             throws RegistroNoEncontradoException {
         return ResponseEntity.ok().body(service.get(id));
     }
@@ -76,16 +76,20 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> updateArrendatario(@RequestBody Arrendatario arrendatario) {
-        try {
-            if (arrendatario == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            ArrendadorDTO updatedarrendatario = service.update(arrendatario);
-            return ResponseEntity.ok().body(updatedarrendatario);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<ArrendadorDTO> updateArrendatario(@RequestBody Arrendatario arrendatario)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (arrendatario == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        ArrendadorDTO updatedarrendatario = service.update(arrendatario);
+        return ResponseEntity.ok().body(updatedarrendatario);
+        // }catch(
+
+        // Exception e)
+        // {
+        // throw new RuntimeException(e);
+        // }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")

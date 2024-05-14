@@ -60,16 +60,17 @@ public class SolicitudArriendoController {
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(
-            @RequestBody SolicitudArriendoDTO solicitudArriendo) {
-        try {
-            if (solicitudArriendo == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo);
-            return ResponseEntity.ok().body(updatedSolicitud);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+            @RequestBody SolicitudArriendoDTO solicitudArriendo)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (solicitudArriendo == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo);
+        return ResponseEntity.ok().body(updatedSolicitud);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e.getMessage());
+        // }
     }
 
     @CrossOrigin

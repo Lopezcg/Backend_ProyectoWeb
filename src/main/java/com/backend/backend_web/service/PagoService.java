@@ -71,13 +71,16 @@ public class PagoService {
         return pagoDTO;
     }
 
-    public PagoDTO update(PagoDTO pagoDTO) {
-        System.out.println("ENTREEEEE2");
+    public PagoDTO update(PagoDTO pagoDTO) throws RegistroNoEncontradoException, IllegalArgumentException {
+        if (pagoDTO == null) {
+            throw new IllegalArgumentException("El objeto PagoDTO proporcionado es nulo");
+        }
         System.out.println(pagoDTO.getId());
 
         // Recuperar el Pago existente desde la base de datos
         Pago pago = repository.findById(pagoDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + pagoDTO.getId()));
 
         pago.setBanco(pagoDTO.getBanco());
         pago.setNumCuenta(pagoDTO.getNumCuenta());

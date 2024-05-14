@@ -130,7 +130,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testUpdatePago() {
+    void testUpdatePago() throws IllegalArgumentException, RegistroNoEncontradoException {
         // Arrange
         PagoDTO pagoDTO = new PagoDTO();
         PagoDTO updatedPagoDTO = new PagoDTO();
@@ -149,7 +149,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testUpdatePago_NullInput() {
+    void testUpdatePago_NullInput() throws IllegalArgumentException, RegistroNoEncontradoException {
         // Arrange
         PagoDTO pagoDTO = null;
 
@@ -226,7 +226,7 @@ class PagoControllerTest {
     }
 
     @Test
-    void testUpdatePago_Exception() {
+    void testUpdatePago_Exception() throws IllegalArgumentException, RegistroNoEncontradoException {
         // Arrange
         PagoDTO pagoDTO = new PagoDTO();
         when(service.update(any(PagoDTO.class))).thenThrow(new RuntimeException("Error updating pago"));

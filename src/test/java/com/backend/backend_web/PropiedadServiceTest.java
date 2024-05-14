@@ -105,7 +105,7 @@ class PropiedadServiceTest {
     }
 
     @Test
-    void whenDelete_thenRepositoryShouldBeCalled() {
+    void whenDelete_thenRepositoryShouldBeCalled() throws RegistroNoEncontradoException {
         doNothing().when(propiedadRepository).deleteById(1L);
 
         propiedadService.delete(1L);

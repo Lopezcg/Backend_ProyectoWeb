@@ -72,10 +72,16 @@ public class ArrendadorService {
         return arrendadorDTO;
     }
 
-    public ArrendadorDTO update(Arrendador arrendadorDTO) {
-        System.out.println("ENTREEEEE");
+    public ArrendadorDTO update(Arrendador arrendadorDTO)
+            throws IllegalArgumentException, RegistroNoEncontradoException {
+        if (arrendadorDTO == null) {
+            throw new IllegalArgumentException("El objeto ArrendadorDTO proporcionado es nulo");
+        }
+
+        // Recuperar la entidad Arrendador existente desde la base de datos
         Arrendador arrendadorExistente = repository.findById(arrendadorDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + arrendadorDTO.getId()));
 
         // Actualizar los campos escalares
         arrendadorExistente.setApellido(arrendadorDTO.getApellido());

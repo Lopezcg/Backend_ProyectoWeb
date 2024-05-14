@@ -97,7 +97,7 @@ class PagoServiceTest {
     }
 
     @Test
-    void testUpdateWhenFound() {
+    void testUpdateWhenFound() throws IllegalArgumentException, RegistroNoEncontradoException {
         Long id = 1L;
         PagoDTO pagoDTO = new PagoDTO();
         pagoDTO.setId(id);

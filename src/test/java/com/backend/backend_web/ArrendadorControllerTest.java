@@ -114,7 +114,7 @@ class ArrendadorControllerTest {
     }
 
     @Test
-    void testUpdateArrendador_Failure() {
+    void testUpdateArrendador_Failure() throws RegistroNoEncontradoException {
         ResponseEntity<ArrendadorDTO> response = controller.updateArrendador(null);
 
         assertEquals(BAD_REQUEST, response.getStatusCode());

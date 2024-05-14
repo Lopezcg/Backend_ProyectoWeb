@@ -106,7 +106,7 @@ class PropiedadControllerTest {
         Long id = 1L;
 
         // Act
-        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad( null);
+        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad(null);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -116,7 +116,7 @@ class PropiedadControllerTest {
     }
 
     @Test
-    void testDeletePropiedad() {
+    void testDeletePropiedad() throws RegistroNoEncontradoException {
         // Arrange
         Long id = 1L;
 

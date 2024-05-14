@@ -55,16 +55,17 @@ public class CalificacionController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> updateCalificacion(@RequestBody CalificacionDTO calificacion) {
-        try {
-            if (calificacion == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            CalificacionDTO updatedCalificacion = service.update(calificacion);
-            return ResponseEntity.ok().body(updatedCalificacion);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getLocalizedMessage());
-        }
+    public ResponseEntity<CalificacionDTO> updateCalificacion(@RequestBody CalificacionDTO calificacion)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (calificacion == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        CalificacionDTO updatedCalificacion = service.update(calificacion);
+        return ResponseEntity.ok().body(updatedCalificacion);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e.getLocalizedMessage());
+        // }
     }
 
     @CrossOrigin

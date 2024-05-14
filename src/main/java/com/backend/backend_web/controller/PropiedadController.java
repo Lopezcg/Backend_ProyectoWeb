@@ -50,16 +50,17 @@ public class PropiedadController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad) {
-        try {
-            if (propiedad == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            PropiedadDTO updatedPropiedad = service.update(propiedad);
-            return ResponseEntity.ok().body(updatedPropiedad);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+    public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        // try {
+        // if (propiedad == null) {
+        // return ResponseEntity.badRequest().build();
+        // }
+        PropiedadDTO updatedPropiedad = service.update(propiedad);
+        return ResponseEntity.ok().body(updatedPropiedad);
+        // } catch (Exception e) {
+        // throw new RuntimeException(e.getMessage());
+        // }
     }
 
     @CrossOrigin

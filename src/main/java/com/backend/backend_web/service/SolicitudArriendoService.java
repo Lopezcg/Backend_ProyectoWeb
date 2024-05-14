@@ -74,9 +74,15 @@ public class SolicitudArriendoService {
         return solicitudDTO;
     }
 
-    public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO) {
+    public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO)
+            throws RegistroNoEncontradoException, IllegalArgumentException {
+        if (solicitudDTO == null) {
+            throw new IllegalArgumentException("El objeto SolicitudArriendoDTO proporcionado es nulo");
+        }
+
         SolicitudArriendo solicitud = repository.findById(solicitudDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + solicitudDTO.getId()));
 
         // Actualizamos los campos necesarios de la entidad
         solicitud.setEstado(solicitudDTO.isEstado()); // Asumiendo que esto es un estado activo/inactivo
