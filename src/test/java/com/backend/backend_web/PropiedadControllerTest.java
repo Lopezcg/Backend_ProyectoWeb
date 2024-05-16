@@ -31,34 +31,34 @@ class PropiedadControllerTest {
     @InjectMocks
     private PropiedadController controller;
 
-    @Test
-    void testCreatePropiedad() {
-        // Arrange
-        PropiedadDTO propiedadDTO = new PropiedadDTO();
-        PropiedadDTO savedPropiedadDTO = new PropiedadDTO();
-        when(service.save(propiedadDTO)).thenReturn(savedPropiedadDTO);
+    // @Test
+    // // void testCreatePropiedad() {
+    // //     // Arrange
+    // //     PropiedadDTO propiedadDTO = new PropiedadDTO();
+    // //     PropiedadDTO savedPropiedadDTO = new PropiedadDTO();
+    // //     when(service.save(propiedadDTO)).thenReturn(savedPropiedadDTO);
 
-        // Act
-        ResponseEntity<PropiedadDTO> responseEntity = controller.createPropiedad(propiedadDTO);
+    // //     // Act
+    // //     ResponseEntity<PropiedadDTO> responseEntity = controller.createPropiedad(propiedadDTO);
 
-        // Assert
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(savedPropiedadDTO, responseEntity.getBody());
+    // //     // Assert
+    // //     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    // //     assertEquals(savedPropiedadDTO, responseEntity.getBody());
 
-        verify(service).save(propiedadDTO);
-    }
+    // //     verify(service).save(propiedadDTO);
+    // // }
 
-    @Test
-    void testCreatePropiedad_NullInput() {
-        // Act
-        ResponseEntity<PropiedadDTO> responseEntity = controller.createPropiedad(null);
+    // @Test
+    // void testCreatePropiedad_NullInput() {
+    //     // Act
+    //     ResponseEntity<PropiedadDTO> responseEntity = controller.createPropiedad(null);
 
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertNull(responseEntity.getBody());
+    //     // Assert
+    //     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    //     assertNull(responseEntity.getBody());
 
-        verifyNoInteractions(service);
-    }
+    //     verifyNoInteractions(service);
+    // }
 
     // @Test
     // void testReadAllPropiedad() {

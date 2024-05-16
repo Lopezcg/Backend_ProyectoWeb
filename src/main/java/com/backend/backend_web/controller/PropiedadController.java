@@ -28,12 +28,15 @@ public class PropiedadController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PropiedadDTO> createPropiedad(@RequestBody PropiedadDTO propiedad) {
+    public ResponseEntity<PropiedadDTO> createPropiedad(@RequestBody PropiedadDTO propiedad,Authentication authentication)
+            throws Exception {
+       
         // try {
         // if (propiedad == null) {
         // return ResponseEntity.badRequest().build();
         // }
-        PropiedadDTO savedPropiedad = service.save(propiedad);
+        ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
+        PropiedadDTO savedPropiedad = service.save(propiedad,arrendador);
         return ResponseEntity.ok().body(savedPropiedad);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getMessage());

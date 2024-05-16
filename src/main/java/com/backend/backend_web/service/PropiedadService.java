@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.dto.PropiedadDTO;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Propiedad;
@@ -42,7 +43,7 @@ public class PropiedadService {
         return propiedadesDTO;
     }
 
-    public PropiedadDTO save(PropiedadDTO propiedadDTO) throws IllegalArgumentException, IllegalStateException,
+    public PropiedadDTO save(PropiedadDTO propiedadDTO,ArrendadorDTO arrendadorDTO) throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         if (propiedadDTO == null) {
             throw new IllegalArgumentException("El DTO de Propiedad no puede ser nulo");
@@ -53,10 +54,11 @@ public class PropiedadService {
         }
 
         Propiedad propiedad;
-
+        Arrendador arrendador=modelMapper.map(arrendadorDTO, Arrendador.class);
         try {
             propiedad = modelMapper.map(propiedadDTO, Propiedad.class);
             propiedad.setStatus(0); // Replace Status.ACTIVE with the appropriate value
+            propiedad.setArrendador(arrendador);
             propiedad = repository.save(propiedad);
         } catch (DataIntegrityViolationException e) {
             throw new IllegalStateException("Error al guardar la propiedad debido a una violación de integridad", e);
