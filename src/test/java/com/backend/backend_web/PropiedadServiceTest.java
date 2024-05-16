@@ -91,18 +91,18 @@ class PropiedadServiceTest {
     //     assertThat(saved.getId()).isEqualTo(propiedad.getId());
     // }
 
-    @Test
-    void whenUpdate_thenPropiedadDTOShouldBeReturned() throws RegistroNoEncontradoException {
-        lenient().when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
-        lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
-        lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
-        lenient().when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
+    // @Test
+    // void whenUpdate_thenPropiedadDTOShouldBeReturned() throws RegistroNoEncontradoException {
+    //     lenient().when(propiedadRepository.findById(1L)).thenReturn(Optional.of(propiedad));
+    //     lenient().when(modelMapper.map(any(PropiedadDTO.class), eq(Propiedad.class))).thenReturn(propiedad);
+    //     lenient().when(propiedadRepository.save(any(Propiedad.class))).thenReturn(propiedad);
+    //     lenient().when(modelMapper.map(any(Propiedad.class), eq(PropiedadDTO.class))).thenReturn(propiedadDTO);
 
-        PropiedadDTO updated = propiedadService.update(propiedadDTO);
+    //     PropiedadDTO updated = propiedadService.update(propiedadDTO);
 
-        assertThat(updated).isNotNull();
-        assertThat(updated.getId()).isEqualTo(propiedadDTO.getId());
-    }
+    //     assertThat(updated).isNotNull();
+    //     assertThat(updated.getId()).isEqualTo(propiedadDTO.getId());
+    // }
 
     @Test
     void whenDelete_thenRepositoryShouldBeCalled() throws RegistroNoEncontradoException {

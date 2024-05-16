@@ -43,7 +43,8 @@ public class PropiedadService {
         return propiedadesDTO;
     }
 
-    public PropiedadDTO save(PropiedadDTO propiedadDTO,ArrendadorDTO arrendadorDTO) throws IllegalArgumentException, IllegalStateException,
+    public PropiedadDTO save(PropiedadDTO propiedadDTO, ArrendadorDTO arrendadorDTO)
+            throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         if (propiedadDTO == null) {
             throw new IllegalArgumentException("El DTO de Propiedad no puede ser nulo");
@@ -54,7 +55,7 @@ public class PropiedadService {
         }
 
         Propiedad propiedad;
-        Arrendador arrendador=modelMapper.map(arrendadorDTO, Arrendador.class);
+        Arrendador arrendador = modelMapper.map(arrendadorDTO, Arrendador.class);
         try {
             propiedad = modelMapper.map(propiedadDTO, Propiedad.class);
             propiedad.setStatus(0); // Replace Status.ACTIVE with the appropriate value
@@ -71,7 +72,7 @@ public class PropiedadService {
         return propiedadDTO;
     }
 
-    public PropiedadDTO update(PropiedadDTO propiedadDTO)
+    public PropiedadDTO update(PropiedadDTO propiedadDTO, ArrendadorDTO arrendadorDTO)
             throws RegistroNoEncontradoException, IllegalArgumentException {
         if (propiedadDTO == null) {
             throw new IllegalArgumentException("El objeto PropiedadDTO proporcionado es nulo");
@@ -81,7 +82,9 @@ public class PropiedadService {
         Propiedad propiedad = repository.findById(propiedadDTO.getId())
                 .orElseThrow(() -> new RegistroNoEncontradoException(
                         "Registro no encontrado para el ID: " + propiedadDTO.getId()));
-
+        if (!propiedad.getArrendador().getId().equals(arrendadorDTO.getId())) {
+            throw new IllegalArgumentException("La propiedad no pertenece al arrendador proporcionado");
+        }
         // Actualizar los campos con los valores proporcionados desde el DTO
         propiedad.setNombre(propiedadDTO.getNombre());
         propiedad.setDescripcion(propiedadDTO.getDescripcion());

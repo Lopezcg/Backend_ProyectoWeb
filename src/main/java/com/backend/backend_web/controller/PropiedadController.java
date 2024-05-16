@@ -59,13 +59,14 @@ public class PropiedadController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad)
-            throws RegistroNoEncontradoException, IllegalArgumentException {
+    public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad,Authentication authentication)
+            throws Exception {
         // try {
         // if (propiedad == null) {
         // return ResponseEntity.badRequest().build();
         // }
-        PropiedadDTO updatedPropiedad = service.update(propiedad);
+        ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
+        PropiedadDTO updatedPropiedad = service.update(propiedad,arrendador);
         return ResponseEntity.ok().body(updatedPropiedad);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getMessage());

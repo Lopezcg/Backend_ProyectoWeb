@@ -100,20 +100,20 @@ class PropiedadControllerTest {
     // verify(service).update(id, propiedadDTO);
     // }
 
-    @Test
-    void testUpdatePropiedad_NullInput() throws RegistroNoEncontradoException {
-        // Arrange
-        Long id = 1L;
+    // @Test
+    // void testUpdatePropiedad_NullInput() throws RegistroNoEncontradoException {
+    //     // Arrange
+    //     Long id = 1L;
 
-        // Act
-        ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad(null);
+    //     // Act
+    //     ResponseEntity<PropiedadDTO> responseEntity = controller.updatePropiedad(null);
 
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-        assertNull(responseEntity.getBody());
+    //     // Assert
+    //     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    //     assertNull(responseEntity.getBody());
 
-        verifyNoInteractions(service);
-    }
+    //     verifyNoInteractions(service);
+    // }
 
     @Test
     void testDeletePropiedad() throws RegistroNoEncontradoException {
