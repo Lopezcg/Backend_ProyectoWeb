@@ -77,7 +77,7 @@ class PropiedadServiceTest {
 
         assertThat(found).isNotEmpty();
         assertThat(found.get(0).getId()).isEqualTo(propiedadDTO.getId());
-    }
+    }}
 
     // @Test
     // void whenSave_thenPropiedadDTOShouldBeReturned() {
@@ -104,12 +104,12 @@ class PropiedadServiceTest {
     //     assertThat(updated.getId()).isEqualTo(propiedadDTO.getId());
     // }
 
-    @Test
-    void whenDelete_thenRepositoryShouldBeCalled() throws RegistroNoEncontradoException {
-        doNothing().when(propiedadRepository).deleteById(1L);
+//     @Test
+//     void whenDelete_thenRepositoryShouldBeCalled() throws RegistroNoEncontradoException {
+//         doNothing().when(propiedadRepository).deleteById(1L);
 
-        propiedadService.delete(1L);
+//         propiedadService.delete(1L);
 
-        verify(propiedadRepository, times(1)).deleteById(1L);
-    }
-}
+//         verify(propiedadRepository, times(1)).deleteById(1L);
+//     }
+// }

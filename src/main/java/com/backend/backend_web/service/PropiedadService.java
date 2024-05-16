@@ -104,11 +104,12 @@ public class PropiedadService {
         return updatedPropiedadDTO;
     }
 
-    public void delete(Long id) throws RegistroNoEncontradoException {
-        Optional<Propiedad> propiedad = repository.findById(id);
-        if (!propiedad.isPresent()) {
-            throw new RegistroNoEncontradoException(
-                    "Propiedad no encontrada con ID " + id + " por lo tanto no se puede eliminar");
+    public void delete(Long id, ArrendadorDTO arrendadorDTO) throws RegistroNoEncontradoException {
+        Propiedad propiedad = repository.findById(id)
+                .orElseThrow(() -> new RegistroNoEncontradoException(
+                        "Registro no encontrado para el ID: " + id));
+        if (!propiedad.getArrendador().getId().equals(arrendadorDTO.getId())) {
+            throw new IllegalArgumentException("La propiedad no pertenece al arrendador proporcionado");
         }
         repository.deleteById(id);
     }

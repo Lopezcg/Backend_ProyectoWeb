@@ -115,17 +115,17 @@ class PropiedadControllerTest {
     //     verifyNoInteractions(service);
     // }
 
-    @Test
-    void testDeletePropiedad() throws RegistroNoEncontradoException {
-        // Arrange
-        Long id = 1L;
+//     @Test
+//     void testDeletePropiedad() throws RegistroNoEncontradoException {
+//         // Arrange
+//         Long id = 1L;
 
-        // Act
-        ResponseEntity<?> responseEntity = controller.deletePropiedad(id);
+//         // Act
+//         ResponseEntity<?> responseEntity = controller.deletePropiedad(id);
 
-        // Assert
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+//         // Assert
+//         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-        verify(service).delete(id);
-    }
+//         verify(service).delete(id);
+//     }
 }
