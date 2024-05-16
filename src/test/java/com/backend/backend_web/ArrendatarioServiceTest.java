@@ -19,7 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.backend.backend_web.dto.ArrendadorDTO;
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendatarioRepository;
@@ -50,20 +50,20 @@ class ArrendatarioServiceTest {
         Long id = 1L;
         Arrendatario arrendatario = new Arrendatario();
         arrendatario.setId(id);
-        ArrendadorDTO ArrendadorDTO = new ArrendadorDTO();
-        ArrendadorDTO.setId(id);
+        ArrendatarioDTO ArrendatarioDTO = new ArrendatarioDTO();
+        ArrendatarioDTO.setId(id);
 
         when(repository.findById(id)).thenReturn(Optional.of(arrendatario));
-        when(modelMapper.map(arrendatario, ArrendadorDTO.class)).thenReturn(ArrendadorDTO);
+        when(modelMapper.map(arrendatario, ArrendatarioDTO.class)).thenReturn(ArrendatarioDTO);
 
         // Act
-        ArrendadorDTO result = service.get(id);
+        ArrendatarioDTO result = service.get(id);
 
         // Assert
         assertNotNull(result);
-        assertEquals(ArrendadorDTO, result);
+        assertEquals(ArrendatarioDTO, result);
         verify(repository).findById(id);
-        verify(modelMapper).map(arrendatario, ArrendadorDTO.class);
+        verify(modelMapper).map(arrendatario, ArrendatarioDTO.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -86,85 +86,85 @@ class ArrendatarioServiceTest {
         arrendatarios.add(new Arrendatario());
         arrendatarios.add(new Arrendatario());
 
-        List<ArrendadorDTO> arrendatariosDTO = arrendatarios.stream()
-                .map(arrendatario -> new ArrendadorDTO())
+        List<ArrendatarioDTO> arrendatariosDTO = arrendatarios.stream()
+                .map(arrendatario -> new ArrendatarioDTO())
                 .collect(Collectors.toList());
 
         when(repository.findAll()).thenReturn(arrendatarios);
-        when(modelMapper.map(any(Arrendatario.class), eq(ArrendadorDTO.class)))
-                .thenReturn(new ArrendadorDTO());
+        when(modelMapper.map(any(Arrendatario.class), eq(ArrendatarioDTO.class)))
+                .thenReturn(new ArrendatarioDTO());
 
         // Act
-        List<ArrendadorDTO> result = service.get();
+        List<ArrendatarioDTO> result = service.get();
 
         // Assert
         assertNotNull(result);
         assertEquals(arrendatariosDTO.size(), result.size());
         verify(repository).findAll();
-        verify(modelMapper, times(arrendatarios.size())).map(any(Arrendatario.class), eq(ArrendadorDTO.class));
+        verify(modelMapper, times(arrendatarios.size())).map(any(Arrendatario.class), eq(ArrendatarioDTO.class));
     }
 
     // @Test
     // void testSave() {
     // // Arrange
     // Arrendatario arrendatario = new Arrendatario();
-    // ArrendadorDTO ArrendadorDTO = new ArrendadorDTO();
+    // ArrendatarioDTO ArrendatarioDTO = new ArrendatarioDTO();
 
-    // when(modelMapper.map(ArrendadorDTO,
+    // when(modelMapper.map(ArrendatarioDTO,
     // Arrendatario.class)).thenReturn(arrendatario);
     // when(repository.save(arrendatario)).thenReturn(arrendatario);
     // when(modelMapper.map(arrendatario,
-    // ArrendadorDTO.class)).thenReturn(ArrendadorDTO);
+    // ArrendatarioDTO.class)).thenReturn(ArrendatarioDTO);
 
     // // Act
-    // ArrendadorDTO result = service.save(ArrendadorDTO);
+    // ArrendatarioDTO result = service.save(ArrendatarioDTO);
 
     // // Assert
     // assertNotNull(result);
-    // verify(modelMapper).map(ArrendadorDTO, Arrendatario.class);
+    // verify(modelMapper).map(ArrendatarioDTO, Arrendatario.class);
     // verify(repository).save(arrendatario);
-    // verify(modelMapper).map(arrendatario, ArrendadorDTO.class);
+    // verify(modelMapper).map(arrendatario, ArrendatarioDTO.class);
     // }
 
     // @Test
     // void testUpdate() {
     // // Arrange
     // Long id = 1L;
-    // ArrendadorDTO ArrendadorDTO = new ArrendadorDTO();
-    // ArrendadorDTO.setId(id);
+    // ArrendatarioDTO ArrendatarioDTO = new ArrendatarioDTO();
+    // ArrendatarioDTO.setId(id);
     // Arrendatario arrendatario = new Arrendatario();
     // arrendatario.setId(id);
 
     // when(repository.findById(id)).thenReturn(Optional.of(arrendatario));
     // when(repository.save(arrendatario)).thenReturn(arrendatario);
-    // when(modelMapper.map(any(ArrendadorDTO.class),
+    // when(modelMapper.map(any(ArrendatarioDTO.class),
     // eq(Arrendatario.class))).thenReturn(arrendatario);
     // when(modelMapper.map(arrendatario,
-    // ArrendadorDTO.class)).thenReturn(ArrendadorDTO);
+    // ArrendatarioDTO.class)).thenReturn(ArrendatarioDTO);
 
     // // Act
-    // ArrendadorDTO result = service.update(ArrendadorDTO);
+    // ArrendatarioDTO result = service.update(ArrendatarioDTO);
 
     // // Assert
     // assertNotNull(result);
     // verify(repository).findById(id);
     // verify(repository).save(arrendatario);
-    // verify(modelMapper).map(ArrendadorDTO, Arrendatario.class);
-    // verify(modelMapper).map(arrendatario, ArrendadorDTO.class);
+    // verify(modelMapper).map(ArrendatarioDTO, Arrendatario.class);
+    // verify(modelMapper).map(arrendatario, ArrendatarioDTO.class);
     // }
 
     // @Test
     // void testUpdate_EntityNotFound() {
     // // Arrange
     // Long id = 1L;
-    // ArrendadorDTO ArrendadorDTO = new ArrendadorDTO();
-    // ArrendadorDTO.setId(id);
+    // ArrendatarioDTO ArrendatarioDTO = new ArrendatarioDTO();
+    // ArrendatarioDTO.setId(id);
 
     // when(repository.findById(id)).thenReturn(Optional.empty());
 
     // // Act + Assert
     // assertThrows(EntityNotFoundException.class, () -> {
-    // service.update(ArrendadorDTO);
+    // service.update(ArrendatarioDTO);
     // });
     // }
 

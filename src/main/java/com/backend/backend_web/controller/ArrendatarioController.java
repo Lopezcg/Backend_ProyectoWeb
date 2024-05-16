@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.backend.backend_web.dto.ArrendadorDTO;
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.service.ArrendatarioService;
@@ -37,7 +37,7 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO)
+    public ResponseEntity<ArrendatarioDTO> createArrendatario(@RequestBody Arrendatario arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         // try {
@@ -45,8 +45,8 @@ public class ArrendatarioController {
         // return ResponseEntity.badRequest().build();
         // }
         Arrendatario savedarrendatario = service.save(arrendatarioDTO);
-        // Convert Arrendador to ArrendadorDTO
-        ArrendadorDTO test = modelMapper.map(savedarrendatario, ArrendadorDTO.class);
+        // Convert Arrendador to ArrendatarioDTO
+        ArrendatarioDTO test = modelMapper.map(savedarrendatario, ArrendatarioDTO.class);
 
         return ResponseEntity.ok().body(test);
         // } catch (Exception e) {
@@ -56,13 +56,13 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ArrendadorDTO> readAllArrendatario() {
+    public List<ArrendatarioDTO> readAllArrendatario() {
         return service.get();
     }
 
     @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> readArrendatario(@PathVariable Long id)
+    public ResponseEntity<ArrendatarioDTO> readArrendatario(@PathVariable Long id)
             throws RegistroNoEncontradoException {
         return ResponseEntity.ok().body(service.get(id));
     }
@@ -76,13 +76,13 @@ public class ArrendatarioController {
 
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArrendadorDTO> updateArrendatario(@RequestBody Arrendatario arrendatario)
+    public ResponseEntity<ArrendatarioDTO> updateArrendatario(@RequestBody Arrendatario arrendatario)
             throws RegistroNoEncontradoException, IllegalArgumentException {
         // try {
         // if (arrendatario == null) {
         // return ResponseEntity.badRequest().build();
         // }
-        ArrendadorDTO updatedarrendatario = service.update(arrendatario);
+        ArrendatarioDTO updatedarrendatario = service.update(arrendatario);
         return ResponseEntity.ok().body(updatedarrendatario);
         // }catch(
 
@@ -97,7 +97,7 @@ public class ArrendatarioController {
     public ResponseEntity<?> loginArrendador(@RequestBody Arrendatario arrendatario) {
         try {
             return service.login(arrendatario.getCorreo(), arrendatario.getContrasena())
-                    .map((ArrendadorDTO arrendadorDTO) -> {
+                    .map((ArrendatarioDTO arrendadorDTO) -> {
                         String token = jwtTokenService.generarToken(arrendadorDTO);
                         System.out.println("TOKEN: " + token);
                         return ResponseEntity.ok().body(Collections.singletonMap("token", token));

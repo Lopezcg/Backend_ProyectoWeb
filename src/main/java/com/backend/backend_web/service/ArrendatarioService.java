@@ -11,7 +11,7 @@ import java.util.Optional;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
-import com.backend.backend_web.dto.ArrendadorDTO;
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,28 +27,28 @@ public class ArrendatarioService {
     ArrendatarioRepository repository;
     @Autowired
     ModelMapper modelMapper;
-    public ArrendadorDTO autorizacion(Authentication authentication) throws Exception {
+    public ArrendatarioDTO autorizacion(Authentication authentication) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println("-----------------------");
         System.out.println(  authentication.getName() );
-        ArrendadorDTO usuario = objectMapper.readValue(authentication.getName(), ArrendadorDTO.class);
+        ArrendatarioDTO usuario = objectMapper.readValue(authentication.getName(), ArrendatarioDTO.class);
         System.out.println("-----------------------"); 
         System.out.println(usuario+"USUARIO");
         return usuario;
     }
 
-    public ArrendadorDTO get(Long id) throws RegistroNoEncontradoException {
+    public ArrendatarioDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
         if (!arrendatarioOptional.isPresent()) {
             throw new RegistroNoEncontradoException("Arrendatario no encontrado con el ID: " + id);
         }
-        return modelMapper.map(arrendatarioOptional.get(), ArrendadorDTO.class);
+        return modelMapper.map(arrendatarioOptional.get(), ArrendatarioDTO.class);
     }
 
-    public List<ArrendadorDTO> get() {
+    public List<ArrendatarioDTO> get() {
         List<Arrendatario> arrendatarios = (List<Arrendatario>) repository.findAll();
-        List<ArrendadorDTO> arrendatariosDTO = arrendatarios.stream()
-                .map(arrendatario -> modelMapper.map(arrendatario, ArrendadorDTO.class)).collect(Collectors.toList());
+        List<ArrendatarioDTO> arrendatariosDTO = arrendatarios.stream()
+                .map(arrendatario -> modelMapper.map(arrendatario, ArrendatarioDTO.class)).collect(Collectors.toList());
         return arrendatariosDTO;
     }
 
@@ -80,7 +80,7 @@ public class ArrendatarioService {
         return arrendatarioDTO;
     }
 
-    public ArrendadorDTO update(Arrendatario arrendatarioDTO)
+    public ArrendatarioDTO update(Arrendatario arrendatarioDTO)
             throws ValidationException, IllegalArgumentException, RegistroNoEncontradoException {
         if (arrendatarioDTO == null) {
             throw new IllegalArgumentException("El objeto ArrendatarioDTO proporcionado es nulo");
@@ -103,7 +103,7 @@ public class ArrendatarioService {
         arrendatarioExistente = repository.save(arrendatarioExistente);
 
         // Convertir de nuevo a DTO para devolver
-        ArrendadorDTO testDTO = modelMapper.map(arrendatarioExistente, ArrendadorDTO.class);
+        ArrendatarioDTO testDTO = modelMapper.map(arrendatarioExistente, ArrendatarioDTO.class);
         return testDTO;
     }
 
@@ -116,9 +116,9 @@ public class ArrendatarioService {
         repository.deleteById(id);
     }
 
-    public Optional<ArrendadorDTO> login(String correo, String contrasena) {
+    public Optional<ArrendatarioDTO> login(String correo, String contrasena) {
         Optional<Arrendatario> arrendatario = repository.findByCorreoAndContrasena(correo, contrasena);
-        return arrendatario.map(a -> modelMapper.map(a, ArrendadorDTO.class));
+        return arrendatario.map(a -> modelMapper.map(a, ArrendatarioDTO.class));
     }
 
 }
