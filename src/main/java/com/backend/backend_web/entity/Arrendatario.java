@@ -26,6 +26,7 @@ public class Arrendatario {
     private Long id;
     private String nombre;
     private String apellido;
+    @Column(nullable = false, unique = true)
     private String correo;
     private String telefono;
     private String contrasena;

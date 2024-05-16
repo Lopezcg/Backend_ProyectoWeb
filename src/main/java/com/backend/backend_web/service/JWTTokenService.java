@@ -37,7 +37,6 @@ public class JWTTokenService {
             e.printStackTrace();
         }
         
-        System.out.println(username  );
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
@@ -53,6 +52,14 @@ public class JWTTokenService {
                         .collect(Collectors.toList()))
                 .signWith(jwtKey, SignatureAlgorithm.HS512) // Use your appropriate signing algorithm
                 .compact();
+    }
+    public boolean validarToken(String jwtToken){
+        try {
+            decodificarToken(jwtToken);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getUsername(String jwtToken){

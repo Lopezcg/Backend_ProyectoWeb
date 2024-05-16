@@ -9,16 +9,15 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.backend.backend_web.dto.ArrendadorDTO;
-import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.entity.Arrendador;
-import com.backend.backend_web.entity.Propiedad;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendadorRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ArrendadorService {
@@ -27,7 +26,15 @@ public class ArrendadorService {
     ArrendadorRepository repository;
     @Autowired
     ModelMapper modelMapper;
-
+    public ArrendadorDTO autorizacion(Authentication authentication) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("-----------------------");
+        System.out.println(  authentication.getName() );
+        ArrendadorDTO usuario = objectMapper.readValue(authentication.getName(), ArrendadorDTO.class);
+        System.out.println("-----------------------"); 
+        System.out.println(usuario+"USUARIO");
+        return usuario;
+    }
     public ArrendadorDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Arrendador> arrendadorOptional = repository.findById(id);
         if (arrendadorOptional.isPresent()) {

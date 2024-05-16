@@ -3,21 +3,27 @@ package com.backend.backend_web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.dto.PropiedadDTO;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.service.ArrendadorService;
 import com.backend.backend_web.service.PropiedadService;
 
 @RestController
 @RequestMapping("/propiedad")
 public class PropiedadController {
-
+    @Autowired
     private final PropiedadService service;
+    @Autowired
+    private final ArrendadorService arrendadorService;
 
     @Autowired
-    public PropiedadController(PropiedadService service) {
+    public PropiedadController(PropiedadService service, ArrendadorService arrendadorService) {
         this.service = service;
+        this.arrendadorService = arrendadorService;
     }
 
     @CrossOrigin
@@ -37,7 +43,7 @@ public class PropiedadController {
     // Exception check
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<PropiedadDTO>> readAllPropiedad() {
+    public ResponseEntity<Iterable<PropiedadDTO>> readAllPropiedad() throws Exception {
         return ResponseEntity.ok().body(service.get());
     }
 

@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.List;
 
-
 import org.hibernate.annotations.Where;
 import org.hibernate.annotations.SQLDelete;
 
@@ -23,6 +22,7 @@ public class Arrendador {
     private Long id;
     private String nombre;
     private String apellido;
+    @Column(nullable = false, unique = true)
     private String correo;
     private String telefono;
     private String contrasena;

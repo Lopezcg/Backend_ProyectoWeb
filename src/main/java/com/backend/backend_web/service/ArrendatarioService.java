@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.repository.ArrendatarioRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -25,6 +27,15 @@ public class ArrendatarioService {
     ArrendatarioRepository repository;
     @Autowired
     ModelMapper modelMapper;
+    public ArrendadorDTO autorizacion(Authentication authentication) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("-----------------------");
+        System.out.println(  authentication.getName() );
+        ArrendadorDTO usuario = objectMapper.readValue(authentication.getName(), ArrendadorDTO.class);
+        System.out.println("-----------------------"); 
+        System.out.println(usuario+"USUARIO");
+        return usuario;
+    }
 
     public ArrendadorDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Arrendatario> arrendatarioOptional = repository.findById(id);
