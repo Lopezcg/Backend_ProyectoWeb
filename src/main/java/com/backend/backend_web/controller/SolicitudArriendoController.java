@@ -80,8 +80,9 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteSolicitudArriendo(@PathVariable Long id) throws RegistroNoEncontradoException {
-        service.delete(id);
+    public ResponseEntity<?> deleteSolicitudArriendo(@PathVariable Long id,Authentication authentication) throws Exception {
+        ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
+        service.delete(id,arrendatario);
         return ResponseEntity.ok().build();
     }
 }

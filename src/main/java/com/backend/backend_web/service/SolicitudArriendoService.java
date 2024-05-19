@@ -44,7 +44,7 @@ public class SolicitudArriendoService {
         return solicitudesDTO;
     }
 
-    public SolicitudArriendoDTO save(SolicitudArriendoDTO solicitudDTO,ArrendatarioDTO arrendatarioDTO)
+    public SolicitudArriendoDTO save(SolicitudArriendoDTO solicitudDTO, ArrendatarioDTO arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         if (solicitudDTO == null) {
@@ -58,7 +58,7 @@ public class SolicitudArriendoService {
         }
 
         SolicitudArriendo solicitud;
-        Arrendatario    arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
+        Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
         if (arrendatario == null) {
             throw new IllegalArgumentException("El arrendatario proporcionado no puede ser nulo");
         }
@@ -106,11 +106,14 @@ public class SolicitudArriendoService {
         return modelMapper.map(solicitud, SolicitudArriendoDTO.class);
     }
 
-    public void delete(Long id) throws RegistroNoEncontradoException {
+    public void delete(Long id, ArrendatarioDTO arrendatarioDTO) throws RegistroNoEncontradoException {
         Optional<SolicitudArriendo> solicitud = repository.findById(id);
         if (!solicitud.isPresent()) {
             throw new RegistroNoEncontradoException(
                     "Solicitud no encontrada con ID " + id + " por lo tanto no se puede eliminar");
+        }
+        if (solicitud.get().getArrendatario().getId() == arrendatarioDTO.getId()) {
+            throw new IllegalArgumentException("La solicitud de arriendo no pertenece al arrendatario proporcionado");
         }
         repository.deleteById(id);
     }
