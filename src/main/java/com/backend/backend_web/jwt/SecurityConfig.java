@@ -26,26 +26,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/arrendador/login").permitAll()
                         .requestMatchers("/arrendatario/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/propiedad").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/propiedad/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/propiedad/arrendador/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/calificacion").permitAll()
 
                         // .requestMatchers(HttpMethod.POST, "/arrendador").permitAll() // Permite solo
                         // POST para
                         // TOCA PONER SOLO LOS NECESARIOS
-                        .requestMatchers("/arrendatario/**").permitAll()
-                        .requestMatchers("/solicitudArriendo/arrendatario").permitAll()
-                        .requestMatchers("/arrendador").permitAll()
-                        .requestMatchers("/arrendador/{id}").permitAll()
-                        .requestMatchers("/arrendatario").permitAll()
-                        .requestMatchers("/arrendatario/{id}").permitAll()
-                        .requestMatchers("/calificacion").permitAll()
-                        .requestMatchers("/calificacion/{id}").permitAll()
-                        .requestMatchers("/pago").permitAll()
-                        .requestMatchers("/pago/{id}").permitAll()
-                        .requestMatchers("/propiedad").permitAll()
-                        .requestMatchers("/propiedad/{id}").permitAll()
-                        .requestMatchers("/solicitudArriendo").permitAll()
-                        .requestMatchers("/solicitudArriendo/{id}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/arrendatario").permitAll() // Permite solo POST para
-                        .requestMatchers(HttpMethod.GET, "/propiedad").permitAll() // Permite solo POST para
 
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
