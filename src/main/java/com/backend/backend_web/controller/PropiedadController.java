@@ -42,7 +42,7 @@ public class PropiedadController {
         // throw new RuntimeException(e.getMessage());
         // }
     }
-    
+
     // Exception check
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,7 +56,11 @@ public class PropiedadController {
     public ResponseEntity<PropiedadDTO> readPropiedad(@PathVariable Long id) throws RegistroNoEncontradoException {
         return ResponseEntity.ok().body(service.get(id));
     }
-
+    @CrossOrigin
+    @GetMapping(value = "/arrendador/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<PropiedadDTO>> readPropiedadByArrendador(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.getPropiedadByArrendador(id));
+    }
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad,Authentication authentication)

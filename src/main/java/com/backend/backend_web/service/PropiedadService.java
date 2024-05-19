@@ -36,6 +36,13 @@ public class PropiedadService {
         return modelMapper.map(propiedadOptional.get(), PropiedadDTO.class);
     }
 
+    public List<PropiedadDTO> getPropiedadByArrendador(Long id) {
+        List<Propiedad> propiedades = repository.findByArrendadorId(id);
+        List<PropiedadDTO> propiedadesDTO = propiedades.stream()
+                .map(propiedad -> modelMapper.map(propiedad, PropiedadDTO.class)).collect(Collectors.toList());
+        return propiedadesDTO;
+    }
+
     public List<PropiedadDTO> get() {
         List<Propiedad> propiedades = (List<Propiedad>) repository.findAll();
         List<PropiedadDTO> propiedadesDTO = propiedades.stream()
