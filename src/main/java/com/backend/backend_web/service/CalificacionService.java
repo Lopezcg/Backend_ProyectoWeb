@@ -78,7 +78,7 @@ public class CalificacionService {
         return CalificacionDTO;
     }
 
-    public CalificacionDTO update(CalificacionDTO CalificacionDTO)
+    public CalificacionDTO update(CalificacionDTO CalificacionDTO, ArrendatarioDTO arrendatarioDTO)
             throws RegistroNoEncontradoException, IllegalArgumentException {
         if (CalificacionDTO == null) {
             throw new IllegalArgumentException("El objeto CalificacionDTO proporcionado es nulo");
@@ -92,6 +92,10 @@ public class CalificacionService {
                         "Registro no encontrado para el ID: " + finalCalificacionDTO.getId()));
 
         // Actualizar los campos de Calificacion
+        if (!Calificacion.getArrendatario().getId().equals(arrendatarioDTO.getId())) {
+            throw new IllegalArgumentException("La calificación no pertenece al arrendatario proporcionado");
+
+        }
         Calificacion.setStatus(0); // Suponiendo que 0 representa un estado particular
         Calificacion.setComentario(finalCalificacionDTO.getComentario());
         Calificacion.setPuntuacion(finalCalificacionDTO.getPuntuacion());
