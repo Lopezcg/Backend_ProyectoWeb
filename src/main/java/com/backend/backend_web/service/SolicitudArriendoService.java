@@ -80,7 +80,7 @@ public class SolicitudArriendoService {
         return solicitudDTO;
     }
 
-    public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO)
+    public SolicitudArriendoDTO update(SolicitudArriendoDTO solicitudDTO, ArrendatarioDTO arrendatarioDTO)
             throws RegistroNoEncontradoException, IllegalArgumentException {
         if (solicitudDTO == null) {
             throw new IllegalArgumentException("El objeto SolicitudArriendoDTO proporcionado es nulo");
@@ -89,7 +89,9 @@ public class SolicitudArriendoService {
         SolicitudArriendo solicitud = repository.findById(solicitudDTO.getId())
                 .orElseThrow(() -> new RegistroNoEncontradoException(
                         "Registro no encontrado para el ID: " + solicitudDTO.getId()));
-
+        if (solicitud.getArrendatario().getId() != arrendatarioDTO.getId()) {
+            throw new IllegalArgumentException("La solicitud de arriendo no pertenece al arrendatario proporcionado");
+        }
         // Actualizamos los campos necesarios de la entidad
         solicitud.setEstado(solicitudDTO.isEstado()); // Asumiendo que esto es un estado activo/inactivo
         solicitud.setStatus(0);
