@@ -98,6 +98,7 @@ public class ArrendatarioController {
         try {
             return service.login(arrendatario.getCorreo(), arrendatario.getContrasena())
                     .map((ArrendatarioDTO arrendadorDTO) -> {
+                        System.out.println("ArrendadorDTO: " + arrendadorDTO);
                         String token = jwtTokenService.generarToken(arrendadorDTO);
                         System.out.println("TOKEN: " + token);
                         return ResponseEntity.ok().body(Collections.singletonMap("token", token));

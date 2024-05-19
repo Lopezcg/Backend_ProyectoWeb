@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import io.jsonwebtoken.Claims;
@@ -57,7 +57,6 @@ public class JWTTokenService {
     }
 
     public String generarToken(ArrendatarioDTO usuario) {
-
         // byte[] secretBytes = secret.getBytes();
         // Key jwtKey = new SecretKeySpec(secretBytes,
         // SignatureAlgorithm.HS512.getJcaName());
@@ -71,7 +70,7 @@ public class JWTTokenService {
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
-
+        System.out.println(username + "SI HP ACA");
         Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
 
         return Jwts.builder()

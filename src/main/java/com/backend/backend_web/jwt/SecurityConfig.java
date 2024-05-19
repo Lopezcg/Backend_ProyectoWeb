@@ -26,9 +26,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/arrendador/login").permitAll()
                         .requestMatchers("/arrendatario/login").permitAll()
+
                         // .requestMatchers(HttpMethod.POST, "/arrendador").permitAll() // Permite solo
                         // POST para
                         // TOCA PONER SOLO LOS NECESARIOS
+                        .requestMatchers("/arrendatario/**").permitAll()
+                        .requestMatchers("/solicitudArriendo/arrendatario").permitAll()
                         .requestMatchers("/arrendador").permitAll()
                         .requestMatchers("/arrendador/{id}").permitAll()
                         .requestMatchers("/arrendatario").permitAll()

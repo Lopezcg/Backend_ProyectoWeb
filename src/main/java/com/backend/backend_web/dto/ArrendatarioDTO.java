@@ -1,6 +1,9 @@
 package com.backend.backend_web.dto;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 @Getter
@@ -13,5 +16,6 @@ public class ArrendatarioDTO {
     private String apellido;
     private String correo;
     private String telefono;
+    @JsonIgnore
     private List<CalificacionDTO> calificaciones;
 }

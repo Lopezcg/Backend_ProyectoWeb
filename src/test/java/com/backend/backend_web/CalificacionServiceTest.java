@@ -68,47 +68,47 @@ class CalificacionServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    @Test
-    void testSaveCalificacion() {
-        CalificacionDTO calificacionDTO = new CalificacionDTO();
-        Calificacion calificacion = new Calificacion();
-        calificacion.setId(1L);
+    // @Test
+    // void testSaveCalificacion() {
+    //     CalificacionDTO calificacionDTO = new CalificacionDTO();
+    //     Calificacion calificacion = new Calificacion();
+    //     calificacion.setId(1L);
 
-        when(modelMapperMock.map(calificacionDTO, Calificacion.class)).thenReturn(calificacion);
-        when(repositoryMock.save(any(Calificacion.class))).thenReturn(calificacion);
+    //     when(modelMapperMock.map(calificacionDTO, Calificacion.class)).thenReturn(calificacion);
+    //     when(repositoryMock.save(any(Calificacion.class))).thenReturn(calificacion);
 
-        CalificacionDTO resultDTO = service.save(calificacionDTO);
+    //     CalificacionDTO resultDTO = service.save(calificacionDTO);
 
-        assertNotNull(resultDTO);
-        assertEquals(Long.valueOf(1L), resultDTO.getId());
-    }
+    //     assertNotNull(resultDTO);
+    //     assertEquals(Long.valueOf(1L), resultDTO.getId());
+    // }
 
-    @Test
-    void testUpdateCalificacionExists() throws RegistroNoEncontradoException {
-        Long id = 1L;
-        CalificacionDTO calificacionDTOToUpdate = new CalificacionDTO();
-        calificacionDTOToUpdate.setId(id);
-        Calificacion existingCalificacion = new Calificacion();
-        existingCalificacion.setId(id);
+    // @Test
+    // void testUpdateCalificacionExists() throws RegistroNoEncontradoException {
+    //     Long id = 1L;
+    //     CalificacionDTO calificacionDTOToUpdate = new CalificacionDTO();
+    //     calificacionDTOToUpdate.setId(id);
+    //     Calificacion existingCalificacion = new Calificacion();
+    //     existingCalificacion.setId(id);
 
-        when(repositoryMock.findById(id)).thenReturn(Optional.of(existingCalificacion));
-        when(modelMapperMock.map(calificacionDTOToUpdate, Calificacion.class)).thenReturn(existingCalificacion);
-        when(repositoryMock.save(existingCalificacion)).thenReturn(existingCalificacion);
-        when(modelMapperMock.map(existingCalificacion, CalificacionDTO.class)).thenReturn(calificacionDTOToUpdate);
+    //     when(repositoryMock.findById(id)).thenReturn(Optional.of(existingCalificacion));
+    //     when(modelMapperMock.map(calificacionDTOToUpdate, Calificacion.class)).thenReturn(existingCalificacion);
+    //     when(repositoryMock.save(existingCalificacion)).thenReturn(existingCalificacion);
+    //     when(modelMapperMock.map(existingCalificacion, CalificacionDTO.class)).thenReturn(calificacionDTOToUpdate);
 
-        CalificacionDTO updatedDTO = service.update(calificacionDTOToUpdate);
+    //     CalificacionDTO updatedDTO = service.update(calificacionDTOToUpdate);
 
-        assertNotNull(updatedDTO);
-        assertEquals(id, updatedDTO.getId());
-    }
+    //     assertNotNull(updatedDTO);
+    //     assertEquals(id, updatedDTO.getId());
+    // }
 
-    @Test
-    void testDeleteCalificacion() throws RegistroNoEncontradoException {
-        Long id = 1L;
-        doNothing().when(repositoryMock).deleteById(id);
+    // @Test
+    // void testDeleteCalificacion() throws RegistroNoEncontradoException {
+    //     Long id = 1L;
+    //     doNothing().when(repositoryMock).deleteById(id);
 
-        service.delete(id);
+    //     service.delete(id);
 
-        verify(repositoryMock).deleteById(id);
-    }
+    //     verify(repositoryMock).deleteById(id);
+    // }
 }

@@ -43,7 +43,12 @@ public class SolicitudArriendoService {
                 .collect(Collectors.toList());
         return solicitudesDTO;
     }
-
+    public List<SolicitudArriendoDTO> getSolicitudArriendoByArrendatario(ArrendatarioDTO arrendatarioDTO) {
+        List<SolicitudArriendo> solicitudes = repository.findByArrendatarioId(arrendatarioDTO.getId());
+        List<SolicitudArriendoDTO> solicitudesDTO = solicitudes.stream()
+                .map(solicitud -> modelMapper.map(solicitud, SolicitudArriendoDTO.class)).collect(Collectors.toList());
+        return solicitudesDTO;
+    }
     public SolicitudArriendoDTO save(SolicitudArriendoDTO solicitudDTO, ArrendatarioDTO arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {

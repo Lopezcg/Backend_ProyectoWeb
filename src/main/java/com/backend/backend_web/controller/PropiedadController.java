@@ -42,7 +42,7 @@ public class PropiedadController {
         // throw new RuntimeException(e.getMessage());
         // }
     }
-
+    
     // Exception check
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

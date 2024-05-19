@@ -34,13 +34,13 @@ public class SolicitudArriendoController {
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SolicitudArriendoDTO> createSolicitudArriendo(
-            @RequestBody SolicitudArriendoDTO solicitudArriendo,Authentication authentication) throws Exception {
+            @RequestBody SolicitudArriendoDTO solicitudArriendo, Authentication authentication) throws Exception {
         // try {
         // if (solicitudArriendo == null) {
         // return ResponseEntity.badRequest().build();
         // }
         ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
-        SolicitudArriendoDTO savedSolicitud = service.save(solicitudArriendo,arrendatario);
+        SolicitudArriendoDTO savedSolicitud = service.save(solicitudArriendo, arrendatario);
         return ResponseEntity.ok().body(savedSolicitud);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getLocalizedMessage());
@@ -54,6 +54,15 @@ public class SolicitudArriendoController {
     }
 
     @CrossOrigin
+    @GetMapping(value = "/get/arrendatario", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<SolicitudArriendoDTO>> readAllSolicitudArriendoByArrendatario(
+            Authentication authentication) throws Exception {
+        System.out.println("ENTREE ACAAA");
+        ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
+        return ResponseEntity.ok().body(service.getSolicitudArriendoByArrendatario(arrendatario));
+    }
+
+    @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SolicitudArriendoDTO> readSolicitudArriendo(@PathVariable Long id)
             throws RegistroNoEncontradoException {
@@ -64,14 +73,14 @@ public class SolicitudArriendoController {
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SolicitudArriendoDTO> updateSolicitudArriendo(
-            @RequestBody SolicitudArriendoDTO solicitudArriendo,Authentication authentication)
+            @RequestBody SolicitudArriendoDTO solicitudArriendo, Authentication authentication)
             throws Exception {
         // try {
         // if (solicitudArriendo == null) {
         // return ResponseEntity.badRequest().build();
         // }
         ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
-        SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo,arrendatario);
+        SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo, arrendatario);
         return ResponseEntity.ok().body(updatedSolicitud);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getMessage());
@@ -80,9 +89,11 @@ public class SolicitudArriendoController {
 
     @CrossOrigin
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteSolicitudArriendo(@PathVariable Long id,Authentication authentication) throws Exception {
+    public ResponseEntity<?> deleteSolicitudArriendo(@PathVariable Long id, Authentication authentication)
+            throws Exception {
         ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
-        service.delete(id,arrendatario);
+        service.delete(id, arrendatario);
         return ResponseEntity.ok().build();
     }
+
 }
