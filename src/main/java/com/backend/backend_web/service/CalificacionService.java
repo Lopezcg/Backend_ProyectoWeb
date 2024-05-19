@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.CalificacionRepository;
@@ -51,7 +53,7 @@ public class CalificacionService {
         return CalificacionesDTO;
     }
 
-    public CalificacionDTO save(CalificacionDTO CalificacionDTO)
+    public CalificacionDTO save(CalificacionDTO CalificacionDTO,ArrendatarioDTO arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         if (CalificacionDTO == null) {
@@ -61,8 +63,9 @@ public class CalificacionService {
         if (CalificacionDTO.getComentario() == null || CalificacionDTO.getPuntuacion() == null) {
             throw new IllegalArgumentException("Faltan campos requeridos en el DTO de Calificación");
         }
-
+        Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
         Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
+        Calificacion.setArrendatario(arrendatario);
 
         Calificacion.setStatus(0);
         try {

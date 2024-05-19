@@ -1,13 +1,15 @@
 package com.backend.backend_web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.CalificacionDTO;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.service.ArrendatarioService;
 import com.backend.backend_web.service.CalificacionService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalificacionController {
     @Autowired
     private CalificacionService service;
+    private final ArrendatarioService arrendatarioService = new ArrendatarioService();
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CalificacionDTO> createCalificacion(@RequestBody CalificacionDTO Calificacion)
-            throws IllegalArgumentException, IllegalStateException,
-            DataIntegrityViolationException {
-        CalificacionDTO savedCalificacion = service.save(Calificacion);
+    public ResponseEntity<CalificacionDTO> createCalificacion(@RequestBody CalificacionDTO Calificacion,
+            Authentication authentication)
+            throws Exception {
+        ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
+        CalificacionDTO savedCalificacion = service.save(Calificacion, arrendatario);
         return ResponseEntity.ok().body(savedCalificacion);
     }
 

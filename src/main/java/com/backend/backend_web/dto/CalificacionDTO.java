@@ -1,5 +1,6 @@
 package com.backend.backend_web.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,5 @@ public class CalificacionDTO {
     private Long id;
     private String comentario;
     private Float puntuacion;
-
+    private SolicitudArriendoDTO solicitudArriendo;
 }
