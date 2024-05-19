@@ -53,7 +53,7 @@ public class CalificacionService {
         return CalificacionesDTO;
     }
 
-    public CalificacionDTO save(CalificacionDTO CalificacionDTO,ArrendatarioDTO arrendatarioDTO)
+    public CalificacionDTO save(CalificacionDTO CalificacionDTO, ArrendatarioDTO arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         if (CalificacionDTO == null) {
@@ -101,11 +101,15 @@ public class CalificacionService {
         return CalificacionDTO;
     }
 
-    public void delete(Long id) throws RegistroNoEncontradoException {
+    public void delete(Long id, ArrendatarioDTO arrendatarioDTO) throws RegistroNoEncontradoException {
         Optional<Calificacion> calificacion = repository.findById(id);
         if (!calificacion.isPresent()) {
             throw new RegistroNoEncontradoException(
                     "Calificacion no encontrada con ID " + id + " por lo tanto no se puede eliminar");
+        }
+        if (!calificacion.get().getArrendatario().getId().equals(arrendatarioDTO.getId())) {
+            throw new IllegalArgumentException("La calificación no pertenece al arrendatario proporcionado");
+
         }
         repository.deleteById(id);
     }
