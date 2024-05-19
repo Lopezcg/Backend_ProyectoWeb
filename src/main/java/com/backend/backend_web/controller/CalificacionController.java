@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalificacionController {
     @Autowired
     private CalificacionService service;
+    @Autowired
     private final ArrendatarioService arrendatarioService = new ArrendatarioService();
 
     @CrossOrigin

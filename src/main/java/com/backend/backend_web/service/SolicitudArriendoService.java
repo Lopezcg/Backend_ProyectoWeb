@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
-import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.SolicitudArriendo;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.SolicitudArrendamientoRepository;
@@ -43,7 +44,7 @@ public class SolicitudArriendoService {
         return solicitudesDTO;
     }
 
-    public SolicitudArriendoDTO save(SolicitudArriendoDTO solicitudDTO)
+    public SolicitudArriendoDTO save(SolicitudArriendoDTO solicitudDTO,ArrendatarioDTO arrendatarioDTO)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
         if (solicitudDTO == null) {
@@ -57,9 +58,13 @@ public class SolicitudArriendoService {
         }
 
         SolicitudArriendo solicitud;
-
+        Arrendatario    arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
+        if (arrendatario == null) {
+            throw new IllegalArgumentException("El arrendatario proporcionado no puede ser nulo");
+        }
         try {
             solicitud = modelMapper.map(solicitudDTO, SolicitudArriendo.class);
+            solicitud.setArrendatario(arrendatario);
             solicitud.setEstado(true); // Assuming true is for active status, adjust accordingly
             solicitud.setStatus(0); // Assuming 0 is for active status, adjust accordingly
             solicitud = repository.save(solicitud);

@@ -3,9 +3,9 @@ package com.backend.backend_web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.service.ArrendatarioService;
 import com.backend.backend_web.service.SolicitudArriendoService;
 
 @RequestMapping("/solicitudArriendo")
@@ -26,17 +28,19 @@ public class SolicitudArriendoController {
 
     @Autowired
     private SolicitudArriendoService service;
+    @Autowired
+    private final ArrendatarioService arrendatarioService = new ArrendatarioService();
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SolicitudArriendoDTO> createSolicitudArriendo(
-            @RequestBody SolicitudArriendoDTO solicitudArriendo) throws IllegalArgumentException, IllegalStateException,
-            DataIntegrityViolationException {
+            @RequestBody SolicitudArriendoDTO solicitudArriendo,Authentication authentication) throws Exception {
         // try {
         // if (solicitudArriendo == null) {
         // return ResponseEntity.badRequest().build();
         // }
-        SolicitudArriendoDTO savedSolicitud = service.save(solicitudArriendo);
+        ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
+        SolicitudArriendoDTO savedSolicitud = service.save(solicitudArriendo,arrendatario);
         return ResponseEntity.ok().body(savedSolicitud);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getLocalizedMessage());
