@@ -42,9 +42,10 @@ public class PropiedadService {
                 .map(propiedad -> modelMapper.map(propiedad, PropiedadDTO.class)).collect(Collectors.toList());
         return propiedadesDTO;
     }
+
     public ArrendadorDTO getArrendadorDTO(Long id) {
-        Propiedad propiedad= repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        Arrendador arrendador= propiedad.getArrendador();
+        Propiedad propiedad = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Arrendador arrendador = propiedad.getArrendador();
         return modelMapper.map(arrendador, ArrendadorDTO.class);
     }
 
@@ -100,6 +101,8 @@ public class PropiedadService {
         // Actualizar los campos con los valores proporcionados desde el DTO
         propiedad.setNombre(propiedadDTO.getNombre());
         propiedad.setDescripcion(propiedadDTO.getDescripcion());
+        propiedad.setCiudad(propiedadDTO.getCiudad());
+        propiedad.setDepartamento(propiedadDTO.getDepartamento());
         propiedad.setValor(propiedadDTO.getValor());
         propiedad.setEstado(propiedadDTO.getEstado());
         propiedad.setAsador(propiedadDTO.getAsador());

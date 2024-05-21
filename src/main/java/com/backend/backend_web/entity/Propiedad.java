@@ -35,6 +35,8 @@ public class Propiedad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    private String ciudad;
+    private String departamento;
     private String descripcion;
     private Long valor;
     private String estado;
