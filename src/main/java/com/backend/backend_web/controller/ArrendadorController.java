@@ -76,6 +76,17 @@ public class ArrendadorController {
     }
 
     @CrossOrigin
+    @GetMapping("bypropiedad/{id}")
+    public ResponseEntity<ArrendadorDTO> readArrendadorbypropiedad(@PathVariable Long id)
+            throws RegistroNoEncontradoException {
+        ArrendadorDTO arrendadorDTO = service.getbyPropiedad(id);
+        if (arrendadorDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(arrendadorDTO);
+    }
+
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArrendador(@PathVariable Long id) throws RegistroNoEncontradoException {
         service.delete(id);

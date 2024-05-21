@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/arrendador/login").permitAll()
                         .requestMatchers("/arrendatario/login").permitAll()
+                        .requestMatchers("/arrendador/bypropiedad/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/propiedad").permitAll()
                         .requestMatchers(HttpMethod.GET, "/propiedad/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/propiedad/arrendador/{id}").permitAll()

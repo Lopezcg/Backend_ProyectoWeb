@@ -18,29 +18,41 @@ import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.ArrendadorRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @Service
 public class ArrendadorService {
 
     @Autowired
     ArrendadorRepository repository;
     @Autowired
+    PropiedadService propiedadS;
+    @Autowired
     ModelMapper modelMapper;
+
     public ArrendadorDTO autorizacion(Authentication authentication) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println("-----------------------");
-        System.out.println(  authentication.getName() );
+        System.out.println(authentication.getName());
         ArrendadorDTO usuario = objectMapper.readValue(authentication.getName(), ArrendadorDTO.class);
-        System.out.println("-----------------------"); 
-        System.out.println(usuario+"USUARIO");
+        System.out.println("-----------------------");
+        System.out.println(usuario + "USUARIO");
         return usuario;
     }
+
     public ArrendadorDTO get(Long id) throws RegistroNoEncontradoException {
         Optional<Arrendador> arrendadorOptional = repository.findById(id);
         if (arrendadorOptional.isPresent()) {
             return modelMapper.map(arrendadorOptional.get(), ArrendadorDTO.class);
         } else {
             throw new RegistroNoEncontradoException("Arrendador no encontrado con el ID: " + id);
+        }
+    }
+
+    public ArrendadorDTO getbyPropiedad(Long id) throws RegistroNoEncontradoException {
+        ArrendadorDTO arrendadorOptional = propiedadS.getArrendadorDTO(id);
+        if (arrendadorOptional != null) {
+            return arrendadorOptional;
+        } else {
+            throw new RegistroNoEncontradoException("Arrendador no encontrado para la propiedad: " + id);
         }
     }
 

@@ -42,6 +42,11 @@ public class PropiedadService {
                 .map(propiedad -> modelMapper.map(propiedad, PropiedadDTO.class)).collect(Collectors.toList());
         return propiedadesDTO;
     }
+    public ArrendadorDTO getArrendadorDTO(Long id) {
+        Propiedad propiedad= repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Arrendador arrendador= propiedad.getArrendador();
+        return modelMapper.map(arrendador, ArrendadorDTO.class);
+    }
 
     public List<PropiedadDTO> get() {
         List<Propiedad> propiedades = (List<Propiedad>) repository.findAll();
