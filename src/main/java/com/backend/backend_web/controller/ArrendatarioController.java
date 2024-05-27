@@ -2,6 +2,7 @@ package com.backend.backend_web.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.exception.UnauthorizedException;
 import com.backend.backend_web.service.ArrendatarioService;
 import com.backend.backend_web.service.JWTTokenService;
 
@@ -95,19 +97,21 @@ public class ArrendatarioController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> loginArrendador(@RequestBody Arrendatario arrendatario) {
-        try {
-            return service.login(arrendatario.getCorreo(), arrendatario.getContrasena())
-                    .map((ArrendatarioDTO arrendadorDTO) -> {
-                        System.out.println("ArrendadorDTO: " + arrendadorDTO);
-                        String token = jwtTokenService.generarToken(arrendadorDTO);
-                        System.out.println("TOKEN: " + token);
-                        return ResponseEntity.ok().body(Collections.singletonMap("token", token));
-                    })
-                    .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-        } catch (Exception e) {
-            System.out.println("Error during login: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        Optional<ArrendatarioDTO> optionalArrendatarioDTO = service.login(arrendatario.getCorreo(),
+                arrendatario.getContrasena());
+        if (optionalArrendatarioDTO.isPresent()) {
+            String token = jwtTokenService.generarToken(optionalArrendatarioDTO.get());
+            System.out.println("TOKEN: " + token);
+            return ResponseEntity.ok().body(Collections.singletonMap("token", token));
+        } else {
+            throw new UnauthorizedException("Credenciales inválidas. Por favor verifique los datos introducidos");
         }
 
+        // } catch (Exception e) {
+        // System.out.println("Error during login: " + e.getMessage());
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        // .body(Collections.singletonMap("error", "An unexpected error occurred"));
+        // }
     }
+
 }

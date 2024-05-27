@@ -28,15 +28,15 @@ public class PropiedadController {
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PropiedadDTO> createPropiedad(@RequestBody PropiedadDTO propiedad,Authentication authentication)
+    public ResponseEntity<PropiedadDTO> createPropiedad(@RequestBody PropiedadDTO propiedad,
+            Authentication authentication)
             throws Exception {
-       
         // try {
         // if (propiedad == null) {
         // return ResponseEntity.badRequest().build();
         // }
         ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
-        PropiedadDTO savedPropiedad = service.save(propiedad,arrendador);
+        PropiedadDTO savedPropiedad = service.save(propiedad, arrendador);
         return ResponseEntity.ok().body(savedPropiedad);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getMessage());
@@ -56,21 +56,24 @@ public class PropiedadController {
     public ResponseEntity<PropiedadDTO> readPropiedad(@PathVariable Long id) throws RegistroNoEncontradoException {
         return ResponseEntity.ok().body(service.get(id));
     }
+
     @CrossOrigin
     @GetMapping(value = "/arrendador/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<PropiedadDTO>> readPropiedadByArrendador(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.getPropiedadByArrendador(id));
     }
+
     @CrossOrigin
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad,Authentication authentication)
+    public ResponseEntity<PropiedadDTO> updatePropiedad(@RequestBody PropiedadDTO propiedad,
+            Authentication authentication)
             throws Exception {
         // try {
         // if (propiedad == null) {
         // return ResponseEntity.badRequest().build();
         // }
         ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
-        PropiedadDTO updatedPropiedad = service.update(propiedad,arrendador);
+        PropiedadDTO updatedPropiedad = service.update(propiedad, arrendador);
         return ResponseEntity.ok().body(updatedPropiedad);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getMessage());
@@ -81,7 +84,7 @@ public class PropiedadController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deletePropiedad(@PathVariable Long id, Authentication authentication) throws Exception {
         ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
-        service.delete(id,arrendador);
+        service.delete(id, arrendador);
         return ResponseEntity.ok().build();
     }
 }
