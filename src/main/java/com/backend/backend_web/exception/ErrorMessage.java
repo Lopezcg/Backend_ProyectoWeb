@@ -20,4 +20,5 @@ public class ErrorMessage {
     private String message;
     private String path;
     private String errorCode;
+    private int status;
 }
