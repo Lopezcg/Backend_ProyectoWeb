@@ -27,13 +27,14 @@ public class ArrendatarioService {
     ArrendatarioRepository repository;
     @Autowired
     ModelMapper modelMapper;
+
     public ArrendatarioDTO autorizacion(Authentication authentication) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println("-----------------------");
-        System.out.println(  authentication.getName() );
+        System.out.println(authentication.getName());
         ArrendatarioDTO usuario = objectMapper.readValue(authentication.getName(), ArrendatarioDTO.class);
-        System.out.println("-----------------------"); 
-        System.out.println(usuario+"USUARIO");
+        System.out.println("-----------------------");
+        System.out.println(usuario + "USUARIO");
         return usuario;
     }
 
@@ -64,6 +65,10 @@ public class ArrendatarioService {
             throw new IllegalArgumentException("Faltan campos requeridos en el DTO de Arrendatario");
         }
 
+        Optional<Arrendatario> existingArrendatario = repository.findByCorreo(arrendatarioDTO.getCorreo());
+        if (existingArrendatario.isPresent()) {
+            throw new IllegalStateException("El correo ya está registrado");
+        }
         Arrendatario arrendatario;
 
         try {

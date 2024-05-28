@@ -75,6 +75,10 @@ public class ArrendadorService {
                 || arrendadorDTO.getTelefono() == null || arrendadorDTO.getContrasena() == null) {
             throw new IllegalArgumentException("Faltan campos requeridos en el DTO de Arrendador");
         }
+        Optional<Arrendador> existingArrendador = repository.findByCorreo(arrendadorDTO.getCorreo());
+        if (existingArrendador.isPresent()) {
+            throw new IllegalStateException("El correo ya está registrado");
+        }
 
         Arrendador arrendador;
 
