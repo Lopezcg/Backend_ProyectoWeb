@@ -68,11 +68,12 @@ public class SolicitudArriendoService {
         if (arrendatario == null) {
             throw new IllegalArgumentException("El arrendatario proporcionado no puede ser nulo");
         }
-        
+
         try {
             solicitud = modelMapper.map(solicitudDTO, SolicitudArriendo.class);
             solicitud.setArrendatario(arrendatario);
-            solicitud.setEstado(true); // Assuming true is for active status, adjust accordingly
+            solicitud.setEstado(false); // Assuming true is for active status, adjust accordingly
+            solicitud.setAceptado(false);
             solicitud.setStatus(0); // Assuming 0 is for active status, adjust accordingly
             solicitud = repository.save(solicitud);
         } catch (DataIntegrityViolationException e) {
@@ -100,6 +101,7 @@ public class SolicitudArriendoService {
             throw new IllegalArgumentException("La solicitud de arriendo no pertenece al arrendatario proporcionado");
         }
         // Actualizamos los campos necesarios de la entidad
+        solicitud.setAceptado(solicitudDTO.isAceptado());
         solicitud.setEstado(solicitudDTO.isEstado()); // Asumiendo que esto es un estado activo/inactivo
         solicitud.setStatus(0);
         solicitud.setCantidadPersonas(solicitudDTO.getCantidadPersonas());

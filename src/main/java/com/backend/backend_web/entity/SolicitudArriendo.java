@@ -41,6 +41,7 @@ public class SolicitudArriendo {
     private LocalDate fechafin;
     private int cantidadPersonas;
     private boolean estado;
+    private boolean aceptado;
     @ManyToOne // Establece una relación de muchos a uno
     @JoinColumn(name = "propiedad", referencedColumnName = "id") // Define la columna de unión
     private Propiedad propiedad; // Relación con Arrendador

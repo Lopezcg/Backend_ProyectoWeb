@@ -15,6 +15,7 @@ public class SolicitudArriendoDTO {
     private LocalDate fechainicio;
     private LocalDate fechafin;
     private boolean estado;
+    private boolean aceptado;
     private Integer cantidadPersonas;
     private ArrendatarioDTO arrendatario;
     private PropiedadDTO propiedad;
