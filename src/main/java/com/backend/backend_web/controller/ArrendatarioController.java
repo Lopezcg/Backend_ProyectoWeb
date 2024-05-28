@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,13 @@ public class ArrendatarioController {
         // } catch (Exception e) {
         // throw new RuntimeException(e);
         // }
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/jwt", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendatarioDTO> readArrendatarioByToken(Authentication authentication) throws Exception {
+        ArrendatarioDTO arrendatario = service.autorizacion(authentication);
+        return ResponseEntity.ok().body(arrendatario);
     }
 
     @CrossOrigin

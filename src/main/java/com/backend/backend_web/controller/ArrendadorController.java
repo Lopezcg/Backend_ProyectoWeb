@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendadorDTO;
@@ -102,6 +103,13 @@ public class ArrendadorController {
         // } catch (Exception e) {
         // throw new RuntimeException(e);
         // }
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/jwt", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ArrendadorDTO> readArrendadorByToken(Authentication authentication) throws Exception {
+        ArrendadorDTO arrendador = service.autorizacion(authentication);
+        return ResponseEntity.ok().body(arrendador);
     }
 
     @CrossOrigin
