@@ -50,8 +50,9 @@ public class SolicitudArriendo {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pago_id", referencedColumnName = "id")
     private Pago pago;
-    @OneToMany(mappedBy = "solicitudArriendo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Calificacion> calificacion;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "calificacion_id", referencedColumnName = "id")
+    private Calificacion calificacion;
     private Integer status = 0;
 
 }

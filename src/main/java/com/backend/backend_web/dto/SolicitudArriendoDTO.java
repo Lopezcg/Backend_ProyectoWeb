@@ -17,5 +17,6 @@ public class SolicitudArriendoDTO {
     private boolean estado;
     private Integer cantidadPersonas;
     private ArrendatarioDTO arrendatario;
+    private PropiedadDTO propiedad;
 
 }

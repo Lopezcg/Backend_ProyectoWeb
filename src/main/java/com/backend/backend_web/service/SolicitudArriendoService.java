@@ -63,12 +63,12 @@ public class SolicitudArriendoService {
             throw new IllegalArgumentException(
                     "Los campos de fecha de inicio, fecha de fin y cantidad de personas son obligatorios");
         }
-
         SolicitudArriendo solicitud;
         Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
         if (arrendatario == null) {
             throw new IllegalArgumentException("El arrendatario proporcionado no puede ser nulo");
         }
+        
         try {
             solicitud = modelMapper.map(solicitudDTO, SolicitudArriendo.class);
             solicitud.setArrendatario(arrendatario);

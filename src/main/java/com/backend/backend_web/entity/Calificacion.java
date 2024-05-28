@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,5 +38,8 @@ public class Calificacion {
     @ManyToOne
     @JoinColumn(name = "arrendatario", referencedColumnName = "id")
     private Arrendatario arrendatario;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "calificacion_id", referencedColumnName = "id")
+    private SolicitudArriendo solicitud;
 
 }
