@@ -25,6 +25,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/arrendador/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/arrendador").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/arrendatario").permitAll()
                         .requestMatchers("/arrendatario/login").permitAll()
                         .requestMatchers("/arrendador/bypropiedad/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/propiedad").permitAll()
