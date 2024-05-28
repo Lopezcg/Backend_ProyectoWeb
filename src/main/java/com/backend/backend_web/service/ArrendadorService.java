@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.exception.UnauthorizedException;
 import com.backend.backend_web.repository.ArrendadorRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

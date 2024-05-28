@@ -1,6 +1,7 @@
 package com.backend.backend_web.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.backend.backend_web.dto.ArrendadorDTO;
+import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.entity.Arrendador;
+import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.exception.UnauthorizedException;
 import com.backend.backend_web.service.ArrendadorService;
 import com.backend.backend_web.service.JWTTokenService;
 
@@ -46,17 +50,9 @@ public class ArrendadorController {
     public ResponseEntity<ArrendadorDTO> createArrendador(@RequestBody Arrendador arrendador)
             throws IllegalArgumentException, IllegalStateException,
             DataIntegrityViolationException {
-        // try {
-        // if (arrendador == null) {
-        // return ResponseEntity.badRequest().build();
-        // }
         Arrendador savedarrendador = service.save(arrendador);
-        // Convert Arrendador to ArrendadorDTO
         ArrendadorDTO arrendadorDTO = modelMapper.map(savedarrendador, ArrendadorDTO.class);
         return ResponseEntity.ok().body(arrendadorDTO);
-        // } catch (Exception e) {
-        // throw new RuntimeException(e);
-        // }
     }
 
     @CrossOrigin
@@ -111,18 +107,21 @@ public class ArrendadorController {
     @CrossOrigin
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> loginArrendador(@RequestBody Arrendador arrendador) {
-        try {
-            return service.login(arrendador.getCorreo(), arrendador.getContrasena())
-                    .map((ArrendadorDTO arrendadorDTO) -> {
-                        String token = jwtTokenService.generarToken(arrendadorDTO);
-                        System.out.println("TOKEN: " + token);
-                        return ResponseEntity.ok().body(Collections.singletonMap("token", token));
-                    })
-                    .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-        } catch (Exception e) {
-            System.out.println("Error during login: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        // try {
+        Optional<ArrendadorDTO> optionalArrendadorDTO = service.login(arrendador.getCorreo(),
+                arrendador.getContrasena());
+        if (optionalArrendadorDTO.isPresent()) {
+            String token = jwtTokenService.generarToken(optionalArrendadorDTO.get());
+            System.out.println("TOKEN: " + token);
+            return ResponseEntity.ok().body(Collections.singletonMap("token", token));
+        } else {
+            throw new UnauthorizedException(
+                    "Credenciales inválidas. Por favor verifique los datos introducidos");
         }
+        // } catch (Exception e) {
+        // System.out.println("Error during login: " + e.getMessage());
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        // }
     }
 
 }
