@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
+import com.backend.backend_web.service.ArrendadorService;
 import com.backend.backend_web.service.ArrendatarioService;
 import com.backend.backend_web.service.SolicitudArriendoService;
 
@@ -30,6 +32,8 @@ public class SolicitudArriendoController {
     private SolicitudArriendoService service;
     @Autowired
     private final ArrendatarioService arrendatarioService = new ArrendatarioService();
+    @Autowired
+    private final ArrendadorService arrendadorService = new ArrendadorService();
 
     @CrossOrigin
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,9 +61,17 @@ public class SolicitudArriendoController {
     @GetMapping(value = "/get/arrendatario", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SolicitudArriendoDTO>> readAllSolicitudArriendoByArrendatario(
             Authentication authentication) throws Exception {
-        System.out.println("ENTREE ACAAA");
         ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
         return ResponseEntity.ok().body(service.getSolicitudArriendoByArrendatario(arrendatario));
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/get/arrendador", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<SolicitudArriendoDTO>> readAllSolicitudArriendoByArrendador(
+            Authentication authentication) throws Exception {
+        System.out.println("ENTREE ACAAA");
+        ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
+        return ResponseEntity.ok().body(service.getSolicitudArriendoByArrendador(arrendador));
     }
 
     @CrossOrigin

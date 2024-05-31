@@ -14,4 +14,7 @@ public interface SolicitudArrendamientoRepository extends CrudRepository<Solicit
 
     @Query("SELECT c FROM SolicitudArriendo c WHERE c.arrendatario.id = :arrendatarioId AND c.status = 0")
     List<SolicitudArriendo> findByArrendatarioId(@Param("arrendatarioId") Long arrendatarioId);
+
+    @Query("SELECT c FROM SolicitudArriendo c WHERE c.propiedad.arrendador.id = :arrendadorId AND c.status = 0")
+    List<SolicitudArriendo> findByArrendadorId(@Param("arrendadorId") Long arrendadorId);
 }

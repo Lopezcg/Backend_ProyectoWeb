@@ -32,14 +32,12 @@ public class Calificacion {
     private String comentario;
     private Float puntuacion;
     private Integer status = 0; // Valor predeterminado para el atributo status.
-    @ManyToOne // Establece una relación de muchos a uno
+    @OneToOne(cascade = CascadeType.ALL) // Establece una relación de muchos a uno
     @JoinColumn(name = "solicitudArriendo", referencedColumnName = "id") // Define la columna de unión
     private SolicitudArriendo solicitudArriendo; // Relación con SolicitudArriendo
     @ManyToOne
     @JoinColumn(name = "arrendatario", referencedColumnName = "id")
     private Arrendatario arrendatario;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "calificacion_id", referencedColumnName = "id")
-    private SolicitudArriendo solicitud;
+ 
 
 }

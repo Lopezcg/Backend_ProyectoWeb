@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.backend.backend_web.dto.ArrendadorDTO;
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.entity.Arrendatario;
@@ -46,6 +47,13 @@ public class SolicitudArriendoService {
 
     public List<SolicitudArriendoDTO> getSolicitudArriendoByArrendatario(ArrendatarioDTO arrendatarioDTO) {
         List<SolicitudArriendo> solicitudes = repository.findByArrendatarioId(arrendatarioDTO.getId());
+        List<SolicitudArriendoDTO> solicitudesDTO = solicitudes.stream()
+                .map(solicitud -> modelMapper.map(solicitud, SolicitudArriendoDTO.class)).collect(Collectors.toList());
+        return solicitudesDTO;
+    }
+
+    public List<SolicitudArriendoDTO> getSolicitudArriendoByArrendador(ArrendadorDTO arrendadorDTO) {
+        List<SolicitudArriendo> solicitudes = repository.findByArrendadorId(arrendadorDTO.getId());
         List<SolicitudArriendoDTO> solicitudesDTO = solicitudes.stream()
                 .map(solicitud -> modelMapper.map(solicitud, SolicitudArriendoDTO.class)).collect(Collectors.toList());
         return solicitudesDTO;
