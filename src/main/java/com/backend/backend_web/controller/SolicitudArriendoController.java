@@ -91,8 +91,8 @@ public class SolicitudArriendoController {
         // if (solicitudArriendo == null) {
         // return ResponseEntity.badRequest().build();
         // }
-        ArrendatarioDTO arrendatario = arrendatarioService.autorizacion(authentication);
-        SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo, arrendatario);
+        ArrendadorDTO arrendador = arrendadorService.autorizacion(authentication);
+        SolicitudArriendoDTO updatedSolicitud = service.update(solicitudArriendo, arrendador);
         return ResponseEntity.ok().body(updatedSolicitud);
         // } catch (Exception e) {
         // throw new RuntimeException(e.getMessage());
