@@ -51,8 +51,7 @@ public class SolicitudArriendo {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pago_id", referencedColumnName = "id")
     private Pago pago;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "calificacion_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "solicitudArriendo")
     private Calificacion calificacion;
     private Integer status = 0;
 

@@ -20,11 +20,16 @@ import com.backend.backend_web.entity.Calificacion;
 import com.backend.backend_web.entity.SolicitudArriendo;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.CalificacionRepository;
+import com.backend.backend_web.repository.SolicitudArrendamientoRepository;
 
 @Service
 public class CalificacionService {
     @Autowired
     CalificacionRepository repository;
+    @Autowired
+    SolicitudArriendoService solicitudArriendoService;
+    @Autowired
+    SolicitudArrendamientoRepository solicitudArriendoRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -55,32 +60,36 @@ public class CalificacionService {
         return CalificacionesDTO;
     }
 
-    public CalificacionDTO save(CalificacionDTO CalificacionDTO, ArrendatarioDTO arrendatarioDTO)
-            throws IllegalArgumentException, IllegalStateException,
-            DataIntegrityViolationException {
-        if (CalificacionDTO == null) {
+    public CalificacionDTO save(CalificacionDTO calificacionDTO, ArrendatarioDTO arrendatarioDTO)
+            throws IllegalArgumentException, IllegalStateException, DataIntegrityViolationException {
+        if (calificacionDTO == null) {
             throw new IllegalArgumentException("El DTO de Calificación no puede ser nulo");
         }
 
-        if (CalificacionDTO.getComentario() == null || CalificacionDTO.getPuntuacion() == null) {
+        if (calificacionDTO.getComentario() == null || calificacionDTO.getPuntuacion() == null) {
             throw new IllegalArgumentException("Faltan campos requeridos en el DTO de Calificación");
         }
-        Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
-        Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
-        Calificacion.setArrendatario(arrendatario);
-        SolicitudArriendo solicitudArriendo = modelMapper.map(CalificacionDTO.getSolicitudArriendo(),
-                SolicitudArriendo.class);
-        Calificacion.setSolicitudArriendo(solicitudArriendo);
 
-        Calificacion.setStatus(0);
+        Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
+        Calificacion calificacion = modelMapper.map(calificacionDTO, Calificacion.class);
+        calificacion.setArrendatario(arrendatario);
+
+        // Cargar la entidad SolicitudArriendo desde la base de datos
+        Long solicitudArriendoId = calificacionDTO.getSolicitudArriendo().getId();
+        SolicitudArriendo solicitudArriendo = solicitudArriendoRepository.findById(solicitudArriendoId)
+                .orElseThrow(() -> new IllegalArgumentException("Solicitud de Arriendo no encontrada"));
+
+        calificacion.setSolicitudArriendo(solicitudArriendo);
+        calificacion.setStatus(0);
+
         try {
-            Calificacion = repository.save(Calificacion);
+            calificacion = repository.save(calificacion);
         } catch (DataIntegrityViolationException e) {
             throw new IllegalStateException("Error al guardar la calificación debido a una violación de integridad", e);
         }
 
-        CalificacionDTO.setId(Calificacion.getId());
-        return CalificacionDTO;
+        calificacionDTO.setId(calificacion.getId());
+        return calificacionDTO;
     }
 
     public CalificacionDTO update(CalificacionDTO CalificacionDTO, ArrendatarioDTO arrendatarioDTO)
