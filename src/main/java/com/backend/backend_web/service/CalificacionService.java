@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.backend.backend_web.dto.ArrendatarioDTO;
 import com.backend.backend_web.dto.CalificacionDTO;
+import com.backend.backend_web.dto.SolicitudArriendoDTO;
 import com.backend.backend_web.entity.Arrendador;
 import com.backend.backend_web.entity.Arrendatario;
 import com.backend.backend_web.entity.Calificacion;
+import com.backend.backend_web.entity.SolicitudArriendo;
 import com.backend.backend_web.exception.RegistroNoEncontradoException;
 import com.backend.backend_web.repository.CalificacionRepository;
 
@@ -66,6 +68,9 @@ public class CalificacionService {
         Arrendatario arrendatario = modelMapper.map(arrendatarioDTO, Arrendatario.class);
         Calificacion Calificacion = modelMapper.map(CalificacionDTO, Calificacion.class);
         Calificacion.setArrendatario(arrendatario);
+        SolicitudArriendo solicitudArriendo = modelMapper.map(CalificacionDTO.getSolicitudArriendo(),
+                SolicitudArriendo.class);
+        Calificacion.setSolicitudArriendo(solicitudArriendo);
 
         Calificacion.setStatus(0);
         try {
